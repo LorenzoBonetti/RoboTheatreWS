@@ -1,0 +1,26 @@
+<launch>
+	<arg name="teleop" default="1" />
+	<arg name="record" default="1" />
+	<arg name="laser" default="1" />
+	
+	<!-- rosserial launch file for nova core -->
+	<include file="$(find rosserial_core)/launch/serial_node.launch">
+		<arg name="port" value="/dev/novaCore" />
+	</include>
+
+	<!-- Robogame Joystick nodes -->
+	<include file="$(find joystick)/launch/joystick.launch"/>
+	
+	<!--Odometry node-->
+	<node pkg="odometry_publisher" type="odometry_publisher" name="odometry_publisher"/>
+	
+	<!--Laser node-->
+	<include file="$(find triskar)/launch/hokuyo_nodes.launch"/>
+	
+	<!-- Merges the two lasers-->
+	<include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch"/>
+	
+	<!-- Run move_base-->
+	<include file="$(find triskar_navigation)/launch/move_base2.launch" /> 	
+	
+</launch> 
