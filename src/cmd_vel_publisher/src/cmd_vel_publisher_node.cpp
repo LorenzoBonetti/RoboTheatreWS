@@ -69,7 +69,7 @@ void Cmd_vel_publisher::RunPeriodically(float Period)
      
     ros::spinOnce();
 
-    ROS_INFO("%d",action_counter);
+    ROS_INFO("Current Action :%d",action_counter);
     //LoopRate.sleep();  //removed because spins at max speed
   }
 }
