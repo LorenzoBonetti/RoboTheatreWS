@@ -1,0 +1,43 @@
+#Parameters for global_planner, NB: if you want to use it set the parameter base_global_planner: "global_planner/GlobalPlanner" in the file move_base_general_params. Reference at: http://wiki.ros.org/global_planner
+GlobalPlanner:
+
+#Specifies whether or not to allow navfn to create plans that traverse unknown space. Decided to not allow to go to unknown space
+allow_unknown: false 
+
+#A tolerance on the goal point for the planner. Global Planner will attempt to create a plan that is as close to the specified goal as possible but no further than default_tolerance away.
+default_tolerance: 0.0 #default value TBD resize this
+
+#Specifies whether or not to visualize the potential area computed by navfn via a PointCloud2.
+visualize_potential: false
+
+#If true, use dijkstra's algorithm. Otherwise, A*. 
+use_dijkstra (bool, default: true)
+
+#If true, use the quadratic approximation of the potential. Otherwise, use a simpler calculation. 
+use_quadratic (bool, default: true)
+
+#If true, create a path that follows the grid boundaries. Otherwise, use a gradient descent method. 
+use_grid_path (bool, default: false)
+   
+#If for some reason, you want global_planner to exactly mirror the behavior of navfn, set this to true (and use the defaults for the other boolean parameters) 
+old_navfn_behavior (bool, default: false)
+    
+#Lethal Cost (dynamic reconfigure) 
+lethal_cost: 253
+
+#Neutral Cost (dynamic reconfigure) 
+neutral_cost: 50
+
+#Factor to multiply each cost from costmap by (dynamic reconfigure) 
+cost_factor: 3.0
+
+#Publish Potential Costmap (dynamic reconfigure) 
+publish_potential (bool, default: True)
+
+#How to set the orientation of each point (None=0, Forward=1, Interpolate=2, ForwardThenInterpolate=3, Backward=4, Leftward=5, Rightward=6) (dynamic reconfigure) 
+orientation_mode (int, default: 0)
+
+#What window to use to determine the orientation based on the position derivative specified by the orientation mode (dynamic reconfigure) 
+orientation_window_size (int, default: 1)
+
+  
