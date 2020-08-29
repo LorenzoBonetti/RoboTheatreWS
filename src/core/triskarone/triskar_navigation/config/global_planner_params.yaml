@@ -11,16 +11,16 @@ default_tolerance: 0.0 #default value TBD resize this
 visualize_potential: false
 
 #If true, use dijkstra's algorithm. Otherwise, A*. 
-use_dijkstra (bool, default: true)
+use_dijkstra: true
 
 #If true, use the quadratic approximation of the potential. Otherwise, use a simpler calculation. 
-use_quadratic (bool, default: true)
+use_quadratic: true
 
 #If true, create a path that follows the grid boundaries. Otherwise, use a gradient descent method. 
-use_grid_path (bool, default: false)
+use_grid_path: false
    
 #If for some reason, you want global_planner to exactly mirror the behavior of navfn, set this to true (and use the defaults for the other boolean parameters) 
-old_navfn_behavior (bool, default: false)
+old_navfn_behavior: false
     
 #Lethal Cost (dynamic reconfigure) 
 lethal_cost: 253
@@ -32,12 +32,12 @@ neutral_cost: 50
 cost_factor: 3.0
 
 #Publish Potential Costmap (dynamic reconfigure) 
-publish_potential (bool, default: True)
+publish_potential: true
 
 #How to set the orientation of each point (None=0, Forward=1, Interpolate=2, ForwardThenInterpolate=3, Backward=4, Leftward=5, Rightward=6) (dynamic reconfigure) 
-orientation_mode (int, default: 0)
+orientation_mode: 0
 
 #What window to use to determine the orientation based on the position derivative specified by the orientation mode (dynamic reconfigure) 
-orientation_window_size (int, default: 1)
+orientation_window_size: 1
 
   

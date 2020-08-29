@@ -1,6 +1,6 @@
 global_costmap:
-  global_frame: map
+  global_frame: /map
   robot_base_frame: base_link
   update_frequency: 10.0
-  static_map: false
+  static_map: false #TBD change to true
   rolling_window: true
