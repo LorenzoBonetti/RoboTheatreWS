@@ -1,6 +1,6 @@
 #Parameters for base_local_planner, to use it set: base_local_planner : "base_local_planner/TrajectoryPlannerROS" in the file: "move_base_general_params". Reference at: http://wiki.ros.org/base_local_planner
 
-TrajectoryPlannerROS:
+#TrajectoryPlannerROS:
 
 ############################################################################################################################################################################################################
 
@@ -65,7 +65,7 @@ sim_time: 1.0
 sim_granularity: 0.025
 
 #The step size, in radians, to take between angular samples on a given trajectory.
-angular_sim_granularity: ~<name>/sim_granularity
+angular_sim_granularity: /sim_granularity
 
 #The number of samples to use when exploring the x velocity space 
 vx_samples: 3

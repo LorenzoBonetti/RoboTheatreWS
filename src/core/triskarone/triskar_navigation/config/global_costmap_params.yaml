@@ -1,6 +1,17 @@
 global_costmap:
-  global_frame: /map
+  #The global frame for the costmap to operate in. 
+  global_frame: map
+  #The name of the frame for the base link of the robot. 
   robot_base_frame: base_link
+  #The frequency in Hz for the map to be updated. 
   update_frequency: 10.0
-  static_map: false #TBD change to true
-  rolling_window: true
+  #The "static_map" parameter determines whether or not the costmap should initialize itself based on a map served by the map_server. If you aren't using an existing map or map server, set the static_map  parameter to false. 
+  static_map: true
+  #Whether or not to use a rolling window version of the costmap. If the static_map parameter is set to true, this parameter must be set to false. 
+  rolling_window: false
+
+
+# resolution: 0.1
+# inflation_radius: 0.40
+  # sets the propagation range of costs. Increasing the factor decreases the range
+# cost_scaling_factor: 80

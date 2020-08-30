@@ -1,5 +1,5 @@
 #Parameters for navFn, NB: if you want to use it set the parameter base_global_planner: "navfn/NavfnROS" in the file move_base_general_params. Reference at: http://wiki.ros.org/navfn
-NavfnROS:
+#NavfnROS:
 
 #Specifies whether or not to allow navfn to create plans that traverse unknown space. Decided to not allow to go to unknown space
 allow_unknown: false 

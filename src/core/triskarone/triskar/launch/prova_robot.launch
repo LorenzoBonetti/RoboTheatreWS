@@ -21,6 +21,6 @@
 	<include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch"/>
 	
 	<!-- Run move_base-->
-	<include file="$(find triskar_navigation)/launch/move_base2.launch" /> 	
+	<include file="$(find triskar_navigation)/launch/move_base2.launch" />	
 	
 </launch> 

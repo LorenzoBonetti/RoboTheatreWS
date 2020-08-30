@@ -20,16 +20,36 @@ footprint: [
   [0.2130, -0.2586]]
 #The inflation radius should be set to the maximum distance from obstacles at which a cost should be incurred. 
 inflation_radius: 0.15
+# A scaling factor to apply to cost values during inflation. The cost function is computed as follows for all cells in the costmap further than the inscribed radius distance and closer than the inflation radius distance away from an actual obstacle: exp(-1.0 * cost_scaling_factor * (distance_from_obstacle - inscribed_radius)) * (costmap_2d::INSCRIBED_INFLATED_OBSTACLE - 1), where costmap_2d::INSCRIBED_INFLATED_OBSTACLE is currently 254. NOTE: since the cost_scaling_factor is multiplied by a negative in the formula, increasing the factor will decrease the resulting cost values. 
+cost_scaling_factor: 5.0
 
 #############################################################################################################################################################################################################
+#Reference at http://wiki.ros.org/costmap_2d/hydro/obstacles
+
+#A list of observation source names separated by spaces. This defines each of the <source_name> namespaces defined below. 
 observation_sources: laser_scan_sensor
 
-laser_scan_sensor: {sensor_frame: base_link, 
-		    data_type: LaserScan,
-                    topic: scan,
-		    marking: true, 
-	            clearing: true,
-                    observation_persistence: 0.0,
-                    raytrace_range: 11.0, 
-                    obstacle_range: 5.6,
-                    expected_update_rate: 0.2}
+# topic (string, default: source_name) The topic on which sensor data comes in for this source. Defaults to the name of the source. 
+
+#sensor_frame (string, default: "") The frame of the origin of the sensor. Leave empty to attempt to read the frame from sensor data. The frame can be read from both sensor_msgs/LaserScan, sensor_msgs/PointCloud, and sensor_msgs/PointCloud2 messages. 
+
+#observation_persistence (double, default: 0.0) How long to keep each sensor reading in seconds. A value of 0.0 will only keep the most recent reading. 
+
+#expected_update_rate (double, default: 0.0) How often to expect a reading from a sensor in seconds. A value of 0.0 will allow infinite time between readings. This parameter is used as a failsafe to keep the navigation stack from commanding the robot when a sensor has failed. It should be set to a value that is slightly more permissive than the actual rate of the sensor. For example, if we expect a scan from a laser every 0.05 seconds we might set this parameter to be 0.1 seconds to give a generous buffer and account for some amount of system latency. 
+
+#data_type (string, default: "PointCloud") The data type associated with the topic, right now only "PointCloud", "PointCloud2", and "LaserScan" are supported. 
+
+#clearing (bool, default: false) Whether or not this observation should be used to clear out freespace. 
+
+#marking (bool, default: true) Whether or not this observation should be used to mark obstacles. 
+
+# max_obstacle_height (double, default: 2.0) The maximum height in meters of a sensor reading considered valid. This is usually set to be slightly higher than the height of the robot. Setting this parameter to a value greater than the global max_obstacle_height parameter has no effect. Setting this parameter to a value less than the global max_obstacle_height will filter out points from this sensor above that height. 
+
+#min_obstacle_height (double, default: 0.0) The minimum height in meters of a sensor reading considered valid. This is usually set to be at ground height, but can be set higher or lower based on the noise model of your sensor. 
+
+#obstacle_range (double, default: 2.5) The maximum range in meters at which to insert obstacles into the costmap using sensor data. 
+
+#raytrace_range (double, default: 3.0) The maximum range in meters at which to raytrace out obstacles from the map using sensor data. 
+
+#inf_is_valid (bool, default: false) Allows for Inf values in "LaserScan" observation messages. The Inf values are converted to the laser maximum range. 
+laser_scan_sensor: {sensor_frame: base_link, data_type: LaserScan,topic: scan, marking: true, clearing: true, observation_persistence: 0.0,raytrace_range: 11.0, obstacle_range: 5.6,expected_update_rate: 0.2}
