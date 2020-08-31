@@ -2,36 +2,33 @@
 	<master auto="start"/>
 	
 	<!-- Run the map server -->
-
 	<node name="map_server" pkg="map_server" type="map_server" args="$(find triskar)/config/airlab_theatre_new.yaml" />
 
 	
 	<!-- Run AMCL -->
 	<include file="$(find triskar_navigation)/launch/amcl_standard.launch" />
 
-	<!--Move Base-->
-	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-	
+	<!--Run Move_Base-->
+        <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 		<!--Load general parameters-->
-	    <rosparam file="$(find triskar_navigation)/config/move_base_general_params.yaml" command="load" />                     
+	    	<rosparam file="$(find triskar_navigation)/params/move_base_general_params.yaml" command="load" />                 
 		
 		<!--Load global planner parameters-->
-  		<rosparam file="$(find triskar_navigation)/config/navfn_params.yaml" command="load" />                                 
-		
-		<!--Load local planner parameters-->
-		<rosparam file="$(find triskar_navigation)/config/base_local_planner_params.yaml" command="load" />
-		
-		<!--Load costmap common parameters-->
-		<rosparam file="$(find triskar_navigation)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />    
-		
-		<!--Load global costmap  parameters-->
-		<rosparam file="$(find triskar_navigation)/config/global_costmap_params.yaml" command="load" />                      
-		
-		<!--Load local costmap  parameters-->
-		<rosparam file="$(find triskar_navigation)/config/local_costmap_params.yaml" command="load" />
-		
-	
+  		<rosparam file="$(find triskar_navigation)/params/navfn_params.yaml" command="load" />
 
-	</node>
+ 		!--Load local planner parameters-->
+		<rosparam file="$(find triskar_navigation)/params/base_local_planner_params.yaml" command="load" />
+
+                <!--Load local costmap  parameters-->
+		<rosparam file="$(find triskar_navigation)/params/local_costmap_params.yaml" command="load" />
+
+		<!--Load global costmap  parameters-->
+		<rosparam file="$(find triskar_navigation)/params/global_costmap_params.yaml" command="load" /> 
+
+		
+ 
+		
+        </node>
+	
 	
 </launch>
