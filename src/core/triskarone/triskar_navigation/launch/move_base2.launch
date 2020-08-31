@@ -24,7 +24,8 @@
 
 		<!--Load global costmap  parameters-->
 		<rosparam file="$(find triskar_navigation)/params/global_costmap_params.yaml" command="load" /> 
-
+		
+		<remap from="/cmd_vel" to="/game_navigation/unsafe/cmd_vel"/>
 		
  
 		

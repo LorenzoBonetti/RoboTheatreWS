@@ -1,13 +1,4 @@
 <launch>
 	<rosparam file="$(find triskar_navigation)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find triskar_navigation)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
-
- 	<!--Load local costmap  parameters-->
-	<rosparam file="$(find triskar_navigation)/params/local_costmap_params.yaml" command="load" />
-
-	<!--Load global costmap  parameters-->
-	<rosparam file="$(find triskar_navigation)/params/global_costmap_params.yaml" command="load" /> 
-
-		
-	
 </launch>

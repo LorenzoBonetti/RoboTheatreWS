@@ -23,9 +23,12 @@ tf::TransformListener* tfListener;
 
 	private:
 		void joyCallback(const sensor_msgs::Joy::ConstPtr &msg);
+		void unsafeCmdVelCallback(const geometry_msgs::Twist::ConstPtr &msg);
 		void updateParameters();
 		void timerCallback(const ros::TimerEvent& e);
 		void publishZeroMessage();
+
+		geometry_msgs::Twist lastUnsafeTwistMsg_;
 
 		double linearScale, angularScale;
 		double maxLinearScale = 0, maxAngularScale = 0;
@@ -33,15 +36,25 @@ tf::TransformListener* tfListener;
 		bool canMove;
 		bool isExit = false;
 		ros::Subscriber joySub;
+		ros::Subscriber unsafeCmdVelSub;
         ros::Subscriber pixelPosSub;
 		ros::Publisher twistPub;
+		ros::Publisher smoothTwistPub;
 		ros::Timer timeout;
+		ros::Time unsafe_cmd_vel_time;
 };
 
 JoyTeleop::JoyTeleop() {
 	joySub = nh.subscribe("/joy", 10, &JoyTeleop::joyCallback, this);
+	unsafeCmdVelSub = nh.subscribe("/game_navigation/unsafe/cmd_vel", 10, &JoyTeleop::unsafeCmdVelCallback, this);// TODO STA COSA NON SERVE?
 	twistPub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+	smoothTwistPub = nh.advertise<geometry_msgs::Twist>("/raw_cmd_vel", 10);
 	updateParameters();
+}
+
+void JoyTeleop::unsafeCmdVelCallback(const geometry_msgs::Twist::ConstPtr &msg) {
+	unsafe_cmd_vel_time = ros::Time::now();
+	lastUnsafeTwistMsg_ = *msg;
 }
 
 void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
@@ -49,7 +62,18 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 	// process and publish
 	geometry_msgs::Twist twistMsg;
 
-	if (msg->buttons[deadmanButton]) {		// if deadman switch is pressed
+	if (msg->buttons[deadmanButton] && msg->buttons[4]){							// if autonomous
+		// let /unsafe/cmd_vel be published on /cmd_vel
+
+		ros::Time now = ros::Time::now();
+		ros::Duration time_diff = now - unsafe_cmd_vel_time;
+		if (time_diff.toSec() < 0.5){
+			twistMsg = lastUnsafeTwistMsg_;
+			twistPub.publish(twistMsg);
+		}else{
+			ROS_DEBUG_STREAM("unsafe/cmd_vel too old... skipping..  Time diff:" << time_diff.toSec());
+		}
+	}else if (msg->buttons[deadmanButton] && !msg->buttons[6]) {		// if deadman switch is pressed
 		if (msg->buttons[3]){
 			ROS_DEBUG_STREAM("Increasing linearScale by 0.5\%...");
 			linearScale += 0.01;//linearScale * 0.05;
@@ -62,6 +86,34 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 		}else if (msg->buttons[1]){
 			ROS_DEBUG_STREAM("Decreasing linearScale by 0.5\%...");
 			angularScale -= 0.01;// angularScale * 0.05;
+		}else if (msg->buttons[7]){
+            ROS_DEBUG_STREAM("Automatic rotation ON.");
+            
+			//TODO QUESTA PARTE NON SERVE
+	  		tf::StampedTransform playerTransform;
+	  		float angle_diff = 0;
+
+            try{
+				tfListener->waitForTransform("/kinect2_link", ros::Time(0), "/player_link", ros::Time(0), "/map", ros::Duration(1.0));
+				tfListener->lookupTransform("/kinect2_link", "/player_link", ros::Time(0), playerTransform);
+				angle_diff = atan2( playerTransform.getOrigin().y(), playerTransform.getOrigin().x());
+			} catch (tf::TransformException ex) {
+				ROS_ERROR("%s",ex.what());
+				angle_diff = 0;
+			}
+		
+			
+			if (std::abs(angle_diff) > (5*M_PI/180)){
+				twistMsg.angular.z = 4.0 * angle_diff;
+				ROS_DEBUG_STREAM("Threshold activated!");
+			} else {
+				twistMsg.angular.z = 0.0;
+			}
+			            
+            ROS_DEBUG_STREAM("Robot<->Player angle mismatch: " << angle_diff << " rad");
+            ROS_DEBUG_STREAM("Angular action threshold: " << (5*M_PI/180) << " rad");
+            ROS_DEBUG_STREAM("Angular value: " << twistMsg.angular.z << " rad");
+            
         }else{
             twistMsg.angular.z = angularScale*msg->axes[angularAxis];
         }
@@ -84,7 +136,9 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 		
         twistMsg.linear.x = linearScale*msg->axes[linearXAxis];
         twistMsg.linear.y = linearScale*msg->axes[linearYAxis];
-		twistPub.publish(twistMsg);
+		// ROLLBACK
+		// twistPub.publish(twistMsg);
+		smoothTwistPub.publish(twistMsg);
 
 	}else{
 		publishZeroMessage();
@@ -147,9 +201,15 @@ int main(int argc, char** argv) {
 	 }
 
 	tfListener = new tf::TransformListener();
-
-
-	ros::spin();
+  	// Loop at 100Hz until the node is shutdown.
+    ros::Rate rate(100);
+	
+	while(ros::ok()){
+       
+		ros::spinOnce();
+        // Wait until it's time for another iteration.
+        rate.sleep() ;
+    }
 
 	return 0;
 }
