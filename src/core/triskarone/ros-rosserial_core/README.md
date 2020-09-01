@@ -1,1 +1,0 @@
-# ros-rosserial_core

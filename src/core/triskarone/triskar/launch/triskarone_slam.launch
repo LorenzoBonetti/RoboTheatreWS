@@ -1,0 +1,8 @@
+<launch>
+	<!--Launch triskarone basic nodes-->
+	<include file="$(find triskar)/launch/triskarone.launch"/>
+	
+	<!-- Run SLAM-->
+	<include file="$(find triskar_navigation)/launch/slam.launch" />	
+	
+</launch> 
