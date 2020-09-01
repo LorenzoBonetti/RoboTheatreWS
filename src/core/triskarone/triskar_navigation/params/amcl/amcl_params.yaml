@@ -41,7 +41,7 @@ recovery_alpha_fast: 0.0
 #Maximum rate (Hz) at which scans and paths are published for visualization, -1.0 to disable. 
 gui_publish_rate: 10.0
 #Maximum rate (Hz) at which to store the last estimated pose and covariance to the parameter server, in the variables ~initial_pose_* and ~initial_cov_*. This saved pose will be used on subsequent runs to initialize the filter. -1.0 to disable. 
-save_pose_rate (double, default: 0.5 Hz)
+save_pose_rate: 0.5
 
 #When set to true, AMCL will subscribe to the map topic rather than making a service call to receive its map.
 use_map_topic: false
@@ -60,9 +60,9 @@ laser_min_range: -1.0
 #Maximum scan range to be considered; -1.0 will cause the laser's reported maximum range to be used. 
 laser_max_range: -1.0
 #How many evenly-spaced beams in each scan to be used when updating the filter. 
-laser_max_beams: 300
+laser_max_beams: 30
 #Mixture weight for the z_hit part of the model. 
-laser_z_hit: 0.95
+laser_z_hit: 0.85
 # Mixture weight for the z_short part of the model. 
 laser_z_short: 0.05  #NOT USED IN LIKELIHOOD_FIELD
 #Mixture weight for the z_max part of the model. 
@@ -76,8 +76,7 @@ laser_lambda_short: 0.1
 #Maximum distance to do obstacle inflation on map, for use in likelihood_field model. 
 laser_likelihood_max_dist: 4.0
 #Which model to use, either beam, likelihood_field, or likelihood_field_prob (same as likelihood_field but incorporates the beamskip feature, if enabled). 
-laser_model_type: "likelihood_field"
-
+laser_model_type: "beam"
 
 #############################################################################################################################################################################################################
 
