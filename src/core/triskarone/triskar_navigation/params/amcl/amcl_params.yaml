@@ -46,10 +46,9 @@ save_pose_rate: 0.5
 #When set to true, AMCL will subscribe to the map topic rather than making a service call to receive its map.
 use_map_topic: false
 #When set to true, AMCL will only use the first map it subscribes to, rather than updating each time a new one is received.
-first_map_only: false
+first_map_only: false   #if set to true it works bad
 #When set to true, will reduce the resampling rate when not needed and help avoid particle deprivation. The resampling will only happen if the effective number of particles (N_eff = 1/(sum(k_i^2))) is lower than half the current number of particles. 
-selective_resampling: false
-
+selective_resampling: false  
 ############################################################################################################################################################################################################
 
 #Laser model parameters
@@ -62,13 +61,13 @@ laser_max_range: -1.0
 #How many evenly-spaced beams in each scan to be used when updating the filter. 
 laser_max_beams: 30
 #Mixture weight for the z_hit part of the model. 
-laser_z_hit: 0.85
+laser_z_hit: 0.9
 # Mixture weight for the z_short part of the model. 
 laser_z_short: 0.05  #NOT USED IN LIKELIHOOD_FIELD
 #Mixture weight for the z_max part of the model. 
 laser_z_max: 0.05   #NOT USED IN LIKELIHOOD_FIELD
 # Mixture weight for the z_rand part of the model. 
-laser_z_rand: 0.05
+laser_z_rand: 0.5  #z rand should be very high
 #Standard deviation for Gaussian model used in z_hit part of the model. 
 laser_sigma_hit: 0.1
 #Exponential decay parameter for z_short part of model. 
@@ -76,15 +75,15 @@ laser_lambda_short: 0.1
 #Maximum distance to do obstacle inflation on map, for use in likelihood_field model. 
 laser_likelihood_max_dist: 4.0
 #Which model to use, either beam, likelihood_field, or likelihood_field_prob (same as likelihood_field but incorporates the beamskip feature, if enabled). 
-laser_model_type: "beam"
+laser_model_type: "likelihood_field"
 
 #############################################################################################################################################################################################################
 
 #Odometry model parameters
 #If ~odom_model_type is "omni" then we use a custom model for an omni-directional base, which uses odom_alpha1 through odom_alpha5. The meaning of the first four parameters is similar to that for the "diff" model. The fifth parameter capture the tendency of the robot to translate (without rotating) perpendicular to the observed direction of travel.
 
-#Robot is omnidirectional, omni_corrected is used since it has some bugs corrected 
-odom_model_type: "omni_corrected"
+#Robot is omnidirectional, omni-corrected is used since it has some bugs corrected 
+odom_model_type: "omni-corrected"
 #Specifies the expected noise in odometry's rotation estimate from the rotational component of the robot's motion. 
 odom_alpha1: 1
 #Specifies the expected noise in odometry's rotation estimate from translational component of the robot's motion. 

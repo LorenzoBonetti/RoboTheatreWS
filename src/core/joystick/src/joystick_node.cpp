@@ -46,7 +46,7 @@ tf::TransformListener* tfListener;
 
 JoyTeleop::JoyTeleop() {
 	joySub = nh.subscribe("/joy", 10, &JoyTeleop::joyCallback, this);
-	unsafeCmdVelSub = nh.subscribe("/move_base/published_cmd_vel", 10, &JoyTeleop::unsafeCmdVelCallback, this);/
+	unsafeCmdVelSub = nh.subscribe("/move_base/published_cmd_vel", 10, &JoyTeleop::unsafeCmdVelCallback, this);
 	twistPub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 	smoothTwistPub = nh.advertise<geometry_msgs::Twist>("/raw_cmd_vel", 10);
 	updateParameters();
@@ -61,10 +61,7 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 
 	// process and publish
 	geometry_msgs::Twist twistMsg;
-
-	if (msg->buttons[deadmanButton] && msg->buttons[4]){							// if autonomous
-		// let /unsafe/cmd_vel be published on /cmd_vel
-
+	if (msg->buttons[4]){							// if autonomous publishes the commands of move_base directly on /cmd_vel
 		ros::Time now = ros::Time::now();
 		ros::Duration time_diff = now - unsafe_cmd_vel_time;
 		if (time_diff.toSec() < 0.5){
@@ -73,83 +70,48 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 		}else{
 			ROS_DEBUG_STREAM("unsafe/cmd_vel too old... skipping..  Time diff:" << time_diff.toSec());
 		}
-	}else if (msg->buttons[deadmanButton] && !msg->buttons[6]) {		// if deadman switch is pressed
-		if (msg->buttons[3]){
-			ROS_DEBUG_STREAM("Increasing linearScale by 0.5\%...");
-			linearScale += 0.01;//linearScale * 0.05;
-		}else if (msg->buttons[2]){
-			ROS_DEBUG_STREAM("Decreasing linearScale by 0.5\%...");
-			linearScale -= 0.01;// linearScale * 0.05;
-		}else if (msg->buttons[0]){
-			ROS_DEBUG_STREAM("Increasing angularScale by 0.5\%...");
-			angularScale += 0.01;// angularScale * 0.05;
-		}else if (msg->buttons[1]){
-			ROS_DEBUG_STREAM("Decreasing linearScale by 0.5\%...");
-			angularScale -= 0.01;// angularScale * 0.05;
-		}else if (msg->buttons[7]){
-            ROS_DEBUG_STREAM("Automatic rotation ON.");
-            
-			//TODO QUESTA PARTE NON SERVE
-	  		tf::StampedTransform playerTransform;
-	  		float angle_diff = 0;
-
-            try{
-				tfListener->waitForTransform("/kinect2_link", ros::Time(0), "/player_link", ros::Time(0), "/map", ros::Duration(1.0));
-				tfListener->lookupTransform("/kinect2_link", "/player_link", ros::Time(0), playerTransform);
-				angle_diff = atan2( playerTransform.getOrigin().y(), playerTransform.getOrigin().x());
-			} catch (tf::TransformException ex) {
-				ROS_ERROR("%s",ex.what());
-				angle_diff = 0;
-			}
-		
-			
-			if (std::abs(angle_diff) > (5*M_PI/180)){
-				twistMsg.angular.z = 4.0 * angle_diff;
-				ROS_DEBUG_STREAM("Threshold activated!");
-			} else {
-				twistMsg.angular.z = 0.0;
-			}
-			            
-            ROS_DEBUG_STREAM("Robot<->Player angle mismatch: " << angle_diff << " rad");
-            ROS_DEBUG_STREAM("Angular action threshold: " << (5*M_PI/180) << " rad");
-            ROS_DEBUG_STREAM("Angular value: " << twistMsg.angular.z << " rad");
-            
-        }else{
-            twistMsg.angular.z = angularScale*msg->axes[angularAxis];
-        }
-
-		if (linearScale >= maxLinearScale){
-			linearScale = maxLinearScale;
-		}
-		
-		if (linearScale <= 0){
-			linearScale = 0;
-		}
-		
-		if (angularScale >= maxAngularScale){
-			angularScale = maxAngularScale;
-		}
-		
-		if (angularScale <= 0){
-			angularScale = 0;
-		}
-		
-        twistMsg.linear.x = linearScale*msg->axes[linearXAxis];
-        twistMsg.linear.y = linearScale*msg->axes[linearYAxis];
-		// ROLLBACK
-		// twistPub.publish(twistMsg);
-		smoothTwistPub.publish(twistMsg);
-
 	}else{
-		publishZeroMessage();
+		if (msg->buttons[deadmanButton]){
+			if (msg->buttons[3]){
+				ROS_DEBUG_STREAM("Increasing linearScale by 0.5\%...");
+				linearScale += 0.01;//linearScale * 0.05;
+			}else if (msg->buttons[2]){
+				ROS_DEBUG_STREAM("Decreasing linearScale by 0.5\%...");
+				linearScale -= 0.01;// linearScale * 0.05;
+			}else if (msg->buttons[0]){
+				ROS_DEBUG_STREAM("Increasing angularScale by 0.5\%...");
+				angularScale += 0.01;// angularScale * 0.05;
+			}else if (msg->buttons[1]){
+				ROS_DEBUG_STREAM("Decreasing linearScale by 0.5\%...");
+				angularScale -= 0.01;// angularScale * 0.05;
+			}
+			
+			
+			if (linearScale >= maxLinearScale){
+				linearScale = maxLinearScale;
+			}
+		
+			if (linearScale <= 0){
+			linearScale = 0;
+			}
+		
+			if (angularScale >= maxAngularScale){
+			angularScale = maxAngularScale;
+			}
+		
+			if (angularScale <= 0){
+			angularScale = 0;
+			}
+		
+			twistMsg.linear.x = linearScale*msg->axes[linearXAxis];
+			twistMsg.linear.y = linearScale*msg->axes[linearYAxis];
+			twistMsg.angular.z = angularScale*msg->axes[angularAxis];
+			// ROLLBACK
+			// twistPub.publish(twistMsg);
+			smoothTwistPub.publish(twistMsg);
+		}else
+			publishZeroMessage();
 	}
-
-	// reset the timeout timer
-	/*if (timeout) {
-		timeout.stop();
-	}
-	timeout = nh.createTimer(ros::Duration(2), &JoyTeleop::timerCallback, this, true);
-	*/
 }
 
 void JoyTeleop::updateParameters() {
