@@ -1,5 +1,6 @@
 /* A node that takes joystick (ps3) commands.
 	author: Ewerton Lopes (ewerlopes@gmail.com)
+	reference at :http://wiki.ros.org/joy
 */
 
 #include <ros/ros.h>
