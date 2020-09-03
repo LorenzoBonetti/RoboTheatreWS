@@ -1,0 +1,57 @@
+#Parameters to be set to send propers command to the robot
+############################################################################################################################################################################################################
+
+#Velocities setting
+
+#Default linear velocity of the robot in meters/second
+linear_scale: 0.75
+#Default angular velocity of the robot in rad/second
+angular_scale: 1.5
+#Max linear velocity of the robot in meters/second
+max_linear_scale: 2
+#Default angular velocity of the robot in rad/second
+max_angular_scale: 3
+
+#############################################################################################################################################################################################################
+
+#Joystick buttons
+
+#Joystick is Logitech Wireless Gamepad F710 (DirectInput Mode), reference at http://wiki.ros.org/joy
+
+#Corresponds to button 1 of the Logitech joystick
+button_X: 0
+
+#Corresponds to button 2 of the Logitech joystick
+button_A: 1
+
+#Corresponds to button 3 of the Logitech joystick
+button_B: 2
+
+#Corresponds to button 4 of the Logitech joystick
+button_Y: 3
+
+#Corresponds to button 5 of the Logitech joystick
+button_LB: 4
+
+#Corresponds to button 6 of the Logitech joystick
+button_RB: 5
+
+#Corresponds to button 7 of the Logitech joystick
+button_LT: 6
+
+#Corresponds to button 8 of the Logitech joystick
+button_RT: 7
+
+#Corresponds to button 9 of the Logitech joystick
+button_back: 8
+
+#Corresponds to button 10 of the Logitech joystick
+button_start: 9
+
+#Corresponds to the left analog button 1 of the Logitech joystick
+button_stick_left: 10
+
+#Corresponds  to the right analog button 1 of the Logitech joystick
+button_stick_right: 11
+
+

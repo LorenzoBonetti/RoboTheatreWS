@@ -1,4 +1,4 @@
-<launch>
+<launch/>
 	<rosparam file="$(find triskar_navigation)/params/costmaps/costmap_common_params.yaml" command="load" ns="global_costmap" />
         <rosparam file="$(find triskar_navigation)/params/costmaps/costmap_common_params.yaml" command="load" ns="local_costmap" />
 </launch>

@@ -109,7 +109,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(${catkin_INCLUDE_DIRS} ${heartbeat_INCLUDE_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${heartbeat_INCLUDE_DIRS})
 
 ## Declare a C++ library
 # add_library(joystick
@@ -126,7 +126,7 @@ add_executable(joystick_node src/joystick_node.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-# add_dependencies(joystick_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(joystick_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
 target_link_libraries(joystick_node

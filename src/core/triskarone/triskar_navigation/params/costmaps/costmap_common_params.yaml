@@ -19,7 +19,7 @@ footprint: [
   [0.2130, 0.2586],
   [0.2130, -0.2586]]
 #The inflation radius should be set to the maximum distance from obstacles at which a cost should be incurred. 
-inflation_radius: 0.01
+inflation_radius: 0.1
 # A scaling factor to apply to cost values during inflation. The cost function is computed as follows for all cells in the costmap further than the inscribed radius distance and closer than the inflation radius distance away from an actual obstacle: exp(-1.0 * cost_scaling_factor * (distance_from_obstacle - inscribed_radius)) * (costmap_2d::INSCRIBED_INFLATED_OBSTACLE - 1), where costmap_2d::INSCRIBED_INFLATED_OBSTACLE is currently 254. NOTE: since the cost_scaling_factor is multiplied by a negative in the formula, increasing the factor will decrease the resulting cost values. 
 #cost_scaling_factor: 5.0
 
