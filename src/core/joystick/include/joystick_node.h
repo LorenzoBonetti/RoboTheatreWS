@@ -8,35 +8,47 @@
 #include <geometry_msgs/Twist.h>
 #include <tf/transform_listener.h>
 #include <sensor_msgs/Joy.h>
-tf::TransformListener* tfListener;
 
+#define RUN_PERIOD_DEFAULT 100
+
+
+/*Listens to the joystick's input
+	If LB is pressed the robot is run autonomously, this node simply republishes the velocitites published by move_base
+	If RB is pressed the manual commands are enabled
+		-RB+X: increase linear scale
+		-RB+A: decrease linear scale
+		-RB+B: increase angular scale
+		-RB+Y: decrease angular scale
+		-RB+left analog: move linear
+		-RB+right analog: move angular
+	If no button is pressed the robot is automatically stopped
+*/
+		
 class JoyTeleop
  {
 	public:
 		JoyTeleop();
-		ros::NodeHandle nh;
+
 
 	private:
 		void joyCallback(const sensor_msgs::Joy::ConstPtr &msg);
-		void unsafeCmdVelCallback(const geometry_msgs::Twist::ConstPtr &msg);
-		void updateParameters();
-		void timerCallback(const ros::TimerEvent& e);
+		void moveBaseCmdVelCallback(const geometry_msgs::Twist::ConstPtr &msg);
+		bool updateParameters();
 		void publishZeroMessage();
 
-		geometry_msgs::Twist lastUnsafeTwistMsg_;
-
+		geometry_msgs::Twist lastMoveBaseTwistMsg;
+		
+		ros::NodeHandle nh;
 		double linearScale, angularScale;
-		double maxLinearScale = 0, maxAngularScale = 0;
-		int deadmanButton, linearXAxis, linearYAxis, angularAxis;
-		bool canMove;
-		bool isExit = false;
+		double maxLinearScale, maxAngularScale;
+		int enable_manual, autonomous_move, linearXAxis, linearYAxis, angularAxis;
+		int LinearScaleUp, LinearScaleDown, AngularScaleUp, AngularScaleDown;
+	
 		ros::Subscriber joySub;
-		ros::Subscriber unsafeCmdVelSub;
-        ros::Subscriber pixelPosSub;
+		ros::Subscriber moveBaseCmdVelSub;
+      
 		ros::Publisher twistPub;
-		ros::Publisher smoothTwistPub;
-		ros::Timer timeout;
-		ros::Time unsafe_cmd_vel_time;
+		ros::Time move_base_cmd_vel_time;
 };
 
 
