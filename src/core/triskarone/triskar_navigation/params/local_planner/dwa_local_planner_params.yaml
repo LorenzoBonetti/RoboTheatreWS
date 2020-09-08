@@ -22,54 +22,54 @@ DWAPlannerROS:
  min_vel_trans: 0.1
    
 #The maximum forward velocity allowed for thebase in meters/sec 
- max_vel_x: 0.7
+ max_vel_x: 0.75
 
 #The minimum forward velocity allowed for the base in meters/sec. It is useful to specify this to guarantee that velocity commands sent to a mobile base are high enough to allow the base to overcome friction. 
  min_vel_x: 0.3
 
 #The maximum y velocity for the robot in m/s 
- max_vel_y: 0.7
+ max_vel_y: 0.75
 
 #The minimum y velocity for the robot in m/s  
  min_vel_y: 0.3
 
 #The maximum rotational velocity allowed for the base in radians/sec 
- max_rot_vel: 0.5
+ max_vel_theta: 0.5
 
 #The minimum rotational velocity allowed for the base in radians/sec    
- min_rot_vel: 0.1
+ min_vel_theta: 0.1
 
 ###########################################################################################################################################################################################################
 
 #Goal Tolerance Parameters
 
 #The tolerance in radians for the controller in yaw/rotation when achieving its goal 
- yaw_goal_tolerance: 0.50
+ yaw_goal_tolerance: 0.1
 
 #The tolerance in meters for the controller in the x & y distance when achieving a goal 
  xy_goal_tolerance: 0.40
 
 #If goal tolerance is latched, if the robot ever reaches the goal xy location it will simply rotate in place, even if it ends up outside the goal tolerance while it is doing so.
- latch_xy_goal_tolerance: false
+ latch_xy_goal_tolerance: true
 
 ###########################################################################################################################################################################################################
 
 #Forward Simulation Parameters
 
 #The amount of time to forward-simulate trajectories in seconds 
- sim_time: 4.0
+ sim_time: 2.0
 
 #The step size, in meters, to take between points on a given trajectory 
  sim_granularity: 0.025
 
 #The number of samples to use when exploring the x velocity space 
- vx_samples: 20
+ vx_samples: 10
 
 #The number of samples to use when exploring the y velocity space 
- vy_samples: 20
+ vy_samples: 10
 
 #The number of samples to use when exploring the theta velocity space   
- vth_samples: 40
+ vth_samples: 20
 
 #The frequency at which this controller will be called in Hz. Uses searchParam to read the parameter from parent namespaces if not set in the namespace of the controller. For use with move_base, this means that you only need to set its "controller_frequency" parameter and can safely leave this one unset.
 #controller_frequency: 10.0
@@ -89,22 +89,22 @@ DWAPlannerROS:
  goal_distance_bias: 24.0
 
 #The weighting for how much the controller should attempt to avoid obstacles 
- occdist_scale: 0.01
+ occdist_scale: 0.1
 
 #The distance from the center point of the robot to place an additional scoring point, in meters
  forward_point_distance: 0.325
 
 #The amount of time that the robot must stop before a collision in order for a trajectory to be considered valid in seconds 
- stop_time_buffer: 0.2
+ stop_time_buffer: 1.0
 
 #The absolute value of the velocity at which to start scaling the robot's footprint, in m/s   
- scaling_speed: 0.25
+ scaling_speed: 0.20
 
 #The maximum factor to scale the robot's footprint by 
- max_scaling_factor: 0.2
+ max_scaling_factor: 0.3
 
 #Whether or not to publish the cost grid that the planner will use when planning. When true, a sensor_msgs/PointCloud2 will be available on the ~<name>/cost_cloud topic. Each point cloud represents the cost grid and has a field for each individual scoring function component as well as the overall cost for each cell, taking the scoring parameters into account. 
- publish_cost_grid: false
+ publish_cost_grid: true
 
 
 ##########################################################################################################################################################################################################

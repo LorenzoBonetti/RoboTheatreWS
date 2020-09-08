@@ -66,7 +66,7 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 			twistMsg.linear.y = linearScale*msg->axes[linearYAxis];
 			twistMsg.angular.z = angularScale*msg->axes[angularAxis];
 		
-			 twistPub.publish(twistMsg);
+			twistPub.publish(twistMsg);
 		
 		}else
 			publishZeroMessage();
@@ -96,7 +96,7 @@ bool JoyTeleop::updateParameters() {
 	if (!nh.getParam("up_down_axis_stick_left", linearXAxis))
 		return false;
 
-	if (!nh.getParam("left_right_axis_stick_right", linearYAxis))
+	if (!nh.getParam("left_right_axis_stick_left", linearYAxis))
 		return false;
 
 	if (!nh.getParam("left_right_axis_stick_right", angularAxis))
