@@ -10,14 +10,16 @@
   	<rosparam file="$(find triskar_navigation)/params/global_planner/global_planner_params.yaml" command="load" />
 
 	<!--Load local planner parameters-->
-	<rosparam file="$(find triskar_navigation)/params/local_planner/dwa_local_planner_params.yaml" command="load" />
+	<!--<rosparam file="$(find triskar_navigation)/params/local_planner/dwa_local_planner_params.yaml" command="load" />-->
+	<rosparam file="$(find triskar_navigation)/params/local_planner/base_local_planner_params.yaml" command="load" />
 
 	<!--Load costmaps  parameters-->
-	<rosparam file="$(find triskar_navigation)/params/costmaps/costmap_common_params.yaml" command="load"/>
-
+	<rosparam file="$(find triskar_navigation)/params/costmaps/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+        <rosparam file="$(find triskar_navigation)/params/costmaps/costmap_common_params.yaml" command="load" ns="global_costmap"/>
 
 	<!--Load local costmap  parameters-->
-	<rosparam file="$(find triskar_navigation)/params/costmaps/local_costmap_params.yaml" command="load" />
+	<rosparam file="$(find triskar_navigation)/params/costmaps/local_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find triskar_navigation)/params/costmaps/local_costmap_params.yaml" command="load"/>
 
 	<!--Load global costmap  parameters-->
 	<rosparam file="$(find triskar_navigation)/params/costmaps/global_costmap_params.yaml" command="load" /> 

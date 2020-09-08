@@ -5,7 +5,7 @@
 base_global_planner: "global_planner/GlobalPlanner" #"navfn/NavfnROS" #TBD try 
 
 #The name of the plugin for the local planner to use with move_base
-base_local_planner: "dwa_local_planner/DWAPlannerROS" # "base_local_planner/TrajectoryPlannerROS"   
+base_local_planner: "base_local_planner/TrajectoryPlannerROS"  # "dwa_local_planner/DWAPlannerROS"
 
 #A list of recovery behavior plugins to use with move_base, see pluginlib documentation for more details on plugins. These behaviors will be run when move_base fails to find a valid plan in the order that they are specified. After each behavior completes, move_base will attempt to make a plan. If planning is successful, move_base will continue normal operation. Otherwise, the next recovery behavior in the list will be executed. These plugins must adhere to the nav_core::RecoveryBehavior interface specified in the nav_core package.
 

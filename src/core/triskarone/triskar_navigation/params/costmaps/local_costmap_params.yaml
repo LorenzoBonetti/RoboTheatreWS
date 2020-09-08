@@ -16,10 +16,10 @@ local_costmap:
   #The height of the local costmap in meters. 
  height: 2.0
   #The resolution of the local costmap in meters/cell. 
- resolution: 0.1
+ resolution: 0.05
   #The x origin of the map in the global frame in meters.
- origin_x: -17.800000
+ origin_x: 0.0
   #The y origin of the map in the global frame in meters. 
- origin_y: -16.200000
+ origin_y: 0.0
  map_type: costmap
 
