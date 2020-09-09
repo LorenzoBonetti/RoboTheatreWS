@@ -66,7 +66,7 @@ DWAPlannerROS:
  vx_samples: 3
 
 #The number of samples to use when exploring the y velocity space 
- vy_samples: 10
+ vy_samples: 3
 
 #The number of samples to use when exploring the theta velocity space   
  vth_samples: 10
