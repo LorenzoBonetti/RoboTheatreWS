@@ -4,17 +4,17 @@
 #Overall filter parameters
 
 # Minimum allowed number of particles. 
-min_particles: 500
+min_particles: 200
 # Maximum allowed number of particles. 
-max_particles: 5000
+max_particles: 1000
 #Maximum error between the true distribution and the estimated distribution. 
 kld_err: 0.05
 #Upper standard normal quantile for (1 - p), where p is the probability that the error on the estimated distrubition will be less than kld_err. 
 kld_z: 0.95
 #Translational movement required before performing a filter update. (in meters)
-update_min_d: 0.01
+update_min_d: 0.1
 #Rotational movement required before performing a filter update.(in  π/value radians)
-update_min_a: 0.01
+update_min_a: 0.08
 #Number of filter updates required before resampling. 
 resample_interval: 1
 #Time in seconds with which to post-date the transform that is published, to indicate that this transform is valid into the future. 
@@ -59,7 +59,7 @@ laser_min_range: -1.0
 #Maximum scan range to be considered; -1.0 will cause the laser's reported maximum range to be used. 
 laser_max_range: -1.0
 #How many evenly-spaced beams in each scan to be used when updating the filter. 
-laser_max_beams: 50
+laser_max_beams: 30
 #Mixture weight for the z_hit part of the model. 
 laser_z_hit: 0.8
 # Mixture weight for the z_short part of the model. 
