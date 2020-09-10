@@ -8,7 +8,7 @@
 	<include file="$(find triskar_navigation)/launch/amcl.launch" />
 
 	<!--Run Move_Base-->
-        <include file="$(find triskar_navigation)/launch/move_base.launch" />
+        <!--<include file="$(find triskar_navigation)/launch/move_base.launch" />-->
 	
 	
 </launch>
