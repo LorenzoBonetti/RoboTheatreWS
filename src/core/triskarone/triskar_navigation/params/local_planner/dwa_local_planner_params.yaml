@@ -44,7 +44,7 @@ DWAPlannerROS:
 #Goal Tolerance Parameters
 
 #The tolerance in radians for the controller in yaw/rotation when achieving its goal 
- yaw_goal_tolerance: 0.2
+ yaw_goal_tolerance: 0.3
 
 #The tolerance in meters for the controller in the x & y distance when achieving a goal 
  xy_goal_tolerance: 0.50
@@ -57,19 +57,19 @@ DWAPlannerROS:
 #Forward Simulation Parameters
 
 #The amount of time to forward-simulate trajectories in seconds 
- sim_time: 2.0
+ sim_time: 3.0
 
 #The step size, in meters, to take between points on a given trajectory 
  sim_granularity: 0.025
 
 #The number of samples to use when exploring the x velocity space 
- vx_samples: 3
+ vx_samples: 10
 
 #The number of samples to use when exploring the y velocity space 
- vy_samples: 3
+ vy_samples: 10
 
 #The number of samples to use when exploring the theta velocity space   
- vth_samples: 10
+ vth_samples: 20
 
 #The frequency at which this controller will be called in Hz. Uses searchParam to read the parameter from parent namespaces if not set in the namespace of the controller. For use with move_base, this means that you only need to set its "controller_frequency" parameter and can safely leave this one unset.
 #controller_frequency: 10.0

@@ -4,7 +4,7 @@
 #Overall filter parameters
 
 # Minimum allowed number of particles. 
-min_particles: 200
+min_particles: 100
 # Maximum allowed number of particles. 
 max_particles: 1000
 #Maximum error between the true distribution and the estimated distribution. 
@@ -12,9 +12,9 @@ kld_err: 0.05
 #Upper standard normal quantile for (1 - p), where p is the probability that the error on the estimated distrubition will be less than kld_err. 
 kld_z: 0.95
 #Translational movement required before performing a filter update. (in meters)
-update_min_d: 0.1
+update_min_d: 0.05
 #Rotational movement required before performing a filter update.(in  π/value radians)
-update_min_a: 0.08
+update_min_a: 0.05
 #Number of filter updates required before resampling. 
 resample_interval: 1
 #Time in seconds with which to post-date the transform that is published, to indicate that this transform is valid into the future. 

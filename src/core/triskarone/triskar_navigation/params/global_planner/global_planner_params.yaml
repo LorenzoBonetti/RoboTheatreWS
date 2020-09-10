@@ -14,7 +14,7 @@ GlobalPlanner:
  use_dijkstra: true
 
 #If true, use the quadratic approximation of the potential. Otherwise, use a simpler calculation. 
- use_quadratic: true
+ use_quadratic: false
 
 #If true, create a path that follows the grid boundaries. Otherwise, use a gradient descent method. 
  use_grid_path: false
