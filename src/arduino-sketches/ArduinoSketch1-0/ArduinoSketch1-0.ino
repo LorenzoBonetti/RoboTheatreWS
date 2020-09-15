@@ -1,6 +1,9 @@
 /*
  * Sketch for Arduino
  * Lorenzo Bonetti
+ * LEFT SERVO: CLOSED AT 0  OPEN AT 180
+ * RIGHT SERVO CLOSED AT 180 OPEN AT 0
+ * BACK SERVO CLOSED AT 0 OPEN AT 180
  */
 #include <Arduino.h>
 #include <ros.h>
@@ -16,10 +19,11 @@
 #define BAT_PROBE_LED 8
 #define BATTERY_PIN A2
 
-#define BOW 0
-#define BOW_RIGHT 1
-#define BOW_LEFT 2
-#define BOW_BACK 3
+#define NORMAL 0
+#define BOW 1
+#define BOW_RIGHT 2
+#define BOW_LEFT 3
+#define BOW_BACK 4
 
 
 
@@ -62,6 +66,11 @@ void setup()
   front_right_servo.attach(FRONT_RIGHT_SERVO_PIN);
   front_left_servo.attach(FRONT_LEFT_SERVO_PIN);
   back_servo.attach(BACK_SERVO_PIN);
+  delay(250);
+
+  front_right_servo.write(0);//OPEN
+  front_left_servo.write(180);//OPEN
+  back_servo.write(180);//OPEN
 }
 
 void loop()
@@ -86,19 +95,35 @@ void loop()
 void servoCallback (const std_msgs::Int32& msg){
   int value=msg.data;
   switch(value){
+    case NORMAL:
+          front_right_servo.write(0);//OPEN
+          front_left_servo.write(180);//OPEN
+          back_servo.write(180);//OPEN
+          response.data="bow";
+          break;
     case BOW:
-          front_right_servo.write(0);
-          front_left_servo.write(0);
+          front_right_servo.write(180);//CLOSED
+          front_left_servo.write(0);//CLOSED
+          back_servo.write(180);//OPEN
           response.data="bow";
           break;
     case BOW_RIGHT:
           response.data="bow_right";
+          front_right_servo.write(180);//CLOSED
+          front_left_servo.write(180);//OPEN
+          back_servo.write(180);//OPEN
           break;
     case BOW_LEFT:
           response.data="bow_left";
+          front_right_servo.write(0);//OPEN
+          front_left_servo.write(0);//CLOSED
+          back_servo.write(180);//OPEN
           break;
     case BOW_BACK:
           response.data="bow_back";
+          front_right_servo.write(0);//OPEN
+          front_left_servo.write(180);//OPEN
+          back_servo.write(0);//CLOSED
           break;
     default:
           response.data="invalid_command";

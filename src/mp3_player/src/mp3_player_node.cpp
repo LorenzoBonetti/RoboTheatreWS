@@ -52,7 +52,7 @@ void Mp3Player::Prepare(void)
 
     Subscriber = Handle.subscribe("Mp3Player/audio_file", 1000, &Mp3Player::MessageCallback, this);
 
-    Publisher = Handle.advertise<std_msgs::String>("name_of_the_topic", 1000);
+    Publisher = Handle.advertise<std_msgs::String>("Mp3Player/status", 1000);
 
 
     ROS_INFO("Node %s ready to run.", ros::this_node::getName().c_str());
@@ -86,7 +86,7 @@ void Mp3Player::MessageCallback(const std_msgs::String::ConstPtr& msg)
 {
     std::string command;
     std::stringstream ss;
-    ss << "canberra-gtk-play -f " <<"/home/lorenzo/RoboTheatreWS/src/mp3_player/audio_files/"<< msg->data;
+    ss << "canberra-gtk-play -f " <<"~/RoboTheatreWS/src/mp3_player/audio_files/"<< msg->data;
     command=ss.str();
 
     int n=command.length();

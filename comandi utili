@@ -3,3 +3,7 @@ Aprire CLion: sh /home/lorenzo/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/19
 Pubblicare messaggio wav:  rostopic pub /Mp3Player/audio_file std_msgs/String "blade_runner.wav"
 
 
+Pubblicare messaggio wav:  rostopic pub /Mp3Player/audio_file std_msgs/String "blade_runner.wav"
+
+Arduino: rosrun rosserial_python serial_node.py /dev/ttyACM0
+
