@@ -1,2 +1,5 @@
 Aprire CLion: sh /home/lorenzo/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/193.6494.38/bin/clion.sh
 
+Pubblicare messaggio wav:  rostopic pub /Mp3Player/audio_file std_msgs/String "blade_runner.wav"
+
+
