@@ -13,6 +13,10 @@
 	<rosparam file="$(find triskar_navigation)/params/local_planner/dwa_local_planner_params.yaml" command="load" />
 	<!--<rosparam file="$(find triskar_navigation)/params/local_planner/base_local_planner_params.yaml" command="load" />-->
 
+	<!--Load recovery behaviours parameters-->
+	<rosparam file="$(find triskar_navigation)/params/local_planner/clear_costmaps_params.yaml" command="load" />
+	<rosparam file="$(find triskar_navigation)/params/local_planner/rotate_recovery_params.yaml" command="load" />
+
 	<!--Load costmaps  parameters-->
 	<rosparam file="$(find triskar_navigation)/params/costmaps/costmap_common_params.yaml" command="load" ns="local_costmap"/>
         <rosparam file="$(find triskar_navigation)/params/costmaps/costmap_common_params.yaml" command="load" ns="global_costmap"/>
