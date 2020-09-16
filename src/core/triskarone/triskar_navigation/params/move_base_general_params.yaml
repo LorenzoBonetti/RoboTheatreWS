@@ -14,10 +14,10 @@ recovery_behaviors: [{name: conservative_reset, type: clear_costmap_recovery/Cle
 controller_frequency: 10.0
 
 #How long the planner will wait in seconds in an attempt to find a valid plan before space-clearing operations are performed. 
-planner_patience: 2.0 #default value
+planner_patience: 5.0 #default value
 
 #How long the controller will wait in seconds without receiving a valid control before space-clearing operations are performed. 
-controller_patience: 2.0 
+controller_patience: 3.0 
 
 #The distance away from the robot in meters beyond which obstacles will be cleared from the costmap when attempting to clear space in the map. Note, this parameter is only used when the default recovery behaviors are used for move_base.    
 conservative_reset_dist: 0.01

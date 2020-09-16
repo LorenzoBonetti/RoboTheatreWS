@@ -1,0 +1,5 @@
+ClearCostmapRecovery:
+#The length of the side of a square centered on the robot pose, outside which obstacles will be removed from the costmaps when they are reverted to the static map. 
+ reset_distance: 0.5
+
+   

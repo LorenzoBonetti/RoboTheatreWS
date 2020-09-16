@@ -1,0 +1,11 @@
+#Reference at: http://wiki.ros.org/rotate_recovery
+RotateRecovery:
+#The distance in radians between checks for obstacles when checking if an in-place rotation is safe. Defaults to 1 degree. 
+ sim_granularity: 0.017
+
+#The frequency in HZ at which to send velocity commands to the mobile base. 
+ frequency: 20.0
+
+
+
+
