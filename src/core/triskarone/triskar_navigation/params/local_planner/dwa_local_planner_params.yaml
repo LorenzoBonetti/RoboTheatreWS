@@ -16,25 +16,25 @@ DWAPlannerROS:
  acc_lim_th: 3.2
 
 #The absolute value of the maximum translational velocity for the robot in m/s 
- max_vel_trans: 0.4
+ max_vel_trans: 0.55
 
 #The absolute value of the minimum translational velocity for the robot in m/s 
  min_vel_trans: 0.1
    
 #The maximum forward velocity allowed for thebase in meters/sec 
- max_vel_x: 0.75
+ max_vel_x: 1.5
 
 #The minimum forward velocity allowed for the base in meters/sec. It is useful to specify this to guarantee that velocity commands sent to a mobile base are high enough to allow the base to overcome friction. 
  min_vel_x: 0.1
 
 #The maximum y velocity for the robot in m/s 
- max_vel_y: 0.75
+ max_vel_y: 1.5
 
 #The minimum y velocity for the robot in m/s  
  min_vel_y: 0.1
 
 #The maximum rotational velocity allowed for the base in radians/sec 
- max_vel_theta: 0.5
+ max_vel_theta: 1.0
 
 #The minimum rotational velocity allowed for the base in radians/sec    
  min_vel_theta: 0.1
@@ -86,10 +86,10 @@ DWAPlannerROS:
  path_distance_bias: 32.0
 
 #The weighting for how much the controller should attempt to reach its local goal, also controls speed 
- goal_distance_bias: 24.0
+ goal_distance_bias: 20.0
 
 #The weighting for how much the controller should attempt to avoid obstacles 
- occdist_scale: 0.01
+ occdist_scale: 0.02
 
 #The distance from the center point of the robot to place an additional scoring point, in meters
  forward_point_distance: 0.325
