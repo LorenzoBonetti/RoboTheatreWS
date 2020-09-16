@@ -7,13 +7,13 @@
 #Robot Configuration Parameters
 DWAPlannerROS:
 #The x acceleration limit of the robot in meters/sec^2 
- acc_lim_x: 0.45
+ acc_lim_x: 2.5
 
 #The y acceleration limit of the robot in meters/sec^2 
- acc_lim_y: 0.45
+ acc_lim_y: 2.5
 
 #The rotational acceleration limit of the robot in radians/sec^2 
- acc_lim_th: 0.45
+ acc_lim_th: 3.2
 
 #The absolute value of the maximum translational velocity for the robot in m/s 
  max_vel_trans: 0.4
@@ -57,7 +57,7 @@ DWAPlannerROS:
 #Forward Simulation Parameters
 
 #The amount of time to forward-simulate trajectories in seconds 
- sim_time: 3.0
+ sim_time: 2.0
 
 #The step size, in meters, to take between points on a given trajectory 
  sim_granularity: 0.025
@@ -89,7 +89,7 @@ DWAPlannerROS:
  goal_distance_bias: 24.0
 
 #The weighting for how much the controller should attempt to avoid obstacles 
- occdist_scale: 0.1
+ occdist_scale: 0.01
 
 #The distance from the center point of the robot to place an additional scoring point, in meters
  forward_point_distance: 0.325
