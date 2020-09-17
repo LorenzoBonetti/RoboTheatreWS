@@ -86,7 +86,7 @@ void Mp3Player::MessageCallback(const std_msgs::String::ConstPtr& msg)
 {
     std::string command;
     std::stringstream ss;
-    ss << "canberra-gtk-play -f " <<"~/RoboTheatreWS/src/mp3_player/audio_files/"<< msg->data;
+    ss << "canberra-gtk-play -f " <<"~/RoboTheatreWS/src/audio_player/audio_files/"<< msg->data;
     command=ss.str();
 
     int n=command.length();
@@ -100,18 +100,6 @@ void Mp3Player::MessageCallback(const std_msgs::String::ConstPtr& msg)
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, NAME_OF_THIS_NODE);
-    /* NOTE: the call to ros::init should be the FIRST statement of
-     * the 'main' block. You get compilation errors if you use any
-     * part of the ROS system before that statement. */
-
-    /* NOTE. If this node is launched with rosrun, a new node
-     * gets added to the running ROS system, the name of which is
-     * the string assigned to NAME_OF_THIS_NODE. If the node is
-     * launched with roslaunch, it is possible that this choice of
-     * name has been overridden, and that the newly added node takes
-     * different name than NAME_OF_THIS_NODE. This happens when the
-     * <node> statement in the launchfile used to launch the node
-     * specifies a name for the node (which is not mandatory). */
 
     Mp3Player MyNode;
 
