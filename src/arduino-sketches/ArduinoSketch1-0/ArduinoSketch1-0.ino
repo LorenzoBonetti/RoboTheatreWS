@@ -15,9 +15,9 @@
 #define FRONT_RIGHT_SERVO_PIN 9
 #define FRONT_LEFT_SERVO_PIN 10
 #define BACK_SERVO_PIN 11
-#define BUZZER_PIN  6
-#define BAT_PROBE_LED 8
-#define BATTERY_PIN A2
+#define BUZZER_PIN  8
+#define BAT_PROBE_LED 13
+#define BATTERY_PIN A0
 
 #define NORMAL 0
 #define BOW 1
@@ -25,15 +25,13 @@
 #define BOW_LEFT 3
 #define BOW_BACK 4
 
+#define BAT_CHK_TIMEOUT_TRH 10000     // publishes battery data every 10 secs.
+#define BEEPING_INTERVAL 5000
+#define LOW_BATTERY_VOLTAGE 21
+#define VOLTAGE_TRH 3.70  //3.70 correspond to battery level at 21V.
 
-
-#define OFF 0
-#define ON 1
-#define BAT_CHK_TIMEOUT_TRH 3000     // publishes battery data every 3 secs.
-#define BEEPING_INTERVAL 400
-#define LOW_BATTERY_VOLTAGE 22
-#define VOLTAGE_TRH 1.947   // A voltage less then 1.77 correspond to battery 
-                            // level at 20V, 1.947 correspond to battery level at 22V.
+#define NOTE_TO_PLAY 262 //corresponds to C4
+#define NOTE_DURATION 1000
 
 void servoCallback (const std_msgs::Int32&);
 
@@ -48,15 +46,15 @@ Servo front_right_servo;
 Servo front_left_servo;
 Servo back_servo;
 
-unsigned long last_battery_check_time;
-unsigned long last_battery_beep_time;
-unsigned long last_acc_time;          // last acc sample time that we saw. 
-int should_beep;
+unsigned long last_battery_check_time=0;
+unsigned long last_battery_beep_time=0;
+bool should_beep;
 
 
 void setup()
 {
-  //nh.getHardware()->setBaud(115200);
+  pinMode(BAT_PROBE_LED,OUTPUT);
+  nh.getHardware()->setBaud(115200);
   nh.initNode();
   delay(1000);
   nh.advertise(bat_pub);
@@ -82,13 +80,16 @@ void loop()
         if (voltage != 0){
           digitalWrite(BAT_PROBE_LED, HIGH);
         }
+        else{
+          digitalWrite(BAT_PROBE_LED, LOW);
+        }
         bat_msg.data = voltage;
         bat_pub.publish(&bat_msg);
     }
     
     nh.spinOnce();
     delay(3);
-    digitalWrite(BAT_PROBE_LED, LOW);
+
 }
 
 
@@ -148,20 +149,16 @@ float checkBatteryLevel(){
   if (voltage <= LOW_BATTERY_VOLTAGE && voltage >= (LOW_BATTERY_VOLTAGE/2)){
     if ((millis() - last_battery_beep_time) > BEEPING_INTERVAL){
       last_battery_beep_time = millis();
-      if (should_beep == OFF) {
-        should_beep = ON;
-        beep(200);
+      if (!should_beep) {
+        should_beep = true;
+        tone(BUZZER_PIN, NOTE_TO_PLAY,NOTE_DURATION);
       } else {
-        should_beep = OFF;
-        beep(0);
+        should_beep = false;
+        noTone(BUZZER_PIN);
       }
     }
   }else{
     digitalWrite(BUZZER_PIN, LOW);
   }
   return voltage;
-}
-
-void beep(unsigned char delayms){
-  analogWrite(BUZZER_PIN, delayms);      // Almost any value can be used except 0 and 255
 }
