@@ -12,9 +12,9 @@
 #include <std_msgs/Int8.h>
 #include <Servo.h>
 
-#define FRONT_RIGHT_SERVO_PIN 9
-#define FRONT_LEFT_SERVO_PIN 10
-#define BACK_SERVO_PIN 11
+#define FRONT_RIGHT_SERVO_PIN 13
+#define FRONT_LEFT_SERVO_PIN 11
+#define BACK_SERVO_PIN 12
 #define BUZZER_PIN  8
 #define BAT_PROBE_LED 13
 #define BATTERY_PIN A0
@@ -54,7 +54,7 @@ bool should_beep;
 void setup()
 {
   pinMode(BAT_PROBE_LED,OUTPUT);
-  nh.getHardware()->setBaud(115200);
+  //nh.getHardware()->setBaud(115200);
   nh.initNode();
   delay(1000);
   nh.advertise(bat_pub);
