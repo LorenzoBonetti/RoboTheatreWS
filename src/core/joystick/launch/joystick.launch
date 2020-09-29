@@ -4,14 +4,6 @@
 
 <launch>
 
-	<!--<param name="linear_scale" value="0.75" />
-	<param name="angular_scale" value="1.5" />
-	<param name="axis_deadman" value="5"/>
-	<param name="linear_x_axis" value="1"/>
-	<param name="linear_y_axis" value="0"/>
-	<param name="angular_axis" value="2"/>
-	<param name="max_linear_scale" value="2"/>
-	<param name="max_angular_scale" value="3"/>-->
 	<rosparam file="$(find joystick)/params/joystick_params.yaml" command="load" />
 	
 	<node pkg="joy" type="joy_node" name="joy">

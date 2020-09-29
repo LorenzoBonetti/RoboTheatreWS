@@ -12,7 +12,7 @@ class AudioPlayer
 {
 private:
     ros::NodeHandle Handle;
-    //ros::ServiceServer Service;
+    ros::ServiceServer Service;
 
     std::string audio_folder_path;
 
@@ -31,11 +31,9 @@ public:
 //-----------------------------------------------------------------
 
 void AudioPlayer::Prepare(void) {
-    ROS_INFO("CIAO");
     std::string FullParamName="audio_folder_path";
     //FullParamName = Handle.getNamespace()+"/audio_folder_path";
-    ROS_INFO("QUA");
-    //Service = Handle.advertiseService("audio_player_service", &AudioPlayer::PlayAudio, this);
+    Service = Handle.advertiseService("audio_player_service", &AudioPlayer::PlayAudio, this);
     ROS_INFO("ROS service %s available (provided by node %s).", "audio_player_service",
              ros::this_node::getName().c_str());
 
@@ -91,12 +89,10 @@ bool AudioPlayer::PlayAudio(audio_player::audio_player::Request  &Req,  audio_pl
 
 
 int main(int argc, char **argv) {
+
     ros::init(argc, argv, NAME_OF_THIS_NODE);
-    ROS_INFO("UEEEE");
     AudioPlayer MyNode;
-    ROS_INFO("CIAAAAO");
     MyNode.Prepare();
-    ROS_INFO("QUA");
     MyNode.RunContinuously();
 
     MyNode.Shutdown();

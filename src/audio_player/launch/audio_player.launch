@@ -1,0 +1,7 @@
+<launch>
+	<!-- Load Parameters-->
+	<rosparam file="$(find audio_player)/params/audio_player_params.yaml" command="load" />
+	<!--Launch audio player node-->
+	<node pkg="audio_player" type="audio_player_node" name="audio_player_node" output="screen" respawn="false"> </node>
+
+</launch>

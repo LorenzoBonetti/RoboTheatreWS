@@ -6,3 +6,4 @@ Arduino: rosrun rosserial_python serial_node.py /dev/ttyACM0
 
 rostopic pub /Arduino/servo std_msgs/Int32 1
 
+Chiamata ros service :rosservice call /audio_player_service blade_runner.wav
