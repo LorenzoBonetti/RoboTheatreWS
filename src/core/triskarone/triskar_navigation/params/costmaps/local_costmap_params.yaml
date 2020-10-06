@@ -6,7 +6,7 @@ local_costmap:
   #The frequency in Hz for the map to be updated. 
  update_frequency: 10.0
   #The frequency in Hz for the map to be publish display information. 
- publish_frequency: 10.0
+ publish_frequency: 2.0
   #The "static_map" parameter determines whether or not the costmap should initialize itself based on a map served by the map_server. If you aren't using an existing map or map server, set the static_map  parameter to false. 
  static_map: false
   #Whether or not to use a rolling window version of the costmap. If the static_map parameter is set to true, this parameter must be set to false. 

@@ -57,7 +57,7 @@ DWAPlannerROS:
 #Forward Simulation Parameters
 
 #The amount of time to forward-simulate trajectories in seconds 
- sim_time: 2.0
+ sim_time: 1.0
 
 #The step size, in meters, to take between points on a given trajectory 
  sim_granularity: 0.025
