@@ -12,7 +12,7 @@
 #include <std_msgs/Int8.h>
 #include <Servo.h>
 
-#define FRONT_RIGHT_SERVO_PIN 13
+#define FRONT_RIGHT_SERVO_PIN 10
 #define FRONT_LEFT_SERVO_PIN 11
 #define BACK_SERVO_PIN 12
 #define BUZZER_PIN  8
