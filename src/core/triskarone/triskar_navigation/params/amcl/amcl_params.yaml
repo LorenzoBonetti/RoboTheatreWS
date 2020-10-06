@@ -85,15 +85,15 @@ laser_model_type: "likelihood_field"
 #Robot is omnidirectional, omni-corrected is used since it has some bugs corrected 
 odom_model_type: "omni-corrected"
 #Specifies the expected noise in odometry's rotation estimate from the rotational component of the robot's motion. 
-odom_alpha1: 1
+odom_alpha1: 0.2
 #Specifies the expected noise in odometry's rotation estimate from translational component of the robot's motion. 
-odom_alpha2: 1
+odom_alpha2: 0.5
 #Specifies the expected noise in odometry's translation estimate from the translational component of the robot's motion. 
-odom_alpha3: 1
+odom_alpha3: 0.5
 #Specifies the expected noise in odometry's translation estimate from the rotational component of the robot's motion. 
-odom_alpha4: 1
+odom_alpha4: 0.5
 #Translation-related noise parameter.
-odom_alpha5: 1
+odom_alpha5: 0.8
 #Which frame to use for odometry. 
 odom_frame_id: "odom"
 #Which frame to use for the robot base 

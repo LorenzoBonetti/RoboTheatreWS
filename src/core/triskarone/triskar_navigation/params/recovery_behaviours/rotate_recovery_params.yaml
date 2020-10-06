@@ -4,7 +4,7 @@ RotateRecovery:
  sim_granularity: 0.017
 
 #The frequency in HZ at which to send velocity commands to the mobile base. 
- frequency: 20.0
+ frequency: 10.0
 
 
 

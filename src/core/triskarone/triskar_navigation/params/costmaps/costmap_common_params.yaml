@@ -9,17 +9,20 @@
 
 #############################################################################################################################################################################################################
 # footprint is the size of the robot.
-footprint: [
-  [0.1175, -0.3137],  
-  [-0.3304, -0.0551],
-  [-0.3304, 0.05507],
-  [0.1175, 0.3137],
-  [0.2130, 0.2586],
-  [0.2130, -0.2586]]
+#footprint: [
+# [0.1175, -0.3137],  
+#  [-0.3304, -0.0551],
+# [-0.3304, 0.05507],
+# [0.1175, 0.3137],
+# [0.2130, 0.2586],
+# [0.2130, -0.2586]]
+
+#robot is considered circular
+robot_radius: 0.35
 #The inflation radius should be set to the maximum distance from obstacles at which a cost should be incurred. 
-inflation_radius: 0.3
+inflation_radius: 0.05
 # A scaling factor to apply to cost values during inflation. The cost function is computed as follows for all cells in the costmap further than the inscribed radius distance and closer than the inflation radius distance away from an actual obstacle: exp(-1.0 * cost_scaling_factor * (distance_from_obstacle - inscribed_radius)) * (costmap_2d::INSCRIBED_INFLATED_OBSTACLE - 1), where costmap_2d::INSCRIBED_INFLATED_OBSTACLE is currently 254. NOTE: since the cost_scaling_factor is multiplied by a negative in the formula, increasing the factor will decrease the resulting cost values. 
-cost_scaling_factor: 10.0
+cost_scaling_factor: 5.0
 
 #############################################################################################################################################################################################################
 #Reference at http://wiki.ros.org/costmap_2d/hydro/obstacles

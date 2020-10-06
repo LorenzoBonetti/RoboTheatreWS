@@ -1,11 +1,11 @@
 #Parameters for global_planner, NB: if you want to use it set the parameter base_global_planner: "global_planner/GlobalPlanner" in the file move_base_general_params. Reference at: http://wiki.ros.org/global_planner
 GlobalPlanner:
 
-#Specifies whether or not to allow navfn to create plans that traverse unknown space. Decided to not allow to go to unknown space
+#Specifies whether or not to allow global_planner to create plans that traverse unknown space. Decided to not allow to go to unknown space
  allow_unknown: false 
 
 #A tolerance on the goal point for the planner. Global Planner will attempt to create a plan that is as close to the specified goal as possible but no further than default_tolerance away.
- default_tolerance: 0.0 #default value TBD resize this
+ default_tolerance: 0.2 #default value TBD resize this
 
 #Specifies whether or not to visualize the potential area computed by navfn via a PointCloud2.
  visualize_potential: false
@@ -14,7 +14,7 @@ GlobalPlanner:
  use_dijkstra: true
 
 #If true, use the quadratic approximation of the potential. Otherwise, use a simpler calculation. 
- use_quadratic: false
+ use_quadratic: true
 
 #If true, create a path that follows the grid boundaries. Otherwise, use a gradient descent method. 
  use_grid_path: false
