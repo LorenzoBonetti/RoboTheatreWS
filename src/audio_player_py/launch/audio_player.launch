@@ -1,0 +1,8 @@
+<launch>
+	<!-- Load Parameters-->
+	<rosparam file="$(find audio_player_py)/params/audio_player_params.yaml" command="load" />
+	<!--Launch audio player node-->
+	<node pkg="audio_player_py" type="audio_player_service.py" name="audio_player_service" output="screen"> </node>
+	
+
+</launch>

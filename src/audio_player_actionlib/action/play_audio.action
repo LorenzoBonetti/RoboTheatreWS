@@ -1,0 +1,8 @@
+#goal definition
+string filename
+---
+#result definition
+bool response
+---
+#feedback
+bool hasFinished
