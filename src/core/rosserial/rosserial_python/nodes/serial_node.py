@@ -44,7 +44,6 @@ import multiprocessing
 import sys
 
 if __name__=="__main__":
-
     rospy.init_node("serial_node")
     rospy.loginfo("ROS Serial Python Node")
 
@@ -95,4 +94,8 @@ if __name__=="__main__":
             except OSError:
                 sleep(1.0)
                 continue
-
+            except:
+                rospy.logwarn("Unexpected Error: %s", sys.exc_info()[0])
+                client.port.close()
+                sleep(1.0)
+                continue

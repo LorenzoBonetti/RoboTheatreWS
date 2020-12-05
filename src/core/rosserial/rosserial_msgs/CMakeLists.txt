@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.7.2)
 project(rosserial_msgs)
 
 find_package(catkin REQUIRED COMPONENTS
@@ -11,9 +11,7 @@ add_message_files(FILES
 )
 
 add_service_files(FILES
-  RequestMessageInfo.srv
   RequestParam.srv
-  RequestServiceInfo.srv
 )
 
 generate_messages()

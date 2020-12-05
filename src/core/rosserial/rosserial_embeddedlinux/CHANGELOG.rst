@@ -2,6 +2,19 @@
 Changelog for package rosserial_embeddedlinux
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.9.1 (2020-09-09)
+------------------
+
+0.9.0 (2020-08-25)
+------------------
+* Use os.path.join for path concatenation (`#495 <https://github.com/ros-drivers/rosserial/issues/495>`_)
+* Bump minimum CMake version to 3.7.2 (Melodic).
+* Fix py3 print usages and trailing whitespaces (`#469 <https://github.com/ros-drivers/rosserial/issues/469>`_)
+* Contributors: Hermann von Kleist, Mike Purvis, acxz
+
+0.8.0 (2018-10-11)
+------------------
+
 0.7.7 (2017-11-29)
 ------------------
 * Copy src/examples to install dir so make_libraries.py doesn't fail (`#336 <https://github.com/ros-drivers/rosserial/issues/336>`_)
