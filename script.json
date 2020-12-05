@@ -1,0 +1,11 @@
+{
+  "section": {
+    "trigger": ["after_precedent", "after_speech", "after_time", "after_command"],
+    "actions": {
+      "movement_move_base": ["goal","speed"],
+      "scripted_movement": ["directions"],
+      "move_body": ["movement_type","speed"],
+      "move_eyes": ["movement_type","speed"]
+    }
+  }
+}
