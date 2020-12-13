@@ -7,7 +7,7 @@ import wave
 import time
 import os
 
-from audio_player_actionlib.msg import *
+from triskarone_msgs.msg import *
 
 
 class AudioPlayerAction(object):
