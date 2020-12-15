@@ -5,9 +5,9 @@
 	<arg name="laser" default="1" />
 	
 	<!-- rosserial launch file for nova core -->
-	<include file="$(find rosserial_core)/launch/serial_node.launch">
-		<arg name="port" value="/dev/novaCore" />
-	</include>
+	<include file="$(find rosserial_core)/launch/serial_node.launch"> 
+		<arg name="port" value="/dev/novaCore" />   
+	</include>  
 
 	<!-- Joystick node -->
 	<include file="$(find joystick)/launch/joystick.launch"/>
