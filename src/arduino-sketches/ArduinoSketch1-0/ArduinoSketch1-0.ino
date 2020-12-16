@@ -34,6 +34,7 @@
 #define NOTE_DURATION 1000
 
 void servoCallback (const std_msgs::Int32&);
+void eyesCallback(const std_msgs::Int8MultiArray);
 
 ros::NodeHandle  nh;
 std_msgs::String response;
