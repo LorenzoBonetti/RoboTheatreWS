@@ -34,14 +34,6 @@
 
 class Eyes_manager{
   private:
-    int high_r_position;
-    int low_r_position;
-    int high_l_position;
-    int low_l_position;
-    int low_r_servo_pin;
-    int high_r_servo_pin;
-    int low_l_servo_pin;
-    int high_l_servo_pin;
     Servo low_r;
     Servo high_r;
     Servo low_l;
@@ -50,7 +42,7 @@ class Eyes_manager{
     void move_eye_by_degree(Servo,Servo, int, int);
   public:
     Eyes_manager( int low_r_servo_pin,int high_r_servo_pin,int low_l_servo_pin,int high_l_servo_pin);
-    void move_eyes_in_position(int Speed, int r_high_final_position, int r_low_final_position, int l_high_final_position, int l_low_final_position){
+    void move_eyes_in_position(int Speed, int r_high_final_position, int r_low_final_position, int l_high_final_position, int l_low_final_position);
 
-}
+};
 #endif
