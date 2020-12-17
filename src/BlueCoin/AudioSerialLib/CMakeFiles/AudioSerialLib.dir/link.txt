@@ -1,0 +1,2 @@
+/usr/bin/ar qc libAudioSerialLib.a  CMakeFiles/AudioSerialLib.dir/AudioModuleSerialLib.cpp.o
+/usr/bin/ranlib libAudioSerialLib.a

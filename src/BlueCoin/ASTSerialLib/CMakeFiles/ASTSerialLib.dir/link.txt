@@ -1,0 +1,2 @@
+/usr/bin/ar qc libASTSerialLib.a  CMakeFiles/ASTSerialLib.dir/Source/ASTSerialLib.cpp.o CMakeFiles/ASTSerialLib.dir/Source/CComPort_noQt.cpp.o CMakeFiles/ASTSerialLib.dir/Source/CCronometer.cpp.o CMakeFiles/ASTSerialLib.dir/Source/serial_protocol.c.o CMakeFiles/ASTSerialLib.dir/Source/SerialComm.cpp.o
+/usr/bin/ranlib libASTSerialLib.a

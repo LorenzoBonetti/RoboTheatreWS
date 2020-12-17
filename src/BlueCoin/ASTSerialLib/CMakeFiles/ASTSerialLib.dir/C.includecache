@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lorenzo/CLionProjects/BlueCOin/ASTSerialLib/Include/serial_protocol.h
+stdint.h
+/home/lorenzo/CLionProjects/BlueCOin/ASTSerialLib/Include/stdint.h
+
+/home/lorenzo/CLionProjects/BlueCOin/ASTSerialLib/Source/serial_protocol.c
+../Include/serial_protocol.h
+/home/lorenzo/CLionProjects/BlueCOin/ASTSerialLib/Include/serial_protocol.h
+
