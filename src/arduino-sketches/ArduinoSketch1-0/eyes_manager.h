@@ -13,7 +13,7 @@ class Eyes_manager{
 
     void move_eye_by_degree(Servo,Servo, int, int);
   public:
-    Eyes_manager( int low_r_servo_pin,int high_r_servo_pin,int low_l_servo_pin,int high_l_servo_pin);
+    Eyes_manager();
     void move_eyes_in_position(int Speed, int r_high_final_position, int r_low_final_position, int l_high_final_position, int l_low_final_position);
 
 };

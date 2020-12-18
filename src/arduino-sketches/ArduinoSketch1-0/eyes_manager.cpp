@@ -1,10 +1,15 @@
 #include "eyes_manager.h"
 
-Eyes_manager::Eyes_manager( int low_r_servo_pin,int high_r_servo_pin,int low_l_servo_pin,int high_l_servo_pin){
-  low_r.attach(low_r_servo_pin);
-  high_r.attach(high_r_servo_pin);// attaches the servo on pin 9 to the servo object
-  low_l.attach(low_l_servo_pin);
-  high_l.attach(high_l_servo_pin);// attaches the servo on pin 9 to the servo object
+Eyes_manager::Eyes_manager(){
+  low_r.attach(R_LOW_SERVO_PIN);
+  high_r.attach(R_HIGH_SERVO_PIN);
+  low_l.attach(L_LOW_SERVO_PIN);
+  high_l.attach(L_HIGH_SERVO_PIN);
+
+  low_r.write(STANDARD_LOW_R);
+  high_r.write(STANDARD_HIGH_R);
+  low_l.write(STANDARD_LOW_L);
+  high_l.write(STANDARD_HIGH_L);
 }
 
 
