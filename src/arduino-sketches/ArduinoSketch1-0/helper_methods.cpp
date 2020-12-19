@@ -13,3 +13,10 @@ int move_servo_by_one_degree(Servo&servo, int final_angle){
 void writeServo(Servo &theServo, int angle){
   theServo.write(angle);
 }
+
+// Reads voltage level at battery pin (analog). This
+// voltage comes from the voltage divider circuit used to monitor the battery.
+float getVoltageLevel(int battery_pin, int low_battery_voltage, int voltage_th){
+  float voltage = (analogRead(battery_pin) * 5.015) / 1024.0;
+  return (low_battery_voltage*voltage)/voltage_th;  // Converted voltage (approx).
+}

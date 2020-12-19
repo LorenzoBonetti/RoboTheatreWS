@@ -17,20 +17,18 @@
 
 //Body Pins
 
-#define FRONT_RIGHT_SERVO_PIN 10
-#define FRONT_LEFT_SERVO_PIN 11
-#define BACK_SERVO_PIN 12
-
-
-#define BUZZER_PIN  8
-#define BAT_PROBE_LED 13
-#define BATTERY_PIN A0
+#define BODY_RIGH_SERVO_PIN 10
+#define BODY_LEFT_SERVO_PIN 11
+#define BODY_BACK_SERVO_PIN 12
 
 //Hardware Parts defines
 
+
+#define SPEED_MULTIPLIER 10
+
 //battery defines
 
-#define BAT_CHK_TIMEOUT_TRH 10000     // publishes battery data every 10 secs.
+#define BAT_CHK_TIMEOUT_TRH 60000     // publishes battery data every 60 secs.
 #define BEEPING_INTERVAL 5000
 #define LOW_BATTERY_VOLTAGE 21
 #define VOLTAGE_TRH 3.70  //3.70 correspond to battery level at 21V.
@@ -54,9 +52,6 @@
 #define BOW_BACK 4
 
 //eyes defines
-
-#define SPEED_MULTIPLIER 10
-
 //right eye angles
 #define STANDARD_LOW_R 70
 #define STANDARD_HIGH_R 70
@@ -86,9 +81,5 @@
 #define EYES_LEFT 2
 #define EYES_UP 3
 #define EYES_DOWN 4
-
-
-
-
 
 #endif
