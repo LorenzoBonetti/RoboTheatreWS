@@ -43,6 +43,7 @@
 #define FL_OPEN 180
 #define FL_CLOSE 0
 #define B_OPEN 180
+#define B_MIDDLE 120
 #define B_CLOSE 0
 
 #define NORMAL 0
@@ -65,8 +66,8 @@
 #define LOOK_UP_HIGH_R 40
 
 //left eye angles
-#define STANDARD_LOW_L 90
-#define STANDARD_HIGH_L 115
+#define STANDARD_LOW_L 70
+#define STANDARD_HIGH_L 90
 #define LOOK_RIGH_HIGH_L 180
 #define LOOK_RIGH_LOW_L  110
 #define LOOK_LEFT_HIGH_L 90
