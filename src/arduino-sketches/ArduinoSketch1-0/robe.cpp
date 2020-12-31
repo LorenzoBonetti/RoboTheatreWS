@@ -1,9 +1,7 @@
 /*
 #include <Arduino.h>
 #include <ros.h>
-#include <std_msgs/String.h>
 #include <std_msgs/Int8MultiArray.h>
-#include <std_msgs/Int8.h>
 #include <Servo.h>
 #include "defines.h"
 #include "helper_methods.h"
@@ -17,9 +15,6 @@ Servo low_r, high_r, low_l, high_l;
 Servo body_right, body_left, body_back;
 
 ros::NodeHandle  nh;
-std_msgs::String response;
-std_msgs::Int8 bat_msg;
-ros::Publisher bat_pub("arduino/battery", &bat_msg);
 ros::Subscriber<std_msgs::Int8MultiArray> body_sub("arduino/body", body_callback);
 ros::Subscriber<std_msgs::Int8MultiArray> eyes_sub("arduino/eyes", eyes_callback);
 
@@ -38,7 +33,6 @@ void setup()
   //nh.getHardware()->setBaud(115200);
   nh.initNode();
   delay(1000);
-  nh.advertise(bat_pub);
   nh.subscribe(eyes_sub);
   nh.subscribe(body_sub);
   delay(1000);
@@ -71,8 +65,6 @@ void loop()
         else{
           digitalWrite(BAT_PROBE_LED, LOW);
         }
-        bat_msg.data = voltage;
-        bat_pub.publish(&bat_msg);
     }
     
     nh.spinOnce();

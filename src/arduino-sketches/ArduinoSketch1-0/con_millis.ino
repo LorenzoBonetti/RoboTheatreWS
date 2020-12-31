@@ -1,4 +1,4 @@
-
+/*
 #include <Arduino.h>
 #include <ros.h>
 #include <std_msgs/Int8MultiArray.h>
@@ -52,7 +52,6 @@ void setup()
   r_high_final_angle=STANDARD_HIGH_R;
   l_low_final_angle=STANDARD_LOW_L;
   l_high_final_angle=STANDARD_HIGH_L;
-  
   should_move_eyes=true;
   eyes_speed=5;
 
@@ -62,7 +61,7 @@ void setup()
 
   fr_final_angle=FR_OPEN;
   fl_final_angle=FL_OPEN;
-  b_final_angle=B_MIDDLE;
+  b_final_angle=B_OPEN;
   body_speed=5;
   should_move_body=true;
 
@@ -123,7 +122,7 @@ void body_callback (const std_msgs::Int8MultiArray&msg){
     case NORMAL:
           fr_final_angle=FR_OPEN;
           fl_final_angle=FL_OPEN;
-          b_final_angle=B_MIDDLE;
+          b_final_angle=B_OPEN;
           break;
     case BOW:
           fr_final_angle=FR_CLOSE;
@@ -221,4 +220,4 @@ void eyes_callback(const std_msgs::Int8MultiArray&msg){
           break;
   }
   should_move_eyes=true;
-}
+}*/
