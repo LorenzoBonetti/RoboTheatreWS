@@ -1,0 +1,16 @@
+{
+  "section1": {
+    "trigger": "after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "move_eyes": [1,1]
+    }
+  },
+  "section2": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+      "move_eyes": [1,1]
+    }
+  }
+}

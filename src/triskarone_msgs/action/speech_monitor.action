@@ -1,0 +1,8 @@
+#goal definition
+float32 wait_time
+---
+#result definition
+bool hasFinished
+---
+#feedback
+bool isSpeaking

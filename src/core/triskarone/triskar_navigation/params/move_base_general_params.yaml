@@ -39,7 +39,7 @@ oscillation_timeout: 0.0 #the robot will be considered not oscillating to allow 
 
 
 # How far in meters the robot must move to be considered not to be oscillating. Moving this far resets the timer counting up to the oscillation_timeout.
-oscillation_distance: 0.0
+oscillation_distance: 0.0 
 
 # The rate in Hz at which to run the global planning loop. If the frequency is set to 0.0, the global planner will only run when a new goal is received or the local planner reports that its path is blocked.
 planner_frequency: 0.0 #default value
