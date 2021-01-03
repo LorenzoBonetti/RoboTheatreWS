@@ -1,0 +1,7 @@
+<launch>
+	<!-- Load Parameters-->
+	<rosparam file="$(find speech_monitor)/params/speech_monitor_params.yaml" command="load" />
+	<!--Launch speech_monitor node-->
+	<node pkg="speech_monitor" type="main.py" name="speech_monitor" output="screen"> </node>
+
+</launch>

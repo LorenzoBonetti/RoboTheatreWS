@@ -1,6 +1,7 @@
 <launch>
 	<!--Launch audio player node-->
 	<node pkg="main_controller" type="main.py" name="main_controller" output="screen"> </node>
-	<node pkg="speech_monitor" type="main.py" name="speech_monitor" output="screen"> </node>
+	<include file="$(find speech_monitor)/launch/speech_monitor.launch" />
+    <include file="$(find audio_player_actionlib)/launch/audio_player.launch" />
 
 </launch>
