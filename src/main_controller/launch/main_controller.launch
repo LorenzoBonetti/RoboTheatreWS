@@ -1,6 +1,10 @@
 <launch>
 	<!--Launch audio player node-->
 	<node pkg="main_controller" type="main.py" name="main_controller" output="screen"> </node>
+	<!-- Load Paramters-->
+	<rosparam file="$(find main_controller)/params/main_controller_params.yaml" command="load" />
+
+	<!-- Run other nodes(only for testing now)-->
 	<include file="$(find speech_monitor)/launch/speech_monitor.launch" />
     <include file="$(find audio_player_actionlib)/launch/audio_player.launch" />
 

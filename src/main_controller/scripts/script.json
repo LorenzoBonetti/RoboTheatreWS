@@ -7,8 +7,7 @@
         1,
         1
       ],
-      "speak": "sampson0.wav",
-      "move_base": [1,1,1]
+      "speak": "sampson0.wav"
     }
   },
   "section2": {
