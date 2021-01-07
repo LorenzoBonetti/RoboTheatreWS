@@ -37,7 +37,7 @@ void setup()
 {
   //Serial.begin(9600);
   pinMode(BAT_PROBE_LED,OUTPUT);
-  //nh.getHardware()->setBaud(115200);
+  nh.getHardware()->setBaud(115200);
   nh.initNode();
   delay(500);
   nh.subscribe(eyes_sub);

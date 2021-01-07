@@ -5,6 +5,7 @@
 #include <time.h>
 #include <signal.h>
 #include <std_msgs/Int32.h>
+#include <std_msgs/Bool.h>
 #include <geometry_msgs/Twist.h>
 #include <tf/transform_listener.h>
 #include <sensor_msgs/Joy.h>
@@ -21,6 +22,7 @@
 		-RB+Y: decrease angular scale
 		-RB+left analog: move linear
 		-RB+right analog: move angular
+	If right_cross_key is pressed, the robot goes to the next session
 	If no button is pressed the robot is automatically stopped
 */
 		
@@ -43,11 +45,13 @@ class JoyTeleop
 		double maxLinearScale, maxAngularScale;
 		int enable_manual, autonomous_move, linearXAxis, linearYAxis, angularAxis;
 		int LinearScaleUp, LinearScaleDown, AngularScaleUp, AngularScaleDown;
+		int NextSection;
 	
 		ros::Subscriber joySub;
 		ros::Subscriber moveBaseCmdVelSub;
       
 		ros::Publisher twistPub;
+		ros::Publisher next_section_pub;
 		ros::Time move_base_cmd_vel_time;
 };
 

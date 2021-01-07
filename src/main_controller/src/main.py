@@ -11,6 +11,7 @@ from main_controller.cfg import main_controllerConfig
 import rospy
 # import std_msgs
 from std_msgs.msg import Int8MultiArray
+from std_msgs.msg import Bool
 from triskarone_msgs.msg import *
 
 
@@ -29,6 +30,9 @@ class main_controller():
         # initialize publisher and clients
         self.eyes_pub = rospy.Publisher('arduino/eyes', Int8MultiArray, queue_size=10)
         self.body_pub = rospy.Publisher('arduino/body', Int8MultiArray, queue_size=10)
+        rospy.Subscriber("next_section", Bool, next_section_callback)
+        self.enable_after_command=True;
+        self.trigger_ok=False
         self.speech_client = actionlib.SimpleActionClient('speech_monitor', triskarone_msgs.msg.speech_monitorAction)
         self.audio_client = actionlib.SimpleActionClient('audio_player_actionlib', triskarone_msgs.msg.play_audioAction)
         self.move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
@@ -57,6 +61,13 @@ class main_controller():
         rospy.loginfo("section_number set to %d", config.section_number)
         self.section_number = config.section_number
         return config
+        
+    def next_section_callback(self,data):
+    	if self.enable_after_command:
+    	    self.trigger_ok=True
+    	    self.enable_after_command=False
+    	    rospy.loginfo("Go to next session")
+    	    
 
     def read_trigger(self, data, section_number):
         section = 'section' + str(section_number)
@@ -79,7 +90,10 @@ class main_controller():
         if trigger == "after_precedent":
             return
         if trigger == "after_command":
-            # subscribes to joystick and wait
+            self.enable_after_command=True;
+            self.trigger_ok=False
+            while not self.trigger_ok:
+            	continue
             return
 
     def check_actions_status(self, actions):

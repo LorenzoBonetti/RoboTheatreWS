@@ -5,6 +5,7 @@ JoyTeleop::JoyTeleop() {
 	joySub = nh.subscribe("/joy", 10, &JoyTeleop::joyCallback, this);
 	moveBaseCmdVelSub = nh.subscribe("/move_base/published_cmd_vel", 10, &JoyTeleop::moveBaseCmdVelCallback, this);
 	twistPub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+	next_section_pub=nh.advertise<std_msgs::Bool>("next_section", 1000);
 	if(!updateParameters()){
 		ROS_FATAL("joystick parameters required");
 	 	ros::shutdown();
@@ -20,6 +21,11 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 
 	// process and publish
 	geometry_msgs::Twist twistMsg;
+	std_msgs::Bool next_sectionMsg;
+	if (msg->axes[NextSection]){
+		next_sectionMsg.data=true;
+		next_section_pub.publish(next_sectionMsg);
+	}
 	if (msg->buttons[autonomous_move]){							// if autonomous publishes the commands of move_base directly on /cmd_vel
 		ros::Time now = ros::Time::now();
 		ros::Duration time_diff = now - move_base_cmd_vel_time;
@@ -112,6 +118,8 @@ bool JoyTeleop::updateParameters() {
 		return false;
 
 	if (!nh.getParam("button_Y", LinearScaleUp))
+		return false;
+	if (!nh.getParam("cross_key_left_right", NextSection))
 		return false;
 	return true;
 }
