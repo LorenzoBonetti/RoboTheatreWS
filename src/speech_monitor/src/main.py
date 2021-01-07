@@ -87,60 +87,60 @@ class SpeechMonitorAction(object):
         rospy.loginfo("%s is started", rospy.get_name())
 
     def execute_cb(self, goal):
-        with suppress_stdout_stderr():
-            CHUNK = self.chunk_dimension
-            FORMAT = pyaudio.paInt16
-            CHANNELS = 1
-            RATE = self.rate
-            isSpeaking = True
-            time = goal.wait_time
-            self.feedback.isSpeaking = isSpeaking
+        #with suppress_stdout_stderr():
+        CHUNK = self.chunk_dimension
+        FORMAT = pyaudio.paInt16
+        CHANNELS = 1
+        RATE = self.rate
+        isSpeaking = True
+        time = goal.wait_time
+        self.feedback.isSpeaking = isSpeaking
+        # publish the feedback
+        self._as.publish_feedback(self.feedback)
+        # rimane fermo a non fare niente per tot tempo
+        t = Timer_Class()
+        t.start()
+        while t.elapsed_time() < time:
             # publish the feedback
+            print("aspettando il tempo")
             self._as.publish_feedback(self.feedback)
-            # rimane fermo a non fare niente per tot tempo
-            t = Timer_Class()
-            t.start()
-            while t.elapsed_time() < time:
-                # publish the feedback
-                print("aspettando il tempo")
+            continue
+        t.stop()
+
+        p = pyaudio.PyAudio()
+        stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, output=False,
+                        frames_per_buffer=CHUNK)
+        not_speaking = 0
+        while isSpeaking:
+            print("ascoltando")
+            if self._as.is_preempt_requested():
+                rospy.loginfo('%s: Preempted' % self._action_name)
+                self._as.set_preempted()
+                stream.stop_stream()
+                stream.close()
+
+                break
+            data = stream.read(CHUNK)
+            rms = audioop.rms(data, 2)  # media quadratica dei dati
+            decibel = 20 * math.log10(rms)  # trasforma in db
+            if decibel < self.threshold:
+                not_speaking += 1
+            else:
+                not_speaking = 0
+            if not_speaking > self.consecutive_silent_data:
+                isSpeaking = False
+                break
+            else:
                 self._as.publish_feedback(self.feedback)
-                continue
-            t.stop()
 
-            p = pyaudio.PyAudio()
-            stream = p.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, output=False,
-                            frames_per_buffer=CHUNK)
-            not_speaking = 0
-            while isSpeaking:
-            	print("ascoltando")
-                if self._as.is_preempt_requested():
-                    rospy.loginfo('%s: Preempted' % self._action_name)
-                    self._as.set_preempted()
-                    stream.stop_stream()
-                    stream.close()
+        stream.stop_stream()
+        stream.close()
+        p.terminate()
 
-                    break
-                data = stream.read(CHUNK)
-                rms = audioop.rms(data, 2)  # media quadratica dei dati
-                decibel = 20 * math.log10(rms)  # trasforma in db
-                if decibel < self.threshold:
-                    not_speaking += 1
-                else:
-                    not_speaking = 0
-                if not_speaking > self.consecutive_silent_data:
-                    isSpeaking = False
-                    break
-                else:
-                    self._as.publish_feedback(self.feedback)
-
-            stream.stop_stream()
-            stream.close()
-            p.terminate()
-
-            self.feedback.isSpeaking = False
-            self.result.hasFinished = True
-            rospy.loginfo('%s: Succeeded' % self._action_name)
-            self._as.set_succeeded(self.result)
+        self.feedback.isSpeaking = False
+        self.result.hasFinished = True
+        rospy.loginfo('%s: Succeeded' % self._action_name)
+        self._as.set_succeeded(self.result)
 
 
 if __name__ == '__main__':
