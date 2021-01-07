@@ -102,6 +102,7 @@ class SpeechMonitorAction(object):
             t.start()
             while t.elapsed_time() < time:
                 # publish the feedback
+                print("aspettando il tempo")
                 self._as.publish_feedback(self.feedback)
                 continue
             t.stop()
@@ -111,6 +112,7 @@ class SpeechMonitorAction(object):
                             frames_per_buffer=CHUNK)
             not_speaking = 0
             while isSpeaking:
+            	print("ascoltando")
                 if self._as.is_preempt_requested():
                     rospy.loginfo('%s: Preempted' % self._action_name)
                     self._as.set_preempted()

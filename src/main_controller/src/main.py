@@ -1,4 +1,4 @@
-# !/usr/bin/env python
+#!/usr/bin/env python
 # license removed for brevity
 import os
 import json
@@ -60,7 +60,7 @@ class main_controller():
 
     def read_trigger(self, data, section_number):
         section = 'section' + str(section_number)
-        trigger = data[section]['trigger']_
+        trigger = data[section]['trigger']
         trigger_data = data[section]['trigger_data']
         return trigger, trigger_data
 
