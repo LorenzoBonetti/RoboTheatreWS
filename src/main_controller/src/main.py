@@ -60,7 +60,7 @@ class main_controller():
 
     def read_trigger(self, data, section_number):
         section = 'section' + str(section_number)
-        trigger = data[section]['trigger']
+        trigger = data[section]['trigger']_
         trigger_data = data[section]['trigger_data']
         return trigger, trigger_data
 
