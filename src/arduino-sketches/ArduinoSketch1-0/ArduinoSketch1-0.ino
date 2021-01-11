@@ -186,9 +186,9 @@ int move_eyes(){
       move_servo_by_one_degree(high_l, l_high_final_angle);
     }
   }else{
+      should_move_eyes=false;
       eyes_msg.data = true;
       eyes_pub.publish(&eyes_msg);
-      should_move_eyes=false;
     }
 }
 

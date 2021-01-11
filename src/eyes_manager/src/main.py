@@ -40,14 +40,14 @@ class EyesManagerAction(object):
                 rospy.loginfo('%s: Preempted' % self._action_name)
                 self._as.set_preempted()
                 break
-            self.feedback.current_movement = movements[self.counter]
-            # publish the feedback
-            self._as.publish_feedback(self.feedback)
+            
             # move_eyes
             if self.has_to_move:
                 array = [movements[self.counter], movements[self.counter + 1]]
+                rospy.loginfo('Move eyes in position %d by speed %d', movements[self.counter],movements[self.counter+1])
                 data_to_send = Int8MultiArray()
                 data_to_send.data = array
+                has_to_move=False
                 self.eyes_pub.publish(data_to_send)
             # se abbiamo finito, passa al successivo
         self.result.response = True

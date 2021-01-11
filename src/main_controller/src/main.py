@@ -131,9 +131,10 @@ class main_controller():
 
     def handle_actions(self, actions):
         if "move_eyes" in actions:
-            rospy.loginfo("Moving eyes in position %d by speed %d", int(actions['move_eyes'][0]),
-                          int(actions['move_eyes'][1]))
-            array = [int(actions['move_eyes'][0]), int(actions['move_eyes'][1])]
+            rospy.loginfo("Moving eyes in position")
+            array=[]
+            for data in actions['move_eyes']:
+            	array.append(data)
             data_to_send = Int8MultiArray()
             data_to_send.data = array
             goal = triskarone_msgs.msg.move_eyesGoal(goal=data_to_send)

@@ -5,7 +5,9 @@
     "actions": {
       "move_eyes": [
         1,
-        1
+        1,
+        2,5,
+        3,4
       ],
       "speak": "sampson0.wav"
     }
@@ -16,7 +18,9 @@
     "actions": {
       "move_eyes": [
         3,
-        1
+        1,
+        4,1,
+        3,2
       ]
     }
   },
@@ -53,7 +57,7 @@
     "trigger_data": 3.5,
     "actions": {
       "move_eyes": [
-        6,
+        1,
         1
       ]
     }
