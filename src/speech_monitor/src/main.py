@@ -87,7 +87,7 @@ class SpeechMonitorAction(object):
         rospy.loginfo("%s is started", rospy.get_name())
 
     def execute_cb(self, goal):
-        with suppress_stdout_stderr():
+        #with suppress_stdout_stderr():
         CHUNK = self.chunk_dimension
         FORMAT = pyaudio.paInt16
         CHANNELS = 1
