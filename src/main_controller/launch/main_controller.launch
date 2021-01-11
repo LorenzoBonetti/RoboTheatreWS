@@ -3,11 +3,13 @@
 	<node pkg="main_controller" type="main.py" name="main_controller" output="screen"> </node>
 	<!-- Load Paramters-->
 	<rosparam file="$(find main_controller)/params/main_controller_params.yaml" command="load" />
+
+	<node pkg="eyes_manager" type="main.py" name="eyes_manager" output="screen"> </node>
 	
-	<node pkg="rosserial_python" type="serial_node.py" name="$(anon serial_node)" output="screen" respawn="true" >
+	<!--<node pkg="rosserial_python" type="serial_node.py" name="$(anon serial_node)" output="screen" respawn="true" >
     		<param name="~port" value="/dev/ttyACM0" />
     		<param name="~baud" value="115200" />
-  	</node>
+  	</node>-->
 	
 	<!-- Run other nodes(only for testing now)-->
 	<include file="$(find speech_monitor)/launch/speech_monitor.launch" />

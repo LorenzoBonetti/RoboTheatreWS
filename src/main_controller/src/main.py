@@ -36,11 +36,13 @@ class main_controller():
         self.speech_client = actionlib.SimpleActionClient('speech_monitor', triskarone_msgs.msg.speech_monitorAction)
         self.audio_client = actionlib.SimpleActionClient('audio_player_actionlib', triskarone_msgs.msg.play_audioAction)
         self.move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
+        self.eyes_manager_client = actionlib.SimpleActionClient('eyes_manager', triskarone_msgs.msg.move_eyesAction)
         # init node
 
         # wait for servers to start
         self.speech_client.wait_for_server()
         self.audio_client.wait_for_server()
+        self.eyes_manager_client.wait_for_server()
 
         # run
         self.run()
@@ -100,25 +102,31 @@ class main_controller():
         has_to_speak = False
         move_base = False
         move_base_error = False
+        move_eyes = False
         if "speak" in actions:
             file_to_play = actions['speak']
             has_to_speak = True
         if "move_base" in actions:
             move_base = True
-        while has_to_speak or move_base:
+        if "move_eyes" in actions:
+            move_eyes = True
+        while has_to_speak or move_base or move_eyes:
             if self.audio_client.get_state() == GoalStatus.SUCCEEDED:
-                rospy.loginfo("audio_client has finished")
+                #rospy.loginfo("audio_client has finished")
                 has_to_speak = False
             if self.move_base_client.get_state() == GoalStatus.SUCCEEDED:
                 move_base = False
-                rospy.loginfo("Correctly moved to the desired position")
+                #rospy.loginfo("Correctly moved to the desired position")
             if self.move_base_client.get_state() == GoalStatus.ABORTED:
                 move_base = False
                 move_base_error = True
+            if self.eyes_manager_client.get_state() == GoalStatus.SUCCEEDED:
+                move_eyes = False
             continue
         if move_base_error:
             rospy.loginfo("Failed to get in position, starting recovery")
             # think for a recovery here
+        rospy.loginfo("actions finished")
         return
 
     def handle_actions(self, actions):
@@ -128,7 +136,8 @@ class main_controller():
             array = [int(actions['move_eyes'][0]), int(actions['move_eyes'][1])]
             data_to_send = Int8MultiArray()
             data_to_send.data = array
-            self.eyes_pub.publish(data_to_send)
+            goal = triskarone_msgs.msg.move_eyesGoal(goal=data_to_send)
+            self.eyes_manager_client.send_goal(goal)
         if "move_body" in actions:
             rospy.loginfo("Moving body in position %d by speed %d", int(actions['move_body'][0]),
                           int(actions['move_body'][1]))

@@ -2,6 +2,7 @@
 #include <Arduino.h>
 #include <ros.h>
 #include <std_msgs/Int8MultiArray.h>
+#include <std_msgs/Bool.h>
 #include <Servo.h>
 #include "defines.h"
 #include "helper_methods.h"
@@ -14,9 +15,12 @@ void move_body();
 Servo low_r, high_r, low_l, high_l;
 Servo body_right, body_left, body_back;
 
+std_msgs::Bool eyes_msg;
+
 ros::NodeHandle  nh;
 ros::Subscriber<std_msgs::Int8MultiArray> body_sub("arduino/body", body_callback);
 ros::Subscriber<std_msgs::Int8MultiArray> eyes_sub("arduino/eyes", eyes_callback);
+ros::Publisher eyes_pub("arduino/eyes_response", &eyes_msg);
 
 unsigned long last_battery_check_time=0;
 unsigned long last_battery_beep_time=0;
@@ -42,6 +46,7 @@ void setup()
   delay(500);
   nh.subscribe(eyes_sub);
   nh.subscribe(body_sub);
+  nh.advertise(eyes_pub);
 
   low_r.attach(R_LOW_SERVO_PIN);
   high_r.attach(R_HIGH_SERVO_PIN);
@@ -181,6 +186,8 @@ int move_eyes(){
       move_servo_by_one_degree(high_l, l_high_final_angle);
     }
   }else{
+      eyes_msg.data = true;
+      eyes_pub.publish(&eyes_msg);
       should_move_eyes=false;
     }
 }
