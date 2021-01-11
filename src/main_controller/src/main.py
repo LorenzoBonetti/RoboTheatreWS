@@ -91,6 +91,7 @@ class main_controller():
         if trigger == "after_command":
             self.enable_after_command = True;
             self.trigger_ok = False
+            rospy.loginfo("Waiting for joystick command")
             while not self.trigger_ok:
                 continue
             return
