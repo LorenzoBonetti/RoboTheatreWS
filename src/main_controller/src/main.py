@@ -37,12 +37,16 @@ class main_controller():
         self.audio_client = actionlib.SimpleActionClient('audio_player_actionlib', triskarone_msgs.msg.play_audioAction)
         self.move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
         self.eyes_manager_client = actionlib.SimpleActionClient('eyes_manager', triskarone_msgs.msg.move_eyesAction)
+        self.body_manager_client = actionlib.SimpleActionClient('body_manager', triskarone_msgs.msg.move_bodyAction)
         # init node
 
         # wait for servers to start
         self.speech_client.wait_for_server()
         self.audio_client.wait_for_server()
         self.eyes_manager_client.wait_for_server()
+        self.body_manager_client.wait_for_server()
+        r = rospy.Rate(0.5)
+        r.sleep() #sleep for 2 seconds before starting
 
         # run
         self.run()
@@ -103,6 +107,7 @@ class main_controller():
         move_base = False
         move_base_error = False
         move_eyes = False
+        move_body=False
         if "speak" in actions:
             file_to_play = actions['speak']
             has_to_speak = True
@@ -110,6 +115,8 @@ class main_controller():
             move_base = True
         if "move_eyes" in actions:
             move_eyes = True
+        if "move_body" in actions:
+        
         while has_to_speak or move_base or move_eyes:
             if self.audio_client.get_state() == GoalStatus.SUCCEEDED:
                 #rospy.loginfo("audio_client has finished")
