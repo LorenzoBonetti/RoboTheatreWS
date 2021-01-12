@@ -46,7 +46,7 @@ class main_controller():
         self.eyes_manager_client.wait_for_server()
         self.body_manager_client.wait_for_server()
         r = rospy.Rate(0.5)
-        r.sleep() #sleep for 2 seconds before starting
+        r.sleep()  # sleep for 2 seconds before starting
 
         # run
         self.run()
@@ -107,7 +107,7 @@ class main_controller():
         move_base = False
         move_base_error = False
         move_eyes = False
-        move_body=False
+        move_body = False
         if "speak" in actions:
             file_to_play = actions['speak']
             has_to_speak = True
@@ -116,19 +116,22 @@ class main_controller():
         if "move_eyes" in actions:
             move_eyes = True
         if "move_body" in actions:
-        
-        while has_to_speak or move_base or move_eyes:
+            move_body = True
+
+        while has_to_speak or move_base or move_eyes or move_body:
             if self.audio_client.get_state() == GoalStatus.SUCCEEDED:
-                #rospy.loginfo("audio_client has finished")
+                # rospy.loginfo("audio_client has finished")
                 has_to_speak = False
             if self.move_base_client.get_state() == GoalStatus.SUCCEEDED:
                 move_base = False
-                #rospy.loginfo("Correctly moved to the desired position")
+                # rospy.loginfo("Correctly moved to the desired position")
             if self.move_base_client.get_state() == GoalStatus.ABORTED:
                 move_base = False
                 move_base_error = True
             if self.eyes_manager_client.get_state() == GoalStatus.SUCCEEDED:
                 move_eyes = False
+            if self.body_manager_client.get_state() == GoalStatus.SUCCEEDED:
+                move_body = False
             continue
         if move_base_error:
             rospy.loginfo("Failed to get in position, starting recovery")
@@ -138,21 +141,23 @@ class main_controller():
 
     def handle_actions(self, actions):
         if "move_eyes" in actions:
-            rospy.loginfo("Moving eyes in position")
-            array=[]
+            array = []
             for data in actions['move_eyes']:
-            	array.append(data)
+                array.append(data)
+            rospy.loginfo("Moving eyes in position: ", array)
             data_to_send = Int8MultiArray()
             data_to_send.data = array
             goal = triskarone_msgs.msg.move_eyesGoal(goal=data_to_send)
             self.eyes_manager_client.send_goal(goal)
         if "move_body" in actions:
-            rospy.loginfo("Moving body in position %d by speed %d", int(actions['move_body'][0]),
-                          int(actions['move_body'][1]))
-            array = [int(actions['move_body'][0]), int(actions['move_body'][1])]
+            array = []
+            for data in actions['move_body']:
+                array.append(data)
+            rospy.loginfo("Moving body in position: ", array)
             data_to_send = Int8MultiArray()
             data_to_send.data = array
-            self.body_pub.publish(data_to_send)
+            goal = triskarone_msgs.msg.move_bodyGoal(goal=data_to_send)
+            self.body_manager_client.send_goal(goal)
         if "speak" in actions:
             file_to_play = actions['speak']
             goal = triskarone_msgs.msg.play_audioGoal(filename=file_to_play)
@@ -171,7 +176,7 @@ class main_controller():
         if "do_nothing" in actions:
             time = int(actions['do_nothing'])
             rospy.loginfo("Do nothing for %d seconds", time)
-            rospy.sleep()
+            rospy.sleep(time)
         if "end" in actions:
             rospy.loginfo("The show is finished, bye!")
             rospy.signal_shutdown("The show is finished")
