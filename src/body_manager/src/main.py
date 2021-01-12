@@ -25,9 +25,11 @@ class BodyManagerAction(object):
     def movement_callback(self, data):
         self.has_to_move = True
         self.counter=self.counter+2
+        r = rospy.Rate(0.5)
+        r.sleep()
 
     def execute_cb(self, goal):
-        r = rospy.Rate(1)
+        
         movements = goal.goal.data
         print(movements)
         print(len(movements))
@@ -49,7 +51,7 @@ class BodyManagerAction(object):
                 data_to_send.data = array
                 self.has_to_move=False
                 self.body_pub.publish(data_to_send)
-                r.sleep()
+            
             # se abbiamo finito, passa al successivo
         self.result.response = True
         rospy.loginfo('%s: Succeeded' % self._action_name)

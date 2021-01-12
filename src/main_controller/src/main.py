@@ -144,7 +144,7 @@ class main_controller():
             array = []
             for data in actions['move_eyes']:
                 array.append(data)
-            rospy.loginfo("Moving eyes in position: ", array)
+            rospy.loginfo("Moving eyes in position");
             data_to_send = Int8MultiArray()
             data_to_send.data = array
             goal = triskarone_msgs.msg.move_eyesGoal(goal=data_to_send)
@@ -153,7 +153,7 @@ class main_controller():
             array = []
             for data in actions['move_body']:
                 array.append(data)
-            rospy.loginfo("Moving body in position: ", array)
+            rospy.loginfo("Moving body in position");
             data_to_send = Int8MultiArray()
             data_to_send.data = array
             goal = triskarone_msgs.msg.move_bodyGoal(goal=data_to_send)

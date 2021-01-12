@@ -11,7 +11,6 @@ void eyes_callback(const std_msgs::Int8MultiArray&);
 int move_eyes();
 void body_callback (const std_msgs::Int8MultiArray&msg);
 void move_body();
-void reset_callback (const std_msgs::Bool&msg);
 
 Servo low_r, high_r, low_l, high_l;
 Servo body_right, body_left, body_back;
@@ -20,9 +19,8 @@ std_msgs::Bool eyes_msg;
 std_msgs::Bool body_msg;
 
 ros::NodeHandle  nh;
-ros::Subscriber<std_msgs::Int8MultiArray> body_sub("arduino/body", body_callback);
-ros::Subscriber<std_msgs::Int8MultiArray> eyes_sub("arduino/eyes", eyes_callback);
-ros::Subscriber<std_msgs::Bool>reset_sub("arduino/reset", reset_callback);
+ros::Subscriber<std_msgs::Int8MultiArray> body_sub("arduino/body",body_callback);
+ros::Subscriber<std_msgs::Int8MultiArray> eyes_sub("arduino/eyes",eyes_callback);
 ros::Publisher eyes_pub("arduino/eyes_response", &eyes_msg);
 ros::Publisher body_pub("arduino/body_response", &body_msg);
 
@@ -45,15 +43,14 @@ void setup()
 {
   //Serial.begin(9600);
   pinMode(BAT_PROBE_LED,OUTPUT);
-  nh.getHardware()->setBaud(115200);
+  //nh.getHardware()->setBaud(57600);
   nh.initNode();
-  delay(500);
+  delay(1000);
   nh.subscribe(eyes_sub);
   nh.subscribe(body_sub);
-  nh.subscribe(reset_sub);
   nh.advertise(eyes_pub);
   nh.advertise(body_pub);
-
+  delay(1000);
   low_r.attach(R_LOW_SERVO_PIN);
   high_r.attach(R_HIGH_SERVO_PIN);
   low_l.attach(L_LOW_SERVO_PIN);
@@ -125,23 +122,6 @@ float checkBatteryLevel(){
     digitalWrite(BUZZER_PIN, LOW);
   }
   return voltage;
-}
-void reset_callback (const std_msgs::Bool&msg){
-  bool reset=msg.data;
-  if(reset){
-    fr_final_angle=FR_OPEN;
-    fl_final_angle=FL_OPEN;
-    b_final_angle=B_MIDDLE;
-    body_speed=5;
-    should_move_body=true;
-
-    r_low_final_angle=STANDARD_LOW_R;
-    r_high_final_angle=STANDARD_HIGH_R;
-    l_low_final_angle=STANDARD_LOW_L;
-    l_high_final_angle=STANDARD_HIGH_L;
-    eyes_speed=5;
-    should_move_eyes=true;
-  }
 }
 
 void body_callback (const std_msgs::Int8MultiArray&msg){
