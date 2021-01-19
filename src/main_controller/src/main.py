@@ -190,9 +190,9 @@ class MainController:
                         move_base = False
                         move_base_error = False
                         # rospy.loginfo("Correctly moved to the desired position")
-                        if self.move_base_client.get_state() == GoalStatus.ABORTED:
-                            move_base = False
-                            move_base_error = True
+                    if self.move_base_client.get_state() == GoalStatus.ABORTED:
+                        move_base = False
+                        move_base_error = True
             if self.down_pressed:
                 move_base_error = False
         rospy.loginfo("actions finished")
