@@ -99,8 +99,11 @@ class MainController:
         if self.move_base_recovery:
             if data.data == 1:
                 self.up_pressed = True
+                rospy.loginfo("up pressed")
             if data.data == 2:
+                rospy.loginfo("down pressed")
                 self.down_pressed = True
+            self.move_base_recovery = False
 
     def read_trigger(self, data, section_number):
         section = 'section' + str(section_number)
@@ -167,7 +170,7 @@ class MainController:
             self.up_pressed = False
             self.down_pressed = False
             self.move_base_recovery = True
-            while not (self.up_pressed and self.down_pressed):
+            while not (self.up_pressed or self.down_pressed):
                 continue
             if self.up_pressed:
                 goal = MoveBaseGoal()
