@@ -12,6 +12,7 @@ import rospy
 # import std_msgs
 from std_msgs.msg import Int8MultiArray
 from std_msgs.msg import Bool
+from std_msgs.msg import Int8
 from triskarone_msgs.msg import *
 
 
@@ -226,7 +227,7 @@ class MainController:
             goal.target_pose.pose.orientation.w = actions['move_base'][3]
             self.move_base_client.send_goal(goal)
             rospy.loginfo("Moving to position: x:%f y:%f z:%f w:%f", actions['move_base'][0], actions['move_base'][1],
-                          actions['move_base'][2])
+                          actions['move_base'][2],actions['move_base'][3])
         if "do_nothing" in actions:
             time = int(actions['do_nothing'])
             rospy.loginfo("Do nothing for %d seconds", time)

@@ -6,6 +6,7 @@ JoyTeleop::JoyTeleop() {
 	moveBaseCmdVelSub = nh.subscribe("/move_base/published_cmd_vel", 10, &JoyTeleop::moveBaseCmdVelCallback, this);
 	twistPub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 	next_section_pub=nh.advertise<std_msgs::Bool>("next_section", 1000);
+	move_base_recovery_pub=nh.advertise<std_msgs::Int8>("move_base_recovery", 1000);
 	if(!updateParameters()){
 		ROS_FATAL("joystick parameters required");
 	 	ros::shutdown();
