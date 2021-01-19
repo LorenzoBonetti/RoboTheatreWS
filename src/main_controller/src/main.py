@@ -39,7 +39,7 @@ class MainController:
 
         # initialize subscribers
         rospy.Subscriber("next_section", Bool, self.next_section_callback)
-        rospy.Subscriber("recovery_move_base", Int8, self.recovery_move_base_callback)
+        rospy.Subscriber("move_base_recovery", Int8, self.recovery_move_base_callback)
 
         # initialize flags
 
@@ -180,7 +180,7 @@ class MainController:
                 self.move_base_client.send_goal(goal)
                 rospy.loginfo("Moving to position: x:%f y:%f z:%f w:%f", actions['move_base'][0],
                               actions['move_base'][1],
-                              actions['move_base'][2])
+                              actions['move_base'][2],actions['move_base'][3])
                 move_base = True
                 while not move_base:
                     if self.move_base_client.get_state() == GoalStatus.SUCCEEDED:
