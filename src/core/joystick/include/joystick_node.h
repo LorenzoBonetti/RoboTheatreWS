@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <std_msgs/Int32.h>
 #include <std_msgs/Bool.h>
+#include <std_msgs/Int8.h>
 #include <geometry_msgs/Twist.h>
 #include <tf/transform_listener.h>
 #include <sensor_msgs/Joy.h>
@@ -46,12 +47,14 @@ class JoyTeleop
 		int enable_manual, autonomous_move, linearXAxis, linearYAxis, angularAxis;
 		int LinearScaleUp, LinearScaleDown, AngularScaleUp, AngularScaleDown;
 		int NextSection;
+		int MoveBaseRecovery;
 	
 		ros::Subscriber joySub;
 		ros::Subscriber moveBaseCmdVelSub;
       
 		ros::Publisher twistPub;
 		ros::Publisher next_section_pub;
+		ros::Publisher move_base_recovery_pub;
 		ros::Time move_base_cmd_vel_time;
 };
 

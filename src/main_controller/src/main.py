@@ -15,38 +15,58 @@ from std_msgs.msg import Bool
 from triskarone_msgs.msg import *
 
 
-class main_controller():
+class MainController:
     def __init__(self):
         # change working directory
         os.chdir(os.path.dirname(os.path.abspath(__file__)))
         os.chdir("..")
+
+        # init node
         rospy.init_node('main_controller', anonymous=True)
+
         # initialize reconfigure
         srv = Server(main_controllerConfig, self.reconfigure_callback)
-        # get paramters
+
+        # get parameters
         self.script_path = rospy.get_param("script_path")
         self.move_base_recovery = rospy.get_param("move_base_recovery")
         self.section_number = rospy.get_param("section_to_start")
-        # initialize publisher and clients
+
+        # initialize publishers
         self.eyes_pub = rospy.Publisher('arduino/eyes', Int8MultiArray, queue_size=10)
         self.body_pub = rospy.Publisher('arduino/body', Int8MultiArray, queue_size=10)
+
+        # initialize subscribers
         rospy.Subscriber("next_section", Bool, self.next_section_callback)
+        rospy.Subscriber("recovery_move_base", Int8, self.recovery_move_base_callback)
+
+        # initialize flags
+
+        # flags for next section
         self.enable_after_command = True
         self.trigger_ok = False
+
+        # flags for move_base recovery
+        self.move_base_failure = False
+        self.up_pressed = False
+        self.down_pressed = False
+
+        # action_lib_clients
         self.speech_client = actionlib.SimpleActionClient('speech_monitor', triskarone_msgs.msg.speech_monitorAction)
         self.audio_client = actionlib.SimpleActionClient('audio_player_actionlib', triskarone_msgs.msg.play_audioAction)
         self.move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
         self.eyes_manager_client = actionlib.SimpleActionClient('eyes_manager', triskarone_msgs.msg.move_eyesAction)
         self.body_manager_client = actionlib.SimpleActionClient('body_manager', triskarone_msgs.msg.move_bodyAction)
-        # init node
 
         # wait for servers to start
         self.speech_client.wait_for_server()
         self.audio_client.wait_for_server()
         self.eyes_manager_client.wait_for_server()
         self.body_manager_client.wait_for_server()
+
+        # wait for 2 second before start
         r = rospy.Rate(0.5)
-        r.sleep()  # sleep for 2 seconds before starting
+        r.sleep()
 
         # run
         self.run()
@@ -73,6 +93,13 @@ class main_controller():
             self.trigger_ok = True
             self.enable_after_command = False
             rospy.loginfo("Go to next session")
+
+    def recovery_move_base_callback(self, data):
+        if self.move_base_recovery:
+            if data.data == 1:
+                self.up_pressed = True
+            if data.data == 2:
+                self.down_pressed = True
 
     def read_trigger(self, data, section_number):
         section = 'section' + str(section_number)
@@ -133,9 +160,35 @@ class main_controller():
             if self.body_manager_client.get_state() == GoalStatus.SUCCEEDED:
                 move_body = False
             continue
-        if move_base_error:
+        while move_base_error:
             rospy.loginfo("Failed to get in position, starting recovery")
-            # think for a recovery here
+            rospy.loginfo("Move the robot and press up for retry to move in position or down to go to next_section")
+            self.up_pressed = False
+            self.down_pressed = False
+            self.move_base_recovery = True
+            while not (self.up_pressed and self.down_pressed):
+                continue
+            if self.up_pressed:
+                goal = MoveBaseGoal()
+                goal.target_pose.header.frame_id = "map"
+                goal.target_pose.header.stamp = rospy.Time.now()
+                goal.target_pose.pose.position.x = actions['move_base'][0]
+                goal.target_pose.pose.position.y = actions['move_base'][1]
+                goal.target_pose.pose.orientation.z = actions['move_base'][2]
+                goal.target_pose.pose.orientation.w = actions['move_base'][3]
+                self.move_base_client.send_goal(goal)
+                rospy.loginfo("Moving to position: x:%f y:%f z:%f w:%f", actions['move_base'][0],
+                              actions['move_base'][1],
+                              actions['move_base'][2])
+                move_base = True
+                while not move_base:
+                    if self.move_base_client.get_state() == GoalStatus.SUCCEEDED:
+                        move_base = False
+                        move_base_error = False
+                        # rospy.loginfo("Correctly moved to the desired position")
+                        if self.move_base_client.get_state() == GoalStatus.ABORTED:
+                            move_base = False
+                            move_base_error = True
         rospy.loginfo("actions finished")
         return
 
@@ -169,9 +222,10 @@ class main_controller():
             goal.target_pose.header.stamp = rospy.Time.now()
             goal.target_pose.pose.position.x = actions['move_base'][0]
             goal.target_pose.pose.position.y = actions['move_base'][1]
-            goal.target_pose.pose.orientation.w = actions['move_base'][2]
+            goal.target_pose.pose.orientation.z = actions['move_base'][2]
+            goal.target_pose.pose.orientation.w = actions['move_base'][3]
             self.move_base_client.send_goal(goal)
-            rospy.loginfo("Moving to position: %f %f %f", actions['move_base'][0], actions['move_base'][1],
+            rospy.loginfo("Moving to position: x:%f y:%f z:%f w:%f", actions['move_base'][0], actions['move_base'][1],
                           actions['move_base'][2])
         if "do_nothing" in actions:
             time = int(actions['do_nothing'])
@@ -187,6 +241,6 @@ if __name__ == '__main__':
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     os.chdir("..")
     try:
-        main_controller()
+        MainController()
     except rospy.ROSInterruptException:
         pass

@@ -1,0 +1,24 @@
+{
+  "section1": {
+    "trigger": "after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "move_base":[1.290298,2.855741,0.593138,0.855100],
+      "speak": "sampson0.wav"
+    }
+  },
+  "section2": {
+    "trigger": "after_command",
+    "trigger_data": 3,
+    "actions": {
+      "move_base": [2.234571, 4.426597, 0.593138, 0.855100]
+    }
+  },
+  "section3": {
+    "trigger":"after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "end": -1
+    }
+  }
+}

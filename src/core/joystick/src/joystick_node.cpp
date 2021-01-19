@@ -22,10 +22,19 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 	// process and publish
 	geometry_msgs::Twist twistMsg;
 	std_msgs::Bool next_sectionMsg;
-	if (msg->axes[NextSection]){
-		next_sectionMsg.data=true;
+	std_msgs::Int8 move_base_recoveryMsg;
+	if (msg->axes[NextSection]==-1.0){ //right key pressed
+	    next_sectionMsg.data=true;
 		next_section_pub.publish(next_sectionMsg);
 	}
+	if(msg->axes[MoveBaseRecovery]==1.0){//up key pressed
+	    move_base_recoveryMsg.data=1;
+	    move_base_recovery_pub.publish(move_base_recoveryMsg);
+	}
+    if(msg->axes[MoveBaseRecovery]==-1.0){//down key pressed
+        move_base_recoveryMsg.data=2;
+        move_base_recovery_pub.publish(move_base_recoveryMsg);
+    }
 	if (msg->buttons[autonomous_move]){							// if autonomous publishes the commands of move_base directly on /cmd_vel
 		ros::Time now = ros::Time::now();
 		ros::Duration time_diff = now - move_base_cmd_vel_time;
@@ -121,6 +130,8 @@ bool JoyTeleop::updateParameters() {
 		return false;
 	if (!nh.getParam("cross_key_left_right", NextSection))
 		return false;
+	if (!nh.getParam("cross_key_up_down", MoveBaseRecovery))
+	    return false;
 	return true;
 }
 
