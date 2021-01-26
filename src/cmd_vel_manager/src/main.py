@@ -68,30 +68,33 @@ class CmdVelAction(object):
                 actual_yaw = round(euler[2], 1)
                 print("Orientation:", actual_yaw)
                 data_to_send = Twist()
-                if (self.position[0] - x_start) > array[0]:
-                    data_to_send.linear.x = linear_speed
-                elif (self.position[0]- x_start) < array[0]:
-                    data_to_send.linear.x = -linear_speed
-                else:
-                    data_to_send.linear.x = 0
-                    print("finito1")
-                    x_done = True
-                if (self.position[1]- y_start) > array[1]:
-                    data_to_send.linear.y = linear_speed
-                elif (self.position[1]- y_start) < array[1]:
-                    data_to_send.linear.y = -linear_speed
-                else:
-                    data_to_send.linear.y = 0
-                    print("finito2")
-                    y_done=True
-                if (actual_yaw - yaw_start) > array[2]:
-                    data_to_send.angular.z = angular_speed
-                elif (actual_yaw-yaw_start) < array[2]:
-                    data_to_send.angular.z = -angular_speed
-                else:
-                    data_to_send.angular.z = 0
-                    print("finito3")
-                    yaw_done = True
+                if not x_done:
+                    if (self.position[0] - x_start) > array[0]:
+                        data_to_send.linear.x = linear_speed
+                    elif (self.position[0]- x_start) < array[0]:
+                        data_to_send.linear.x = -linear_speed
+                    else:
+                        data_to_send.linear.x = 0
+                        print("finito1")
+                        x_done = True
+                if not y_done:
+                    if (self.position[1]- y_start) > array[1]:
+                        data_to_send.linear.y = linear_speed
+                    elif (self.position[1]- y_start) < array[1]:
+                        data_to_send.linear.y = -linear_speed
+                    else:
+                        data_to_send.linear.y = 0
+                        print("finito2")
+                        y_done=True
+                if not yaw_done:
+                    if (actual_yaw - yaw_start) > array[2]:
+                        data_to_send.angular.z = angular_speed
+                    elif (actual_yaw-yaw_start) < array[2]:
+                        data_to_send.angular.z = -angular_speed
+                    else:
+                        data_to_send.angular.z = 0
+                        print("finito3")
+                        yaw_done = True
                 self.cmd_vel_pub.publish(data_to_send)
                 r.sleep()
             self.counter = self.counter + 5
