@@ -26,7 +26,7 @@ class CmdVelAction(object):
         self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
         self.odom_sub = rospy.Subscriber('odom', Odometry, self.odometry_callback)
         rospy.loginfo("%s is started", rospy.get_name())
-        self.position = Point()
+        self.position =[0,0,0]
         # self.orientation = Quaternion()
         self.orientation = [0, 0, 0, 0]
 
@@ -53,8 +53,8 @@ class CmdVelAction(object):
             print(array)
             linear_speed = movements[self.counter + 3]
             angular_speed = movements[self.counter + 4]
-            x_start = self.position.x
-            y_start = self.position.y
+            x_start = self.position[0]
+            y_start = self.position[1]
             euler = euler_from_quaternion(self.orientation)
             yaw_start = round(euler[2], 2)
             x_done = False
