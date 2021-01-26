@@ -32,7 +32,6 @@ class BodyManagerAction(object):
         
         movements = goal.goal.data
         print(movements)
-        print(len(movements))
         self.counter = 0
         self.has_to_move = True
         has_finished = False
