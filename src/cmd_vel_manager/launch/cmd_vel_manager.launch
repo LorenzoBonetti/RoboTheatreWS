@@ -1,5 +1,7 @@
 <launch>
-	<node pkg="cmd_vel_manager" type="main.py" name="cmd_vel_manager" output="screen"> </node>
+	<node pkg="cmd_vel_manager" type="main.py" name="cmd_vel_manager" output="screen">
+	    <remap from="cmd_vel" to="cmd_vel_manager/cmd_vel"/>
+	</node>
 	<node pkg="cmd_vel_manager" type="dummy_publisher.py" name="dummy_publisher" output="screen"> </node>
 
 </launch>

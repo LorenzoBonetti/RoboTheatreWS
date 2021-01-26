@@ -36,10 +36,11 @@ class JoyTeleop
 	private:
 		void joyCallback(const sensor_msgs::Joy::ConstPtr &msg);
 		void moveBaseCmdVelCallback(const geometry_msgs::Twist::ConstPtr &msg);
-		bool updateParameters();
+        void cmd_managerCallback(const geometry_msgs::Twist::ConstPtr &msg);
+        bool updateParameters();
 		void publishZeroMessage();
 
-		geometry_msgs::Twist lastMoveBaseTwistMsg;
+		geometry_msgs::Twist lastTwistMsg;
 		
 		ros::NodeHandle nh;
 		double linearScale, angularScale;
@@ -51,11 +52,12 @@ class JoyTeleop
 	
 		ros::Subscriber joySub;
 		ros::Subscriber moveBaseCmdVelSub;
+		ros::Subscriber cmd_vel_managerSub;
       
 		ros::Publisher twistPub;
 		ros::Publisher next_section_pub;
 		ros::Publisher move_base_recovery_pub;
-		ros::Time move_base_cmd_vel_time;
+		ros::Time cmd_vel_time;
 };
 
 

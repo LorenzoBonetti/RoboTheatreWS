@@ -4,6 +4,7 @@
 JoyTeleop::JoyTeleop() {
 	joySub = nh.subscribe("/joy", 10, &JoyTeleop::joyCallback, this);
 	moveBaseCmdVelSub = nh.subscribe("/move_base/published_cmd_vel", 10, &JoyTeleop::moveBaseCmdVelCallback, this);
+    cmd_vel_managerSub = nh.subscribe("/cmd_vel_manager/cmd_vel", 10, &JoyTeleop::moveBaseCmdVelCallback, this);
 	twistPub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 	next_section_pub=nh.advertise<std_msgs::Bool>("next_section", 1000);
 	move_base_recovery_pub=nh.advertise<std_msgs::Int8>("move_base_recovery", 1000);
@@ -14,9 +15,14 @@ JoyTeleop::JoyTeleop() {
 }
 
 void JoyTeleop::moveBaseCmdVelCallback(const geometry_msgs::Twist::ConstPtr &msg) {
-	move_base_cmd_vel_time = ros::Time::now();
-	lastMoveBaseTwistMsg= *msg;
+	cmd_vel_time = ros::Time::now();
+	lastTwistMsg= *msg;
 }
+void JoyTeleop::cmd_managerCallback(const geometry_msgs::Twist::ConstPtr &msg) {
+    cmd_vel_time = ros::Time::now();
+    lastTwistMsg= *msg;
+}
+
 
 void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 
@@ -38,9 +44,9 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
     }
 	if (msg->buttons[autonomous_move]){							// if autonomous publishes the commands of move_base directly on /cmd_vel
 		ros::Time now = ros::Time::now();
-		ros::Duration time_diff = now - move_base_cmd_vel_time;
+		ros::Duration time_diff = now - cmd_vel_time;
 		if (time_diff.toSec() < 0.5){
-			twistMsg = lastMoveBaseTwistMsg;
+			twistMsg = lastTwistMsg;
 			twistPub.publish(twistMsg);
 		}else{
 			ROS_DEBUG_STREAM("move_base/published_cmd_vel too old... skipping..  Time diff:" << time_diff.toSec());
