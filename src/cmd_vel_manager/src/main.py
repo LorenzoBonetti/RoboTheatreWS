@@ -62,9 +62,10 @@ class CmdVelAction(object):
             yaw_done = False
             while not (x_done and y_done and yaw_done):
                 r=rospy.Rate(10)
-                print("sono quiii")
-                print(self.position)
-                print(self.orientation)
+                print("Position:", self.position)
+                euler = euler_from_quaternion(self.orientation)
+                actual_yaw = round(euler[2], 2)
+                print("Orientation:", actual_yaw)
                 data_to_send = Twist()
                 if (self.position[0] - x_start) > array[0]:
                     data_to_send.linear.x = linear_speed
@@ -81,9 +82,7 @@ class CmdVelAction(object):
                 else:
                     data_to_send.linear.y = 0
                     print("finito2")
-                    y_done = True
-                euler = euler_from_quaternion(self.orientation)
-                actual_yaw = round(euler[2], 2)
+                    y_done=True
                 if (actual_yaw - yaw_start) > array[2]:
                     data_to_send.angular.z = angular_speed
                 elif (actual_yaw-yaw_start) < array[2]:
