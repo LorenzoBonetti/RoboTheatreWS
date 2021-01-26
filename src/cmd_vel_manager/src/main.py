@@ -31,7 +31,8 @@ class CmdVelAction(object):
         self.orientation = [0, 0, 0, 0]
 
     def odometry_callback(self, data):
-        self.position = data.pose.pose.position
+        self.position = [round(data.pose.pose.position.x, 2), round(data.pose.pose.position.y, 2),
+                         round(data.pose.pose.position.z, 2)]
         self.orientation = [data.pose.pose.orientation.x, data.pose.pose.orientation.y, data.pose.pose.orientation.z,
                             data.pose.pose.orientation.w]
 
@@ -52,25 +53,29 @@ class CmdVelAction(object):
             print(array)
             linear_speed = movements[self.counter + 3]
             angular_speed = movements[self.counter + 4]
+            x_start = self.position.x
+            y_start = self.position.y
+            euler = euler_from_quaternion(self.orientation)
+            yaw_start = round(euler[2], 2)
             x_done = False
             y_done = False
             yaw_done = False
-            while not(x_done and y_done and yaw_done):
+            while not (x_done and y_done and yaw_done):
                 print("sono quiii")
                 print(self.position)
                 print(self.orientation)
                 data_to_send = Twist()
-                if self.position.x > array[0]:
+                if (self.position.x - x_start) > array[0]:
                     data_to_send.linear.x = linear_speed
-                elif self.position.x < array[0]:
+                elif (self.position.x - x_start) < array[0]:
                     data_to_send.linear.x = -linear_speed
                 else:
                     data_to_send.linear.x = 0
                     print("finito1")
                     x_done = True
-                if self.position.y > array[1]:
+                if (self.position.y - y_start) > array[1]:
                     data_to_send.linear.y = linear_speed
-                elif self.position.y < array[1]:
+                elif (self.position.y - y_start) < array[1]:
                     data_to_send.linear.y = -linear_speed
                 else:
                     data_to_send.linear.y = 0
@@ -78,9 +83,9 @@ class CmdVelAction(object):
                     y_done = True
                 euler = euler_from_quaternion(self.orientation)
                 actual_yaw = round(euler[2], 2)
-                if actual_yaw> array[2]:
+                if (actual_yaw - yaw_start) > array[2]:
                     data_to_send.angular.z = angular_speed
-                elif actual_yaw < array[2]:
+                elif (actual_yaw-yaw_start) < array[2]:
                     data_to_send.angular.z = -angular_speed
                 else:
                     data_to_send.angular.z = 0
