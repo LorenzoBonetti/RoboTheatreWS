@@ -87,7 +87,8 @@ class CmdVelAction(object):
                         print("finito2")
                         y_done=True
                 if not yaw_done:
-                    if (actual_yaw - yaw_start) != array[2]:
+                    print("Mi devo muovere di", array[2])
+                    if abs(actual_yaw - yaw_start) != array[2]:
                         data_to_send.angular.z = angular_speed
                     else:
                         data_to_send.angular.z = 0
