@@ -63,6 +63,7 @@ class CmdVelAction(object):
             while not (x_done and y_done and yaw_done):
                 r=rospy.Rate(10)
                 print("Position:", self.position)
+                print("Starting position:", x_start, y_start, yaw_start)
                 euler = euler_from_quaternion(self.orientation)
                 actual_yaw = round(euler[2], 2)
                 print("Orientation:", actual_yaw)
