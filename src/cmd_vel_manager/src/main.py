@@ -56,7 +56,7 @@ class CmdVelAction(object):
             x_start = self.position[0]
             y_start = self.position[1]
             euler = euler_from_quaternion(self.orientation)
-            yaw_start = round(euler[2], 2)
+            yaw_start = round(euler[2], 1)
             x_done = False
             y_done = False
             yaw_done = False
@@ -65,7 +65,7 @@ class CmdVelAction(object):
                 print("Position:", self.position)
                 print("Starting position:", x_start, y_start, yaw_start)
                 euler = euler_from_quaternion(self.orientation)
-                actual_yaw = round(euler[2], 2)
+                actual_yaw = round(euler[2], 1)
                 print("Orientation:", actual_yaw)
                 data_to_send = Twist()
                 if (self.position[0] - x_start) > array[0]:
