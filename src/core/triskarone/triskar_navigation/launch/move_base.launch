@@ -4,7 +4,7 @@
 	<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
 
   	<!--Load general parameters-->
-    	<rosparam file="$(find triskar_navigation)/params/move_base_general_params.yaml" command="load" /> 
+    	<rosparam file="$(find triskar_navigation)/params/move_base_general/move_base_general_params.yaml" command="load" /> 
 
 	<!--Load global planner parameters-->
   	<rosparam file="$(find triskar_navigation)/params/global_planner/global_planner_params.yaml" command="load" />

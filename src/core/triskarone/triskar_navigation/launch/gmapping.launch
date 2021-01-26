@@ -1,7 +1,4 @@
 <launch>
-	<!--Launch Trikarone-->
-	<include file="$(find triskar)/launch/triskarone.launch"/>
-
 	<!-- Run map server-->
 	<include file="$(find triskar_navigation)/launch/map_server.launch" /> 
 	
