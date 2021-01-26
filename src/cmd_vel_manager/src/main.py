@@ -65,17 +65,17 @@ class CmdVelAction(object):
                 print(self.position)
                 print(self.orientation)
                 data_to_send = Twist()
-                if (self.position.x - x_start) > array[0]:
+                if (self.position[0] - x_start) > array[0]:
                     data_to_send.linear.x = linear_speed
-                elif (self.position.x - x_start) < array[0]:
+                elif (self.position[0]- x_start) < array[0]:
                     data_to_send.linear.x = -linear_speed
                 else:
                     data_to_send.linear.x = 0
                     print("finito1")
                     x_done = True
-                if (self.position.y - y_start) > array[1]:
+                if (self.position[1]- y_start) > array[1]:
                     data_to_send.linear.y = linear_speed
-                elif (self.position.y - y_start) < array[1]:
+                elif (self.position[1]- y_start) < array[1]:
                     data_to_send.linear.y = -linear_speed
                 else:
                     data_to_send.linear.y = 0
