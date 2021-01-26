@@ -61,6 +61,7 @@ class CmdVelAction(object):
             y_done = False
             yaw_done = False
             while not (x_done and y_done and yaw_done):
+                r=rospy.Rate(10)
                 print("sono quiii")
                 print(self.position)
                 print(self.orientation)
@@ -92,6 +93,7 @@ class CmdVelAction(object):
                     print("finito3")
                     yaw_done = True
                 self.cmd_vel_pub.publish(data_to_send)
+                r.sleep()
             self.counter = self.counter + 5
 
             # se abbiamo finito, passa al successivo
