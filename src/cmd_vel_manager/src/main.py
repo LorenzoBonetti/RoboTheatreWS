@@ -31,9 +31,9 @@ class CmdVelAction(object):
         self.orientation = [0, 0, 0, 0]
 
     def odometry_callback(self, data):
-        self.position = data.pose.position
-        self.orientation = [data.pose.orientation.x, data.pose.orientation.y, data.pose.orientation.z,
-                            data.pose.orientation.w]
+        self.position = data.pose.pose.position
+        self.orientation = [data.pose.pose.orientation.x, data.pose.pose.orientation.y, data.pose.pose.orientation.z,
+                            data.pose.pose.orientation.w]
 
     def execute_cb(self, goal):
 
