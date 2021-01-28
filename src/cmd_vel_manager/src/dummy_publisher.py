@@ -19,9 +19,10 @@ class DummyPublisher:
         array = []
         array.append(0)
         array.append(0)
-        array.append(0.5)
+        array.append(1.0)
         array.append(0.75)
-        array.append(0.2)
+        array.append(0.75)
+        array.append(0.3)
         data_to_send.data = array
         goal = triskarone_msgs.msg.manual_move_baseGoal(goal=data_to_send)
         self.action_client.send_goal(goal=goal)

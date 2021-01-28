@@ -9,32 +9,46 @@ from geometry_msgs.msg import Point
 from geometry_msgs.msg import Quaternion
 from tf.transformations import euler_from_quaternion
 from std_msgs.msg import Float32MultiArray
+from math import sin, cos, pi
 
 
 class CmdVelAction(object):
     # create messages that are used to publish feedback/result
     feedback = manual_move_baseFeedback()
     result = manual_move_baseResult()
-    has_to_move = False
-    counter = 0
 
     def __init__(self, name):
         self._action_name = name
+
+        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
+        self.odom_sub = rospy.Subscriber('vel', Twist, self.vel_callback)
+
+        self.last_time = rospy.get_rostime()
+        self.x = 0.0
+        self.y = 0.0
+        self.th = 0.0
+
+        self.counter = 0
+
         self._as = actionlib.SimpleActionServer(self._action_name, manual_move_baseAction, execute_cb=self.execute_cb,
                                                 auto_start=False)
         self._as.start()
-        self.cmd_vel_pub = rospy.Publisher('cmd_vel', Twist, queue_size=10)
-        self.odom_sub = rospy.Subscriber('odom', Odometry, self.odometry_callback)
-        rospy.loginfo("%s is started", rospy.get_name())
-        self.position =[0,0,0]
-        # self.orientation = Quaternion()
-        self.orientation = [0, 0, 0, 0]
 
-    def odometry_callback(self, data):
-        self.position = [round(data.pose.pose.position.x, 2), round(data.pose.pose.position.y, 2),
-                         round(data.pose.pose.position.z, 2)]
-        self.orientation = [data.pose.pose.orientation.x, data.pose.pose.orientation.y, data.pose.pose.orientation.z,
-                            data.pose.pose.orientation.w]
+        rospy.loginfo("%s is started", rospy.get_name())
+
+    def vel_callback(self, data):
+        vx = data.linear.x
+        vy = data.liner.y
+        vth = data.angular.z
+        current_time = rospy.get_rostime()
+        dt = (current_time - self.last_time).to_sec()
+        delta_x = (vx * cos(self.th) - vy * sin(self.th)) * dt
+        delta_y = (vx * sin(self.th) + vy * cos(self.th)) * dt
+        delta_th = vth * dt
+        self.x += delta_x
+        self.y += delta_y
+        self.th += delta_th
+        self.last_time = current_time
 
     def execute_cb(self, goal):
 
@@ -48,55 +62,53 @@ class CmdVelAction(object):
                 rospy.loginfo('%s: Preempted' % self._action_name)
                 self._as.set_preempted()
                 break
+
             array = [round(movements[self.counter], 2), round(movements[self.counter + 1], 2),
                      round(movements[self.counter + 2], 2)]
-            print(array)
-            linear_speed = movements[self.counter + 3]
-            angular_speed = movements[self.counter + 4]
-            x_start = self.position[0]
-            y_start = self.position[1]
-            euler = euler_from_quaternion(self.orientation)
-            yaw_start = round(euler[2], 1)
+            x_speed = movements[self.counter + 3]
+            y_speed = movements[self.counter + 4]
+            angular_speed = movements[self.counter + 5]
+
+            self.x = 0.0
+            self.y = 0.0
+            self.th = 0.0
+
+            x_start = self.x
+            y_start = self.y
+            th_start = self.th
+
             x_done = False
             y_done = False
             yaw_done = False
             while not (x_done and y_done and yaw_done):
-                r=rospy.Rate(10)
-                print("Position:", self.position)
-                print("Starting position:", x_start, y_start, yaw_start)
-                euler = euler_from_quaternion(self.orientation)
-                actual_yaw = round(euler[2], 1)
-                print("Orientation:", actual_yaw)
+                r = rospy.Rate(10)
                 data_to_send = Twist()
                 if not x_done:
-                    if (self.position[0] - x_start) > array[0]:
-                        data_to_send.linear.x = linear_speed
-                    elif (self.position[0]- x_start) < array[0]:
-                        data_to_send.linear.x = -linear_speed
+                    if abs(self.x - x_start) < array[0]:
+                        data_to_send.linear.x = x_speed
                     else:
-                        data_to_send.linear.x = 0
+                        data_to_send.linear.x = 0.0
                         print("finito1")
                         x_done = True
                 if not y_done:
-                    if (self.position[1]- y_start) > array[1]:
-                        data_to_send.linear.y = linear_speed
-                    elif (self.position[1]- y_start) < array[1]:
-                        data_to_send.linear.y = -linear_speed
+                    if abs(self.y - y_start) < array[1]:
+                        data_to_send.linear.y = y_speed
                     else:
-                        data_to_send.linear.y = 0
+                        data_to_send.linear.y = 0.0
                         print("finito2")
-                        y_done=True
+                        y_done = True
                 if not yaw_done:
                     print("Mi devo muovere di", array[2])
-                    if abs(actual_yaw - yaw_start) != array[2]:
+                    if abs(self.th - th_start) < array[2]:
                         data_to_send.angular.z = angular_speed
                     else:
-                        data_to_send.angular.z = 0
+                        data_to_send.angular.z = 0.0
                         print("finito3")
                         yaw_done = True
                 self.cmd_vel_pub.publish(data_to_send)
                 r.sleep()
-            self.counter = self.counter + 5
+
+            self.counter = self.counter + 6
 
             # se abbiamo finito, passa al successivo
         self.result.response = True
