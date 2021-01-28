@@ -18,9 +18,9 @@ class DummyPublisher:
         data_to_send = Float32MultiArray()
         array = []
         array.append(1.0)
-        array.append(0)
+        array.append(2.0)
         array.append(0.0)
-        array.append(0.75)
+        array.append(-0.75)
         array.append(0.75)
         array.append(0.3)
         data_to_send.data = array
