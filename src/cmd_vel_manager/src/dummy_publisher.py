@@ -17,9 +17,9 @@ class DummyPublisher:
         r.sleep()
         data_to_send = Float32MultiArray()
         array = []
-        array.append(0)
-        array.append(0)
         array.append(1.0)
+        array.append(0)
+        array.append(0.0)
         array.append(0.75)
         array.append(0.75)
         array.append(0.3)
