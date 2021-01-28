@@ -19,7 +19,7 @@ map_update_interval: 0.2
 maxUrange: 4.0
 
 #The sigma used by the greedy endpoint matching
-sigma (float, default: 0.05)
+sigma: 0.05
 
 #The kernel in which to look for a correspondence
 kernelSize: 1
