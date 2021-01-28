@@ -38,7 +38,7 @@ class CmdVelAction(object):
 
     def vel_callback(self, data):
         vx = data.linear.x
-        vy = data.liner.y
+        vy = data.linear.y
         vth = data.angular.z
         current_time = rospy.get_rostime()
         dt = (current_time - self.last_time).to_sec()
@@ -54,7 +54,6 @@ class CmdVelAction(object):
 
         movements = goal.goal.data
         self.counter = 0
-        self.has_to_move = True
         has_finished = False
         while self.counter < len(movements):
             # check that preempt has not been requested by the client
@@ -82,6 +81,7 @@ class CmdVelAction(object):
             yaw_done = False
             while not (x_done and y_done and yaw_done):
                 r = rospy.Rate(10)
+                print("It has moved by %f  %f  %f", self.x, self.y, self.th)
                 data_to_send = Twist()
                 if not x_done:
                     if abs(self.x - x_start) < array[0]:
