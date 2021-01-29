@@ -33,10 +33,6 @@ class MainController:
         self.move_base_recovery = rospy.get_param("move_base_recovery")
         self.section_number = rospy.get_param("section_to_start")
 
-        # initialize publishers
-        self.eyes_pub = rospy.Publisher('arduino/eyes', Int8MultiArray, queue_size=10)
-        self.body_pub = rospy.Publisher('arduino/body', Int8MultiArray, queue_size=10)
-
         # initialize subscribers
         rospy.Subscriber("next_section", Bool, self.next_section_callback)
         rospy.Subscriber("move_base_recovery", Int8, self.recovery_move_base_callback)
