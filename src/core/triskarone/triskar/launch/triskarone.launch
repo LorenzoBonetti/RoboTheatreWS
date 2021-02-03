@@ -21,4 +21,10 @@
 	<!-- Merges the two lasers-->
 	<include file="$(find ira_laser_tools)/launch/laserscan_multi_merger.launch"/>
 	
+	<!--Arduino nodes-->
+	<include file="$(find triskar)/launch/arduino.launch"/>
+	
+	<!--Audio nodes-->
+	<include file="$(find triskar)/launch/audio.launch"/>
+	
 </launch> 

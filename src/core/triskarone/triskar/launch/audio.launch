@@ -1,0 +1,4 @@
+<launch>
+	<include file="$(find speech_monitor)/launch/speech_monitor.launch" />
+    	<include file="$(find audio_player_actionlib)/launch/audio_player.launch" />
+</launch>

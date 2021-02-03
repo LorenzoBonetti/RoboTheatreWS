@@ -3,7 +3,7 @@
     "trigger": "after_precedent",
     "trigger_data": -1,
     "actions": {
-      "move_base":[-1.19,-2.20,0.33,0.94],
+      "move_base":[-0.19,2.21,0.33,0.94],
       "speak": "sampson0.wav"
     }
   },
@@ -11,7 +11,7 @@
     "trigger": "after_command",
     "trigger_data": 3,
     "actions": {
-      "move_base": [-0.05, 2.04, -0.47, 0.88]
+      "speak": "sampson2.wav"
     }
   },
   "section3": {
