@@ -41,8 +41,8 @@ bool should_move_body;
 
 void setup()
 {
-  //Serial.begin(9600);
   pinMode(BAT_PROBE_LED,OUTPUT);
+  pinMode(BUZZER_PIN,OUTPUT);
   //nh.getHardware()->setBaud(57600);
   nh.initNode();
   delay(1000);
@@ -91,14 +91,14 @@ void loop()
         }
     }
 
-    if(should_move_eyes){
+ /*   if(should_move_eyes){
       move_eyes();
     }
     if(should_move_body){
       move_body();
     }
     nh.spinOnce();
-   
+   */
    
 }
 
