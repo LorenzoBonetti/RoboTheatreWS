@@ -41,9 +41,10 @@ bool should_move_body;
 
 void setup()
 {
+  //Serial.begin(9600);
   pinMode(BAT_PROBE_LED,OUTPUT);
   pinMode(BUZZER_PIN,OUTPUT);
-  //nh.getHardware()->setBaud(57600);
+  nh.getHardware()->setBaud(57600);
   nh.initNode();
   delay(1000);
   nh.subscribe(eyes_sub);
@@ -91,14 +92,14 @@ void loop()
         }
     }
 
- /*   if(should_move_eyes){
+    if(should_move_eyes){
       move_eyes();
     }
     if(should_move_body){
       move_body();
     }
     nh.spinOnce();
-   */
+   
    
 }
 
@@ -106,7 +107,6 @@ void loop()
 // the voltage level to serial port.
 float checkBatteryLevel(){
   float voltage = getVoltageLevel(BATTERY_PIN,LOW_BATTERY_VOLTAGE, VOLTAGE_TRH);
-  
   if (voltage <= LOW_BATTERY_VOLTAGE && voltage >= (LOW_BATTERY_VOLTAGE/2)){
     if ((millis() - last_battery_beep_time) > BEEPING_INTERVAL){
       last_battery_beep_time = millis();

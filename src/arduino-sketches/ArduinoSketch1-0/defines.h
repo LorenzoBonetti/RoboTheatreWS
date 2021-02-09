@@ -28,7 +28,7 @@
 
 //battery defines
 
-#define BAT_CHK_TIMEOUT_TRH 10000     // publishes battery data every 60 secs.
+#define BAT_CHK_TIMEOUT_TRH 5000     // publishes battery data every 60 secs.
 #define BEEPING_INTERVAL 5000
 #define LOW_BATTERY_VOLTAGE 21
 #define VOLTAGE_TRH 3.70  //3.70 correspond to battery level at 21V.
