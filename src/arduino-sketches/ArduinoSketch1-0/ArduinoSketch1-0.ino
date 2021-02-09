@@ -231,6 +231,18 @@ void eyes_callback(const std_msgs::Int8MultiArray&msg){
           l_low_final_angle=LOOK_UP_LOW_L;
           l_high_final_angle=LOOK_UP_HIGH_L;
           break;
+    case EYES_CROSS:
+          r_low_final_angle=LOOK_LEFT_LOW_R;
+          r_high_final_angle=LOOK_LEFT_HIGH_R;
+          l_low_final_angle=LOOK_RIGH_LOW_L;
+          l_high_final_angle=LOOK_RIGH_HIGH_L;
+          break;
+    case EYES_DIVIDE:
+          r_low_final_angle=LOOK_RIGH_LOW_R;
+          r_high_final_angle=LOOK_RIGH_HIGH_R;
+          l_low_final_angle=LOOK_LEFT_LOW_L;
+          l_high_final_angle=LOOK_LEFT_HIGH_L;
+          break;
   }
   should_move_eyes=true;
 }

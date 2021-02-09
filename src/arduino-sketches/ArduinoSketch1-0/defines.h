@@ -82,5 +82,7 @@
 #define EYES_LEFT 2
 #define EYES_UP 3
 #define EYES_DOWN 4
+#define EYES_CROSS 5
+#define EYES_DIVIDE 6
 
 #endif
