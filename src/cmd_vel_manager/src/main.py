@@ -81,29 +81,24 @@ class CmdVelAction(object):
             yaw_done = False
             while not (x_done and y_done and yaw_done):
                 r = rospy.Rate(10)
-                print("It has moved by %f  %f  %f", self.x, self.y, self.th)
                 data_to_send = Twist()
                 if not x_done:
                     if abs(self.x - x_start) < array[0]:
                         data_to_send.linear.x = x_speed
                     else:
                         data_to_send.linear.x = 0.0
-                        print("finito1")
                         x_done = True
                 if not y_done:
                     if abs(self.y - y_start) < array[1]:
                         data_to_send.linear.y = y_speed
                     else:
                         data_to_send.linear.y = 0.0
-                        print("finito2")
                         y_done = True
                 if not yaw_done:
-                    print("Mi devo muovere di", array[2])
                     if abs(self.th - th_start) < array[2]:
                         data_to_send.angular.z = angular_speed
                     else:
                         data_to_send.angular.z = 0.0
-                        print("finito3")
                         yaw_done = True
                 self.cmd_vel_pub.publish(data_to_send)
                 r.sleep()

@@ -26,5 +26,8 @@
 	
 	<!--Audio nodes-->
 	<include file="$(find triskar)/launch/audio.launch"/>
+
+	<include file="$(find cmd_vel_manager)/launch/cmd_vel_manager.launch"/>
+
 	
 </launch> 

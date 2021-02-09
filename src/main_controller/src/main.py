@@ -54,6 +54,7 @@ class MainController:
         self.move_base_client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
         self.eyes_manager_client = actionlib.SimpleActionClient('eyes_manager', triskarone_msgs.msg.move_eyesAction)
         self.body_manager_client = actionlib.SimpleActionClient('body_manager', triskarone_msgs.msg.move_bodyAction)
+        self.cmd_vel_client=actionlib.SimpleActionClient('cmd_vel_manager', triskarone_msgs.msg.manual_move_baseAction)
 
         # wait for servers to start
         self.speech_client.wait_for_server()
@@ -135,6 +136,7 @@ class MainController:
         move_base_error = False
         move_eyes = False
         move_body = False
+        manual_move=False
         if "speak" in actions:
             file_to_play = actions['speak']
             has_to_speak = True
@@ -144,8 +146,10 @@ class MainController:
             move_eyes = True
         if "move_body" in actions:
             move_body = True
+        if "manual_move" in actions:
+            manual_move=True
 
-        while has_to_speak or move_base or move_eyes or move_body:
+        while has_to_speak or move_base or move_eyes or move_body or manual_move:
             if self.audio_client.get_state() == GoalStatus.SUCCEEDED:
                 # rospy.loginfo("audio_client has finished")
                 has_to_speak = False
@@ -159,6 +163,8 @@ class MainController:
                 move_eyes = False
             if self.body_manager_client.get_state() == GoalStatus.SUCCEEDED:
                 move_body = False
+            if self.cmd_vel_client.get_state()==GoalStatus.SUCCEEDED
+                manual_move=False
             continue
         while move_base_error:
             rospy.loginfo("Failed to get in position, starting recovery")
@@ -218,6 +224,11 @@ class MainController:
             goal = triskarone_msgs.msg.play_audioGoal(filename=file_to_play)
             self.audio_client.send_goal(goal)
             rospy.loginfo("Playing audio: %s", file_to_play)
+        if "manual_move" in actions:
+            movements=actions["manual_move"]
+            goal = triskarone_msgs.msg.manual_move_baseGoal()
+            self.cmd_vel_client.send_goal(goal)
+            rospy.loginfo("Cmd_vel_manager")
         if "move_base" in actions:
             goal = MoveBaseGoal()
             goal.target_pose.header.frame_id = "map"

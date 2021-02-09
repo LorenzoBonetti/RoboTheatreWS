@@ -1,0 +1,30 @@
+{
+  "section1": {
+    "trigger": "after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "move_base":[2.41,-2.2,0.33,0.94]
+    }
+  },
+  "section2": {
+    "trigger": "after_command",
+    "trigger_data": 3,
+    "actions": {
+      "move_base":[0.27,-0.08,0.63,0.77]
+    }
+  },
+  "section3": {
+    "trigger":"after_command",
+    "trigger_data": -1,
+    "actions": {
+      "move_base":[1.676,2.094,0.14,0.99]
+    }
+  },
+  "section4": {
+    "trigger":"after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "end": -1
+    }
+  }
+}
