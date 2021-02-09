@@ -8,22 +8,6 @@
 	<!-- Run gmapping server -->
 	<node name="slam_gmapping" pkg="gmapping" type="slam_gmapping">
 	<rosparam file="$(find triskar_navigation)/params/gmapping/gmapping_params.yaml" command="load" />
-		<!--<param name="map_update_interval" value="0.2" />
-		<param name="particles" value="100" />
-		<param name="maxUrange" value="5.0" />
-		<param name="xmin" value="-5.0" />
-		<param name="ymin" value="-5.0" />
-		<param name="xmax" value="5.0" />
-		<param name="ymax" value="5.0" />
-		<param name="maxRange" value="5.6" />-->
-		
-		<!-- 
-		<param name="scan" value="/scan_right" />
-		<name="base_frame" value="base_link" />
-		<param name="linearUpdate" value="0.2" />
-		<param name="maxRange" value="4.6" />		
-		<remap from="scan" to="scan_right" />
-		-->
 	</node>
 	
 </launch> 
