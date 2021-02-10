@@ -14,7 +14,7 @@
     "trigger_data": 3,
     "actions": {
       "move_base":[0.27,-0.08,0.63,0.77],
-      "move_eyes":[5,2,6,2,5,2,6,2,0,2],
+      "move_eyes":[5,2,6,2,5,2,6,2,0,2]
     }
   },
   "section3": {

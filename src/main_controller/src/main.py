@@ -163,7 +163,7 @@ class MainController:
                 move_eyes = False
             if self.body_manager_client.get_state() == GoalStatus.SUCCEEDED:
                 move_body = False
-            if self.cmd_vel_client.get_state()==GoalStatus.SUCCEEDED
+            if self.cmd_vel_client.get_state()==GoalStatus.SUCCEEDED:
                 manual_move=False
             continue
         while move_base_error:

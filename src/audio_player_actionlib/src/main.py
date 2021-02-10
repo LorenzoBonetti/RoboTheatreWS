@@ -61,54 +61,54 @@ class AudioPlayerAction(object):
         rospy.loginfo("%s is started", rospy.get_name())
 
     def execute_cb(self, goal):
-    	with suppress_stdout_stderr():
-			# helper variables
-			r = rospy.Rate(10)
-			success = True
-			file_to_play = self.audio_folder_path + goal.filename
-			# publish info to the console for the user
-			print(goal.filename)
-			# start executing the action
-			wf = wave.open(file_to_play, 'rb')
+        with suppress_stdout_stderr():
+            # helper variables
+            r = rospy.Rate(10)
+            success = True
+            file_to_play = self.audio_folder_path + goal.filename
+            # publish info to the console for the user
+            print(goal.filename)
+            # start executing the action
+            wf = wave.open(file_to_play, 'rb')
 
-			p = pyaudio.PyAudio()
+            p = pyaudio.PyAudio()
 
-			def callback(in_data, frame_count, time_info, status):
-			    data = wf.readframes(frame_count)
-			    return (data, pyaudio.paContinue)
+            def callback(in_data, frame_count, time_info, status):
+                data = wf.readframes(frame_count)
+                return (data, pyaudio.paContinue)
 
-			stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-			                channels=wf.getnchannels(),
-			                rate=wf.getframerate(),
-			                output=True,
-			                stream_callback=callback)
+            stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
+                            channels=wf.getnchannels(),
+                            rate=wf.getframerate(),
+                            output=True,
+                            stream_callback=callback)
 
-			stream.start_stream()
+            stream.start_stream()
 
-			while stream.is_active():
-			    # check that preempt has not been requested by the client
-			    if self._as.is_preempt_requested():
-			        rospy.loginfo('%s: Preempted' % self._action_name)
-			        self._as.set_preempted()
-			        success = False
-			        stream.stop_stream()
-			        stream.close()
-			        wf.close()
-			        break
-			    self.feedback.hasFinished = False
-			    # publish the feedback
-			    self._as.publish_feedback(self.feedback)
-			    r.sleep()
-			stream.stop_stream()
-			stream.close()
-			wf.close()
-			p.terminate()
+            while stream.is_active():
+                # check that preempt has not been requested by the client
+                if self._as.is_preempt_requested():
+                    rospy.loginfo('%s: Preempted' % self._action_name)
+                    self._as.set_preempted()
+                    success = False
+                    stream.stop_stream()
+                    stream.close()
+                    wf.close()
+                    break
+                self.feedback.hasFinished = False
+                # publish the feedback
+                self._as.publish_feedback(self.feedback)
+                r.sleep()
+            stream.stop_stream()
+            stream.close()
+            wf.close()
+            p.terminate()
 
-			if success:
-			    self.feedback.hasFinished = True
-			    self.result.response = self.feedback.hasFinished
-			    rospy.loginfo('%s: Succeeded' % self._action_name)
-			    self._as.set_succeeded(self.result)
+            if success:
+                self.feedback.hasFinished = True
+                self.result.response = self.feedback.hasFinished
+                rospy.loginfo('%s: Succeeded' % self._action_name)
+                self._as.set_succeeded(self.result)
 
 
 if __name__ == '__main__':
