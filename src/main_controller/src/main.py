@@ -11,6 +11,7 @@ from main_controller.cfg import main_controllerConfig
 import rospy
 # import std_msgs
 from std_msgs.msg import Int8MultiArray
+from std_msgs.msg import Float32MultiArray
 from std_msgs.msg import Bool
 from std_msgs.msg import Int8
 from triskarone_msgs.msg import *
@@ -225,8 +226,13 @@ class MainController:
             self.audio_client.send_goal(goal)
             rospy.loginfo("Playing audio: %s", file_to_play)
         if "manual_move" in actions:
-            movements=actions["manual_move"]
-            goal = triskarone_msgs.msg.manual_move_baseGoal()
+            array = []
+            for data in actions['manual_move']:
+                array.append(data)
+            rospy.loginfo("Moving cmd_vel in position");
+            data_to_send = Float32MultiArray()
+            data_to_send.data = array
+            goal = triskarone_msgs.msg.manual_move_baseGoal(goal=data_to_send)
             self.cmd_vel_client.send_goal(goal)
             rospy.loginfo("Cmd_vel_manager")
         if "move_base" in actions:

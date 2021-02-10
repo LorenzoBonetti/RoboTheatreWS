@@ -53,6 +53,7 @@ class CmdVelAction(object):
     def execute_cb(self, goal):
 
         movements = goal.goal.data
+        print(movements)
         self.counter = 0
         has_finished = False
         while self.counter < len(movements):
