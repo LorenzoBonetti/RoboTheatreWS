@@ -13,7 +13,7 @@ void body_callback (const std_msgs::Int8MultiArray&msg);
 void move_body();
 
 Servo low_r, high_r, low_l, high_l;
-Servo body_right, body_left, body_back;
+Servo body_right, body_left, body_back, body_back_down;
 
 std_msgs::Bool eyes_msg;
 std_msgs::Bool body_msg;
@@ -34,7 +34,7 @@ int r_low_final_angle, r_high_final_angle, l_low_final_angle, l_high_final_angle
 int eyes_speed;
 bool should_move_eyes;
 
-int fr_final_angle, fl_final_angle, b_final_angle;
+int fr_final_angle, fl_final_angle, b_final_angle, b_d_final_angle;
 int body_speed;
 bool should_move_body;
 
@@ -61,6 +61,10 @@ void setup()
   r_high_final_angle=STANDARD_HIGH_R;
   l_low_final_angle=STANDARD_LOW_L;
   l_high_final_angle=STANDARD_HIGH_L;
+  /*r_low_final_angle=LOOK_DOWN_LOW_R;
+  r_high_final_angle=LOOK_DOWN_HIGH_R;
+  l_low_final_angle=LOOK_DOWN_LOW_L;
+  l_high_final_angle=LOOK_DOWN_HIGH_L;*/
   
   should_move_eyes=true;
   eyes_speed=5;
@@ -68,10 +72,16 @@ void setup()
   body_right.attach(BODY_RIGH_SERVO_PIN);
   body_left.attach(BODY_LEFT_SERVO_PIN);
   body_back.attach(BODY_BACK_SERVO_PIN);
+  body_back_down.attach(BODY_BACK_DOWN_SERVO_PIN);
+  
 
-  fr_final_angle=FR_OPEN;
-  fl_final_angle=FL_OPEN;
+  fr_final_angle=FR_MIDDLE;
+  fl_final_angle=FL_MIDDLE;
   b_final_angle=B_MIDDLE;
+  b_d_final_angle=B_D_MIDDLE;
+  //fr_final_angle=FR_CLOSE;
+  //fl_final_angle=FL_CLOSE;
+  //b_final_angle=B_OPEN;
   body_speed=5;
   should_move_body=true;
 
@@ -129,45 +139,52 @@ void body_callback (const std_msgs::Int8MultiArray&msg){
    body_speed=msg.data[1];
    switch(movement_type){
     case NORMAL:
-          fr_final_angle=FR_OPEN;
-          fl_final_angle=FL_OPEN;
+          fr_final_angle=FR_MIDDLE;
+          fl_final_angle=FL_MIDDLE;
           b_final_angle=B_MIDDLE;
+          b_d_final_angle=B_D_MIDDLE;
           break;
     case BOW:
-          fr_final_angle=FR_CLOSE;
-          fl_final_angle=FL_CLOSE;
-          b_final_angle=B_OPEN;
+          fr_final_angle=FR_MIDDLE;
+          fl_final_angle=FL_MIDDLE;
+          b_final_angle=B_CLOSE;
+          b_d_final_angle=B_D_OPEN;
           break;
     case BOW_RIGHT:
           fr_final_angle=FR_CLOSE;
           fl_final_angle=FL_OPEN;
-          b_final_angle=B_OPEN;
+          b_final_angle=B_MIDDLE;
+          b_d_final_angle=B_D_MIDDLE;
           break;
     case BOW_LEFT:
           fr_final_angle=FR_OPEN;
           fl_final_angle=FL_CLOSE;
-          b_final_angle=B_OPEN;
+          b_final_angle=B_MIDDLE;
+          b_d_final_angle=B_D_MIDDLE;
           break;
     case BOW_BACK:
           fr_final_angle=FR_OPEN;
           fl_final_angle=FL_OPEN;
-          b_final_angle=B_CLOSE;
+          b_final_angle=B_OPEN;
+          b_d_final_angle=B_D_CLOSE;
           break;
     }
     should_move_body=true;
 }
 
 void move_body(){
-  int fr_angle,fl_angle,b_angle;
+  int fr_angle,fl_angle,b_angle,b_d_angle;
   fr_angle=body_right.read();
   fl_angle=body_left.read();
   b_angle=body_back.read();
-  if(fr_angle!=fr_final_angle||fl_angle!=fl_final_angle||b_angle!=b_final_angle){
+  b_d_angle=body_back_down.read();
+  if(fr_angle!=fr_final_angle||fl_angle!=fl_final_angle||b_angle!=b_final_angle||b_d_angle!=b_d_final_angle){
     if((millis()-last_body_move_time)>(body_speed*SPEED_MULTIPLIER)){
       last_body_move_time=millis();
       move_servo_by_one_degree(body_right,fr_final_angle);
       move_servo_by_one_degree(body_left,fl_final_angle);
       move_servo_by_one_degree(body_back,b_final_angle);
+      move_servo_by_one_degree(body_back_down,b_d_final_angle);
     }
   }else{
     should_move_body=false;
