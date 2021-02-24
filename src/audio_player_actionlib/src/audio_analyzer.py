@@ -18,8 +18,4 @@ while True:
     data = stream.read(CHUNK)
     rms = audioop.rms(data, 2)
     decibel = 20 * math.log10(rms)
-
-    if decibel > 65:
-        print("SPEAKING")
-    else:
-        print("NOT SPEAKING")
+    print(decibel)
