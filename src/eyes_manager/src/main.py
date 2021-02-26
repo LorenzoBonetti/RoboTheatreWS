@@ -20,15 +20,14 @@ class EyesManagerAction(object):
                                                 auto_start=False)
         self._as.start()
         self.eyes_pub = rospy.Publisher('arduino/eyes', Int8MultiArray, queue_size=10)
+        self.pause=0
         rospy.Subscriber("arduino/eyes_response", Bool, self.movement_callback)
         rospy.loginfo("%s is started", rospy.get_name())
 
     def movement_callback(self, data):
         self.has_to_move = True
         self.counter = self.counter + 3
-        if self.pause != 0:
-            r = rospy.Rate(1 / self.pause)
-            r.sleep()
+        
 
     def execute_cb(self, goal):
         # print("Chiamata all'azione")
@@ -48,9 +47,12 @@ class EyesManagerAction(object):
 
             # move_eyes
             if self.has_to_move and self.counter < len(movements):
-                array = [movements[self.counter], movements[self.counter + 1]]
-                self.pause = movements[self.counter + 2]
-
+                array = [movements[self.counter+1], movements[self.counter + 2]]
+                self.pause = movements[self.counter]
+                if self.pause != 0:
+            		r = rospy.Rate(1 / self.pause)
+            		rospy.loginfo("Pause %f",self.pause)
+            		r.sleep()
                 rospy.loginfo('Move eyes in position %d by speed %d', movements[self.counter],
                               movements[self.counter + 1])
                 data_to_send = Int8MultiArray()

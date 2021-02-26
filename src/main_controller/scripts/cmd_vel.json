@@ -1,9 +1,9 @@
 {
   "section1": {
-    "trigger": "after_command",
+    "trigger": "after_precedent",
     "trigger_data": 2,
     "actions": {
-    	"move_eyes":[0,2]
+    	"move_eyes":[1,2,3,3,2,1,4,5,2,6,2,0,4,2,1]
     }
   },
    "section2": {

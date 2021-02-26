@@ -19,6 +19,7 @@ class BodyManagerAction(object):
                                                 auto_start=False)
         self._as.start()
         self.body_pub = rospy.Publisher('arduino/body', Int8MultiArray, queue_size=10)
+        self.pause=0
         rospy.Subscriber("arduino/body_response", Bool, self.movement_callback)
         rospy.loginfo("%s is started", rospy.get_name())
 
@@ -27,6 +28,7 @@ class BodyManagerAction(object):
         self.counter=self.counter+3
         if self.pause!=0:
             r = rospy.Rate(1/self.pause)
+            rospy.loginfo("Pause %f",self.pause)
             r.sleep()
 
     def execute_cb(self, goal):
