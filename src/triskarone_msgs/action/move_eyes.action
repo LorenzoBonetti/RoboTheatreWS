@@ -1,5 +1,5 @@
 #goal definition
-std_msgs/Int8MultiArray goal
+std_msgs/Float32MultiArray goal
 ---
 #result definition
 bool response

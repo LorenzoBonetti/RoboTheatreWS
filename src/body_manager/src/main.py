@@ -3,7 +3,7 @@ import actionlib
 import rospy
 
 from triskarone_msgs.msg import *
-from std_msgs.msg import Int8MultiArray
+from std_msgs.msg import Float32MultiArray
 from std_msgs.msg import Bool
 
 
@@ -45,15 +45,15 @@ class BodyManagerAction(object):
             # move_eyes
             if self.has_to_move and self.counter < len(movements):
 
-                array = [movements[self.counter+1], movements[self.counter + 2]]
+                array = [int(movements[self.counter+1]), int(movements[self.counter + 2])]
                 self.pause = movements[self.counter]
                 if self.pause != 0:
                     r = rospy.Rate(1 / self.pause)
                     rospy.loginfo("Pause %f", self.pause)
                     r.sleep()
 
-                rospy.loginfo('Move body in position %d by speed %d', movements[self.counter+1],
-                              movements[self.counter + 2])
+                rospy.loginfo('Move body in position %d by speed %d', int(movements[self.counter+1]),
+                              int(movements[self.counter + 2]))
                 data_to_send = Int8MultiArray()
                 data_to_send.data = array
                 self.has_to_move = False
