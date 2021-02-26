@@ -40,13 +40,13 @@
 //body defines
 //servo angles
 #define FR_OPEN 180
-#define FR_MIDDLE 90
+#define FR_MIDDLE 140
 #define FR_CLOSE  0
 #define FL_OPEN 0
-#define FL_MIDDLE 90
+#define FL_MIDDLE 40
 #define FL_CLOSE 180
 #define B_OPEN 180
-#define B_MIDDLE 110
+#define B_MIDDLE 90
 #define B_CLOSE 0
 #define B_D_OPEN 0
 #define B_D_CLOSE 180
