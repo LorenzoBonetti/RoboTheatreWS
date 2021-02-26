@@ -5,15 +5,15 @@
     "actions": {
       "move_base":[2.41,-2.2,0.33,0.94],
       "speak":"pinocchio0.wav",
-      "move_eyes":[3,2,4,2,3,2,4,2,0,2],
-      "move_body":[1,2,0,2]
+      "move_eyes":[0,3,2,1,4,2,1,3,2,1,4,2,1,0,2],
+      "move_body":[0,1,2,2,0,2]
     }
   },
   "section2":{
   	"trigger": "after_precedent",
     "trigger_data": 3,
     "actions": {
-      "manual_move":[0.0,0.0,2.0,0.0,0.0,1.0]
+      "manual_move":[0.0,0.0,2.0,0.0,0.0,1.0,0.5]
     }
   },
   "section3": {
@@ -21,8 +21,8 @@
     "trigger_data": 3,
     "actions": {
       "move_base":[0.27,-0.08,0.63,0.77],
-      "move_eyes":[5,2,6,2,5,2,6,2,0,2],
-      "move_body":[4,2,0,2]
+      "move_eyes":[0,5,2,1,6,2,1,5,2,1,6,2,1,0,2],
+      "move_body":[0,4,2,1,0,2]
     }
   },
   "section4": {
@@ -30,16 +30,16 @@
     "trigger_data": -1,
     "actions": {
       "move_base":[1.676,2.094,0.14,0.99],
-      "move_eyes":[3,2,4,2,3,2,4,2,0,2],
+      "move_eyes":[0,3,2,1,4,2,1,3,2,1,4,2,1,0,2],
       "speak":"pinocchio1.wav"
     }
   },
   "section5": {
-    "trigger":"after_speech",
+    "trigger":"after_predent",
     "trigger_data":2,
     "actions": {
       "move_base":[2.58,-0.19,-0.64,0.76],
-      "move_eyes":[5,1,6,2,5,1,6,2,0,1],
+      "move_eyes":[0,5,1,1,6,2,1,5,1,1,6,2,1,0,1],
       "speak":"pinocchio2.wav"
     }
   },
@@ -49,14 +49,14 @@
     "actions": {
       "move_base":[2.41,-2.2,0.33,0.94],
       "speak":"pinocchio3.wav",
-      "move_eyes":[3,2,4,2,3,2,4,2,0,2]
+      "move_eyes":[1,3,2,1,4,2,1,3,2,1,4,2,1,0,2]
     }
   },
   "section7":{
   	"trigger": "after_precedent",
     "trigger_data": 3,
     "actions": {
-      "manual_move":[0.0,0.0,0.8,0.0,0.0,-1.0,2.0,0.0,0.0,-0.5,0.0,0.0,0.0,0.0,1.5,0.0,0.0,-1.0,1.0,0.0,0.0,-0.5,0.0,0.0]
+      "manual_move":[0.0,0.0,0.8,0.0,0.0,-1.0,0.5,2.0,0.0,0.0,-0.5,0.0,0.0,0.5,0.0,0.0,1.5,0.0,0.0,-1.0,0.5,1.0,0.0,0.0,-0.5,0.0,0.0,0.5]
     }
   },
    "section8":{
@@ -70,21 +70,21 @@
     "trigger": "after_precedent",
     "trigger_data": -1,
     "actions": {
-      "move_eyes":[1,4,0,4,2,4,0,4]
+      "move_eyes":[1,1,4,2,0,4,2,2,4,2,0,4]
     }
   },
   "section10": {
     "trigger": "after_precedent",
     "trigger_data": 2,
     "actions": {
-    	"manual_move":[0.0,0.0,3.0,0.0,0.0,-1.0,0.0,0.0,6.0,0.0,0.0,1.0,0.0,0.0,3.0,0.0,0.0,-1.0]
+    	"manual_move":[0.0,0.0,1.5,0.0,0.0,-0.5,2.0,0.0,0.0,3.0,0.0,0.0,0.5,2.0,0.0,0.0,1.5,0.0,0.0,-0.5,0.0]
     }
   },
     "section11": {
     "trigger": "after_precedent",
     "trigger_data": -1,
     "actions": {
-    	"move_eyes":[3,1]
+    	"move_eyes":[2,3,6]
     }
   },
   "section12": {
