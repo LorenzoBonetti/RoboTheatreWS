@@ -3,7 +3,7 @@
     "trigger": "after_precedent",
     "trigger_data": 2,
     "actions": {
-    	"move_eyes":[1,2,3,3,2,1,4,5,2,6,2,0,4,2,1]
+    	"move_eyes":[1,2,3,0,3,1,0.5,5,2]
     }
   },
    "section2": {
