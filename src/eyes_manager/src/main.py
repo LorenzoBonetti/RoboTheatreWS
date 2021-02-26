@@ -3,7 +3,7 @@ import actionlib
 import rospy
 
 from triskarone_msgs.msg import *
-from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Float32MultiArray, Int8MultiArray
 from std_msgs.msg import Bool
 
 
