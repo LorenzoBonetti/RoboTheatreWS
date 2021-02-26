@@ -68,6 +68,7 @@ class CmdVelAction(object):
             x_speed = movements[self.counter + 3]
             y_speed = movements[self.counter + 4]
             angular_speed = movements[self.counter + 5]
+            pause=movements[self.counter+6]
 
             self.x = 0.0
             self.y = 0.0
@@ -81,7 +82,7 @@ class CmdVelAction(object):
             y_done = False
             yaw_done = False
             while not (x_done and y_done and yaw_done):
-                r = rospy.Rate(10)
+                r = rospy.Rate(1/pause)
                 data_to_send = Twist()
                 if not x_done:
                     if abs(self.x - x_start) < array[0]:
@@ -104,7 +105,7 @@ class CmdVelAction(object):
                 self.cmd_vel_pub.publish(data_to_send)
                 r.sleep()
 
-            self.counter = self.counter + 6
+            self.counter = self.counter + 7
 
             # se abbiamo finito, passa al successivo
         self.result.response = True

@@ -24,9 +24,10 @@ class BodyManagerAction(object):
 
     def movement_callback(self, data):
         self.has_to_move = True
-        self.counter=self.counter+2
-        r = rospy.Rate(0.5)
-        r.sleep()
+        self.counter=self.counter+3
+        if self.pause!=0:
+            r = rospy.Rate(1/self.pause)
+            r.sleep()
 
     def execute_cb(self, goal):
         
@@ -45,6 +46,7 @@ class BodyManagerAction(object):
             # move_eyes
             if self.has_to_move and self.counter<len(movements):
                 array = [movements[self.counter], movements[self.counter + 1]]
+                self.pause=movements[self.counter+2]
                 rospy.loginfo('Move body in position %d by speed %d', movements[self.counter],movements[self.counter+1])
                 data_to_send = Int8MultiArray()
                 data_to_send.data = array
