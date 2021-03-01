@@ -108,7 +108,7 @@
     },
       "section14": {
     "trigger": "after_speech",
-    "trigger_data": 4,
+    "trigger_data": 1,
     "actions": {
     	"speak":"pinocchio5.wav"
     }
