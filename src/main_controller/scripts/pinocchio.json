@@ -99,7 +99,77 @@
     	"move_body":[5,0,3]
     }
     },
-  "section13": {
+      "section13": {
+    "trigger": "after_precedent",
+    "trigger_data": -1,
+    "actions": {
+    	"speak":"pinocchio4.wav"
+    }
+    },
+      "section14": {
+    "trigger": "after_speech",
+    "trigger_data": 4,
+    "actions": {
+    	"speak":"pinocchio5.wav"
+    }
+    },
+    "section15": {
+    "trigger": "after_speech",
+    "trigger_data": 3,
+    "actions": {
+    	"speak":"pinocchio6.wav"
+    }
+    },
+    "section16": {
+    "trigger": "after_speech",
+    "trigger_data": 2,
+    "actions": {
+    	"speak":"pinocchio7.wav"
+    }
+    },
+    "section17": {
+    "trigger": "after_speech",
+    "trigger_data": 4,
+    "actions": {
+    	"speak":"pinocchio8.wav"
+    }
+    },
+    "section18": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+    	"speak":"pinocchio9.wav"
+    }
+    },
+    "section19": {
+    "trigger": "after_speech",
+    "trigger_data": 0.5,
+    "actions": {
+    	"speak":"pinocchio10.wav"
+    }
+    },
+    "section20": {
+    "trigger": "after_speech",
+    "trigger_data": 2,
+    "actions": {
+    	"speak":"pinocchio11.wav"
+    }
+    },
+    "section21": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+    	"speak":"pinocchio12.wav"
+    }
+    },
+    "section22": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+    	"speak":"pinocchio13.wav"
+    }
+    },
+  "section23": {
     "trigger":"after_precedent",
     "trigger_data": -1,
     "actions": {
