@@ -1,4 +1,4 @@
-threshold: 60
-consecutive_silent_data: 5
+threshold: 57
+consecutive_silent_data: 7
 chunk_dimension: 4096
 rate: 44100
