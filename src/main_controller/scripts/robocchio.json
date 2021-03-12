@@ -1,0 +1,270 @@
+{
+  "section1": {
+    "trigger": "after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "move_base":[2.41,-2.2,0.33,0.94],
+      "speak":"urlo3.wav",
+      "move_eyes":[0,3,2,1,4,2,1,3,2,1,4,2,1,0,2],
+      "move_body":[0,1,2,2,0,2]
+    }
+  },
+  "section2": {
+    "trigger":"after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "move_base":[1.676,2.094,0.14,0.99],
+      "move_eyes":[0,3,2,1,4,2,1,3,2,1,0,2],
+      "speak":"robocchio1.wav"
+    }
+  },
+  "section3": {
+    "trigger":"after_predent",
+    "trigger_data":-1,
+    "actions": {
+      "move_base":[2.58,-0.19,-0.64,0.76],
+      "move_eyes":[0,5,1,1,6,2,1,5,1,1,0,1],
+      "speak":"robocchio2.wav"
+    }
+  },
+   "section4": {
+    "trigger": "after_precedent",
+    "trigger_data": 2,
+    "actions": {
+      "move_base":[2.41,-2.2,0.33,0.94],
+      "speak":"robocchio3.wav",
+      "move_eyes":[1,3,2,1,4,2,1,3,2,1,0,2]
+    }
+  },
+  "section5":{
+  	"trigger": "after_precedent",
+    "trigger_data": 3,
+    "actions": {
+      "speak":"urlo2.wav",
+      "manual_move":[0.0,0.0,0.7,0.0,0.0,-1.0,0.5,3.0,0.0,0.0,-0.5,0.0,0.0,0.5,0.0,0.0,1.5,0.0,0.0,-1.0,0.5,1.0,0.0,0.0,-0.5,0.0,0.0,0.5]
+    }
+  },
+   "section6":{
+  	"trigger": "after_precedent",
+    "trigger_data": 3,
+    "actions": {
+      "move_base":[2.97,-0.25,0.08,0.99]
+    }
+  },
+    "section7": {
+    "trigger": "after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "move_eyes":[1,1,4,1,0,4,1,2,4,1,0,4],
+      "manual_move":[0.0,0.0,1.5,0.0,0.0,-0.75,2.0,0.0,0.0,3.0,0.0,0.0,0.75,2.0,0.0,0.0,1.5,0.0,0.0,-0.75,0.1]
+    }
+  },
+      "section8": {
+    "trigger": "after_precedent",
+    "trigger_data": -1,
+    "actions": {
+    	"speak":"robocchio4.wav",
+    	"move_eyes":[0,4,1,0,0,1,0,4,1,0,0,1,1,3,3],
+    	"move_body":[2,1,1]
+    }
+    },
+      "section9": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+    	"speak":"robocchio5.wav",
+    	 "move_eyes":[0,2,1],
+    	"move_body":[0,0,1]
+    }
+    },
+    "section10": {
+    "trigger": "after_speech",
+    "trigger_data": 4,
+    "actions": {
+    	"speak":"robocchio6.wav",
+    	"move_eyes":[0,1,2,0,2,2,0,0,3]
+    }
+    },
+    "section12": {
+    "trigger": "after_speech",
+    "trigger_data": 0.5,
+    "actions": {
+    	"speak":"robocchio7.wav",
+    	"move_body":[0,2,2,1,3,2,1,0,2]
+    	}
+    },
+    "section13": {
+    "trigger": "after_speech",
+    "trigger_data": 4,
+    "actions": {
+    	"speak":"robocchio8.wav",
+    	"move_eyes":[0,3,6],
+    	"move_body":[0,1,3]
+    }
+    },
+    "section14": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+    	"speak":"robocchio9.wav",
+    	"move_eyes":[0,1,1,0,2,1,0,0,1]
+    }
+    },
+    "section15":{
+     "trigger": "after_precedent",
+    "trigger_data": 1,
+    "actions": {
+    	"end":-1
+    }
+    },
+    "section16": {
+    "trigger": "after_speech",
+    "trigger_data": 0.5,
+    "actions": {
+    	"speak":"robocchio10.wav",
+    	"move_body":[0,2,2,1,3,2,0,0,2]
+    }
+    },
+    "section17": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+    	"speak":"robocchio11.wav",
+    	"move_eyes":[0,1,1]
+    }
+    },
+    "section18": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+    	"speak":"robocchio12.wav",
+    	"move_eyes":[0,0,2],
+    	"move_body":[0,4,1,0,2,2,0,3,2,0,0,2]
+    }
+    },
+    "section19": {
+    "trigger": "after_speech",
+    "trigger_data": 1,
+    "actions": {
+    	"speak":"robocchio13.wav",
+    	"move_base":[0.27,-0.08,0.63,0.77],
+    	"move_eyes":[0,4,2,0,0,2],
+    	"move_body":[2,0,3]
+    }
+    },
+    "section20": {
+    "trigger": "after_command",
+    "trigger_data": 1,
+    "actions": {
+    	"move_eyes":[2,0,6,0,1,3,1,2,3,1,1,3,1,2,3,1,1,3,1,0,3],
+    	"move_body":[2,0,3],
+    	"move_base":[2.98,-0.48,0.72,0.69]
+    }
+    },
+      "section21": {
+    "trigger": "after_precedent",
+    "trigger_data": 0.5,
+    "actions": {
+    	"manual_move":[1.0,0.0,0.0,-1.0,2.0,0.0,0.1,1.0,0.0,0.0,0.5,0.0,0.0,2.0],
+    	"speak":"urlo4.wav",
+    	"move_eyes":[0,6,2,3,0,2],
+    	"move_body":[0,4,2,3,0,2]
+    }
+    },
+      "section22": {
+    "trigger": "after_precedent",
+    "trigger_data": 0.5,
+    "actions": {
+    	"speak":"robocchio14.wav",
+    	"manual_move":[0.0,0.0,1.0,0.0,0.0,-1.0,0.5,0.0,0.0,2.0,0.0,0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.0,-1.0,0.5],
+    	"move_eyes":[0,4,2,1,0,2,1,4,2,1,0,2],
+    	"move_body":[0,2,2,1,3,2,1,0,2]
+    }
+    },
+      "section23": {
+    "trigger": "after_speech",
+    "trigger_data": 1.5,
+    "actions": {
+    	"speak":"robocchio15.wav",
+    	"move_eyes":[0,3,2,0,0,2,0,3,2,0,0,2,2,3,5,1,0,3,1,3,4],
+    	"move_body":[4,2,2,1,0,2,3,1,2]
+    }
+    },
+
+     "section24": {
+    "trigger": "after_precedent",
+    "trigger_data": 0.5,
+    "actions": {
+    	"do_nothing":1
+    }
+    },
+    "section25": {
+    "trigger": "after_precedent",
+    "trigger_data": 1.5,
+    "actions": {
+    	"speak":"robocchio16.wav",
+    	"move_eyes":[0,0,2],
+    	"move_body":[0,0,2]
+    }
+    },
+     "section26": {
+    "trigger": "after_speech",
+    "trigger_data": 3.5,
+    "actions": {
+    	"speak":"robocchio17.wav",
+    	"move_eyes":[0,3,1,0,0,1,0,3,1,0,0,2],
+    	"move_body":[1,1,4,3,0,3]
+    }
+    },
+     "section27": {
+    "trigger": "after_speech",
+    "trigger_data": 9.5,
+    "actions": {
+    	"speak":"robocchio18.wav",
+    	"move_eyes":[0,4,1,2,0,1],
+    	"move_body":[0,4,4,2,0,3],
+    	"manual_move":[0.5,0.0,0.0,-0.25,0.0,0.0,0.5]
+    }
+    },
+     "section28": {
+    "trigger": "after_speech",
+    "trigger_data": 12.5,
+    "actions": {
+    	"speak":"robocchio19.wav",
+    	"manual_move":[0.5,0.0,0.0,0.25,0.0,0.0,0.5],
+    	"move_body":[0,1,3]
+    }
+    },
+     "section29": {
+    "trigger": "after_speech",
+    "trigger_data": 1.5,
+    "actions": {
+    	"speak":"robocchio20.wav",
+    	"move_eyes":[0,1,1,0,2,1,0,0,2]
+    }
+    },
+     "section30": {
+    "trigger": "after_speech",
+    "trigger_data": 0.5,
+    "actions": {
+    	"speak":"robocchio21.wav",
+    	"move_body":[0,2,2,0,3,2,0,0,2]
+    }
+    },
+      "section31": {
+    "trigger": "after_command",
+    "trigger_data": 0.5,
+    "actions": {
+    	"move_eyes":[2,0,6],
+    	"move_body":[2,0,3],
+    	"move_base":[0.1,0.1,0.1,0.1]
+    }
+    },
+  "section32": {
+    "trigger":"after_precedent",
+    "trigger_data": -1,
+    "actions": {
+      "end": -1
+    }
+  }
+}

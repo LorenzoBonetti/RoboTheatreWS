@@ -61,10 +61,14 @@ void setup()
   r_high_final_angle=STANDARD_HIGH_R;
   l_low_final_angle=STANDARD_LOW_L;
   l_high_final_angle=STANDARD_HIGH_L;
-  /*r_low_final_angle=LOOK_DOWN_LOW_R;
-  r_high_final_angle=LOOK_DOWN_HIGH_R;
-  l_low_final_angle=LOOK_DOWN_LOW_L;
-  l_high_final_angle=LOOK_DOWN_HIGH_L;*/
+  /*r_low_final_angle=LOOK_LEFT_LOW_R;
+  r_high_final_angle=LOOK_LEFT_HIGH_R;
+  l_low_final_angle=LOOK_RIGH_LOW_L;
+  l_high_final_angle=LOOK_RIGH_HIGH_L;*/
+   /*r_low_final_angle=CROSS_LOW_R;
+  r_high_final_angle=CROSS_HIGH_R;
+  l_low_final_angle=CROSS_LOW_L;
+  l_high_final_angle=CROSS_HIGH_L;*/
   
   should_move_eyes=true;
   eyes_speed=5;
@@ -249,10 +253,10 @@ void eyes_callback(const std_msgs::Int8MultiArray&msg){
           l_high_final_angle=LOOK_UP_HIGH_L;
           break;
     case EYES_CROSS:
-          r_low_final_angle=LOOK_LEFT_LOW_R;
-          r_high_final_angle=LOOK_LEFT_HIGH_R;
-          l_low_final_angle=LOOK_RIGH_LOW_L;
-          l_high_final_angle=LOOK_RIGH_HIGH_L;
+          r_low_final_angle=CROSS_LOW_R;
+          r_high_final_angle=CROSS_HIGH_R;
+          l_low_final_angle=CROSS_LOW_L;
+          l_high_final_angle=CROSS_HIGH_L;
           break;
     case EYES_DIVIDE:
           r_low_final_angle=LOOK_RIGH_LOW_R;

@@ -70,18 +70,22 @@
 #define LOOK_DOWN_HIGH_R 140
 #define LOOK_UP_LOW_R 150
 #define LOOK_UP_HIGH_R 35
+#define CROSS_LOW_R 50
+#define CROSS_HIGH_R 40
 
 //left eye angles
 #define STANDARD_LOW_L 90
-#define STANDARD_HIGH_L 90
+#define STANDARD_HIGH_L 110
 #define LOOK_RIGH_HIGH_L 180
 #define LOOK_RIGH_LOW_L  120
-#define LOOK_LEFT_HIGH_L 75
+#define LOOK_LEFT_HIGH_L 100
 #define LOOK_LEFT_LOW_L 0
 #define LOOK_DOWN_LOW_L 130
 #define LOOK_DOWN_HIGH_L 60
 #define LOOK_UP_LOW_L 65
 #define LOOK_UP_HIGH_L 150
+#define CROSS_LOW_L 120
+#define CROSS_HIGH_L 170
 
 #define EYES_STANDARD 0
 #define EYES_RIGH 1
