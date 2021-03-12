@@ -72,17 +72,11 @@
     "trigger": "after_precedent",
     "trigger_data": -1,
     "actions": {
-      "move_eyes":[1,1,4,2,0,4,2,2,4,2,0,4]
+      "move_eyes":[1,1,4,1,0,4,1,2,4,1,0,4],
+      "manual_move":[0.0,0.0,1.5,0.0,0.0,-0.75,2.0,0.0,0.0,3.0,0.0,0.0,0.75,2.0,0.0,0.0,1.5,0.0,0.0,-0.75,0.1]
     }
   },
-  "section10": {
-    "trigger": "after_precedent",
-    "trigger_data": 2,
-    "actions": {
-    	"manual_move":[0.0,0.0,1.5,0.0,0.0,-0.5,2.0,0.0,0.0,3.0,0.0,0.0,0.5,2.0,0.0,0.0,1.5,0.0,0.0,-0.5,0.1]
-    }
-  },
-      "section11": {
+      "section10": {
     "trigger": "after_precedent",
     "trigger_data": -1,
     "actions": {
@@ -91,7 +85,7 @@
     	"move_body":[0,1,1]
     }
     },
-      "section12": {
+      "section11": {
     "trigger": "after_speech",
     "trigger_data": 1,
     "actions": {
@@ -100,7 +94,7 @@
     	"move_body":[0,0,1]
     }
     },
-    "section13": {
+    "section12": {
     "trigger": "after_speech",
     "trigger_data": 4,
     "actions": {
@@ -109,7 +103,7 @@
     	"move_eyes":[1,0,3]
     }
     },
-    "section14": {
+    "section13": {
     "trigger": "after_speech",
     "trigger_data": 0.5,
     "actions": {
@@ -117,7 +111,7 @@
     	"manual_move":[0.0,0.0,2.0,0.0,0.0,-1.0,0.5]
     }
     },
-    "section15": {
+    "section14": {
     "trigger": "after_speech",
     "trigger_data": 4,
     "actions": {
@@ -127,7 +121,7 @@
     	"move_body":[0,1,3]
     }
     },
-    "section16": {
+    "section15": {
     "trigger": "after_speech",
     "trigger_data": 1,
     "actions": {
@@ -135,7 +129,7 @@
     	"move_eyes":[0,1,1,0,2,1,0,0,1]
     }
     },
-    "section17": {
+    "section16": {
     "trigger": "after_speech",
     "trigger_data": 0.5,
     "actions": {
@@ -143,7 +137,7 @@
     	"move_body":[0,0,1]
     }
     },
-    "section18": {
+    "section17": {
     "trigger": "after_speech",
     "trigger_data": 1,
     "actions": {
@@ -151,7 +145,7 @@
     	"move_eyes":[0,1,1,5,2,3]
     }
     },
-    "section19": {
+    "section18": {
     "trigger": "after_speech",
     "trigger_data": 1,
     "actions": {
@@ -160,7 +154,7 @@
     	"move_body":[0,4,1]
     }
     },
-    "section20": {
+    "section19": {
     "trigger": "after_speech",
     "trigger_data": 1,
     "actions": {
@@ -170,79 +164,104 @@
     	"move_body":[2,0,3]
     }
     },
-    "section21": {
+    "section20": {
     "trigger": "after_command",
     "trigger_data": 1,
     "actions": {
-    	"move_eyes":[2,0,6],
-    	"move_body":[2,0,3]
+    	"move_eyes":[2,0,6,0,1,3,1,2,3,1,1,3,1,2,3,1,1,3,1,0,3],
+    	"move_body":[2,0,3],
+    	"move_base":[2.98,-0.48,0.72,0.69]
+    }
+    },
+      "section21": {
+    "trigger": "after_precedent",
+    "trigger_data": 0.5,
+    "actions": {
+    	"manual_move":[1.0,0.0,0.0,-1.0,2.0,0.0,0.1,1.0,0.0,0.0,0.5,0.0,0.0,2.0],
+    	"move_eyes":[0,6,2,3,0,2],
+    	"move_body":[0,4,2,3,0,2]
     }
     },
       "section22": {
     "trigger": "after_precedent",
     "trigger_data": 0.5,
     "actions": {
-    	"speak":"pinocchio14.wav"
+    	"speak":"pinocchio14.wav",
+    	"manual_move":[0.0,0.0,1.0,0.0,0.0,-1.0,0.5,0.0,0.0,2.0,0.0,0.0,1.0,0.5,0.0,0.0,1.0,0.0,0.0,-1.0,0.5],
+    	"move_eyes":[0,4,2,1,0,2,1,4,2,1,0,2],
+    	"move_body":[0,2,2,1,3,2,1,0,2]
     }
     },
-      "section24": {
+      "section23": {
     "trigger": "after_speech",
     "trigger_data": 1.5,
     "actions": {
-    	"speak":"pinocchio15.wav"
+    	"speak":"pinocchio15.wav",
+    	"move_eyes":[0,3,2,0,0,2,0,3,2,0,0,2,2,3,5,1,0,3,1,3,4],
+    	"move_body":[4,2,2,1,0,2]
     }
     },
-     "section25": {
+     "section24": {
     "trigger": "after_precedent",
     "trigger_data": 0.5,
     "actions": {
-    	"speak":"pinocchio16.wav"
+    	"speak":"pinocchio16.wav",
+    	"move_eyes":[0,0,3]
+    }
+    },
+     "section25": {
+    "trigger": "after_speech",
+    "trigger_data": 3.5,
+    "actions": {
+    	"speak":"pinocchio17.wav",
+    	"move_eyes":[0,3,1,0,0,1,0,3,1,0,0,2],
+    	"move_body":[1,1,4,3,0,3]
     }
     },
      "section26": {
     "trigger": "after_speech",
-    "trigger_data": 3.5,
+    "trigger_data": 9.5,
     "actions": {
-    	"speak":"pinocchio17.wav"
+    	"speak":"pinocchio18.wav",
+    	"move_eyes":[0,4,1,2,0,1],
+    	"move_body":[0,4,4,2,0,3],
+    	"manual_move":[0.5,0.0,0.0,-0.25,0.0,0.0,0.5]
     }
     },
      "section27": {
     "trigger": "after_speech",
     "trigger_data": 12.5,
     "actions": {
-    	"speak":"pinocchio18.wav"
+    	"speak":"pinocchio19.wav",
+    	"manual_move":[0.5,0.0,0.0,0.25,0.0,0.0,0.5],
+    	"move_body":[0,1,3]
     }
     },
      "section28": {
     "trigger": "after_speech",
-    "trigger_data": 18.5,
+    "trigger_data": 1.5,
     "actions": {
-    	"speak":"pinocchio19.wav"
+    	"speak":"pinocchio20.wav",
+    	"move_eyes":[0,1,1,0,2,1,0,0,2]
     }
     },
      "section29": {
     "trigger": "after_speech",
-    "trigger_data": 2.5,
-    "actions": {
-    	"speak":"pinocchio20.wav"
-    }
-    },
-     "section30": {
-    "trigger": "after_speech",
-    "trigger_data": 1,
+    "trigger_data": 0.5,
     "actions": {
     	"speak":"pinocchio21.wav"
     }
     },
-      "section31": {
+      "section30": {
     "trigger": "after_command",
     "trigger_data": 0.5,
     "actions": {
     	"move_eyes":[2,0,6],
-    	"move_body":[2,0,3]
+    	"move_body":[2,0,3],
+    	"move_base":[0.1,0.1,0.1,0.1]
     }
     },
-  "section32": {
+  "section31": {
     "trigger":"after_precedent",
     "trigger_data": -1,
     "actions": {
