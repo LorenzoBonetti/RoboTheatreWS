@@ -14,7 +14,7 @@ kld_z: 0.95
 #Translational movement required before performing a filter update. (in meters)
 update_min_d: 0.05
 #Rotational movement required before performing a filter update.(in  π/value radians)
-update_min_a: 0.05
+update_min_a: 18.0
 #Number of filter updates required before resampling. 
 resample_interval: 1
 #Time in seconds with which to post-date the transform that is published, to indicate that this transform is valid into the future. 
