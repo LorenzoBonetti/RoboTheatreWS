@@ -8,12 +8,25 @@ JoyTeleop::JoyTeleop() {
 	twistPub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 	next_section_pub=nh.advertise<std_msgs::Bool>("next_section", 1000);
 	move_base_recovery_pub=nh.advertise<std_msgs::Int8>("move_base_recovery", 1000);
-	body_pub=nh.advertise<std_msgs::Int8MultiArray>("arduino/body",1000);
-	eyes_pub=nh.advertise<std_msgs::Int8MultiArray>("arduino/eyes",1000)
+	
+  	eyes_pub=nh.advertise<std_msgs::Int8MultiArray>("arduino/eyes", 1000);
+  	eyes_data=std::vector<int>(2);
+  	eyes_msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
+	eyes_msg.layout.dim[0].size = eyes_data.size();
+	eyes_msg.layout.dim[0].stride = 1;
+	eyes_msg.layout.dim[0].label = "x";
+	
+	body_pub=nh.advertise<std_msgs::Int8MultiArray>("arduino/body", 1000);
+  	body_data=std::vector<int>(2);
+  	body_msg.layout.dim.push_back(std_msgs::MultiArrayDimension());
+	body_msg.layout.dim[0].size = body_data.size();
+	body_msg.layout.dim[0].stride = 1;
+	body_msg.layout.dim[0].label = "y";
 	if(!updateParameters()){
 		ROS_FATAL("joystick parameters required");
 	 	ros::shutdown();
 	}
+	printf("AAAA %d", body_up_down);
 }
 
 void JoyTeleop::moveBaseCmdVelCallback(const geometry_msgs::Twist::ConstPtr &msg) {
@@ -27,40 +40,93 @@ void JoyTeleop::cmd_managerCallback(const geometry_msgs::Twist::ConstPtr &msg) {
 
 
 void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
-
 	// process and publish
 	geometry_msgs::Twist twistMsg;
 	std_msgs::Bool next_sectionMsg;
 	std_msgs::Int8 move_base_recoveryMsg;
-	std_msgs::Int8MultiArray move_eyes_msg;
-    std_msgs::Int8MultiArray move_body_msg;
 	if(msg->buttons[eyes_std]){
-	    move_eyes_msg.data[0]=0;
-	    move_eyes_msg.data[1]=3;
-	    eyes_pub.publish(move_eyes_msg);
+		eyes_data.clear();
+	    eyes_data.insert(eyes_data.begin(),0);
+	    eyes_data.insert(eyes_data.begin()+1,3);
+	    eyes_msg.data.clear();
+		eyes_msg.data.insert(eyes_msg.data.end(), eyes_data.begin(), eyes_data.end());
+		eyes_pub.publish(eyes_msg);
 	}
     if(msg->buttons[eyes_left]){
-        move_eyes_msg.data[0]=1;
-        move_eyes_msg.data[1]=3;
-        eyes_pub.publish(move_eyes_msg);
+    	eyes_data.clear();
+        eyes_data.insert(eyes_data.begin(),2);
+	    eyes_data.insert(eyes_data.begin()+1,3);
+	    eyes_msg.data.clear();
+		eyes_msg.data.insert(eyes_msg.data.end(), eyes_data.begin(), eyes_data.end());
+		eyes_pub.publish(eyes_msg);
     }
     if(msg->buttons[eyes_right]){
-        move_eyes_msg.data[0]=2;
-        move_eyes_msg.data[1]=3;
-        eyes_pub.publish(move_eyes_msg);
+    	eyes_data.clear();
+        eyes_data.insert(eyes_data.begin(),1);
+	    eyes_data.insert(eyes_data.begin()+1,3);
+	    eyes_msg.data.clear();
+		eyes_msg.data.insert(eyes_msg.data.end(), eyes_data.begin(), eyes_data.end());
+		eyes_pub.publish(eyes_msg);
     }
     if(msg->buttons[eyes_up]){
-        move_eyes_msg.data[0]=4;
-        move_eyes_msg.data[1]=3;
-        eyes_pub.publish(move_eyes_msg);
+    	eyes_data.clear();
+         eyes_data.insert(eyes_data.begin(),4);
+	    eyes_data.insert(eyes_data.begin()+1,3);
+	    eyes_msg.data.clear();
+		eyes_msg.data.insert(eyes_msg.data.end(), eyes_data.begin(), eyes_data.end());
+		eyes_pub.publish(eyes_msg);
     }
 
     if(msg->buttons[eyes_down]){
-        move_eyes_msg.data[0]=3;
-        move_eyes_msg.data[1]=3;
-        eyes_pub.publish(move_eyes_msg);
+    	eyes_data.clear();
+          eyes_data.insert(eyes_data.begin(),3);
+	    eyes_data.insert(eyes_data.begin()+1,3);
+	    eyes_msg.data.clear();
+		eyes_msg.data.insert(eyes_msg.data.end(), eyes_data.begin(), eyes_data.end());
+		eyes_pub.publish(eyes_msg);
     }
-	if (msg->axes[NextSection]==-1.0){ //right key pressed
+    
+    //BODY
+    if(msg->buttons[body_std]){
+    	body_data.clear();
+	    body_data.insert(body_data.begin(),0);
+	    body_data.insert(body_data.begin()+1,3);
+	    body_msg.data.clear();
+		body_msg.data.insert(body_msg.data.end(), body_data.begin(), body_data.end());
+		body_pub.publish(body_msg);
+    }
+    if(msg->axes[body_left_right]==-1.0){
+		body_data.clear();
+	    body_data.insert(body_data.begin(),2);
+	    body_data.insert(body_data.begin()+1,3);
+	    body_msg.data.clear();
+		body_msg.data.insert(body_msg.data.end(), body_data.begin(), body_data.end());
+		body_pub.publish(body_msg);
+	}
+    if(msg->axes[body_left_right]==1.0){
+		body_data.clear();
+	    body_data.insert(body_data.begin(),3);
+	    body_data.insert(body_data.begin()+1,3);
+	    body_msg.data.clear();
+		body_msg.data.insert(body_msg.data.end(), body_data.begin(), body_data.end());
+		body_pub.publish(body_msg);
+	}if(msg->axes[body_up_down]==1.0){
+		body_data.clear();
+	    body_data.insert(body_data.begin(),1);
+	    body_data.insert(body_data.begin()+1,3);
+	    body_msg.data.clear();
+		body_msg.data.insert(body_msg.data.end(), body_data.begin(), body_data.end());
+		body_pub.publish(body_msg);
+	}if(msg->axes[body_up_down]==-1.0){
+		body_data.clear();
+	    body_data.insert(body_data.begin(),4);
+	    body_data.insert(body_data.begin()+1,3);
+	    body_msg.data.clear();
+		body_msg.data.insert(body_msg.data.end(), body_data.begin(), body_data.end());
+		body_pub.publish(body_msg);
+	}
+  
+	/*if (msg->axes[NextSection]==-1.0){ //right key pressed
 	    next_sectionMsg.data=true;
 		next_section_pub.publish(next_sectionMsg);
 	}
@@ -71,7 +137,7 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
     if(msg->axes[MoveBaseRecovery]==-1.0){//down key pressed
         move_base_recoveryMsg.data=2;
         move_base_recovery_pub.publish(move_base_recoveryMsg);
-    }
+    }*/
 	if (msg->buttons[autonomous_move]){							// if autonomous publishes the commands of move_base directly on /cmd_vel
 		ros::Time now = ros::Time::now();
 		ros::Duration time_diff = now - cmd_vel_time;
@@ -84,17 +150,17 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 	}else{
 		if (msg->buttons[enable_manual]){
 			if (msg->buttons[LinearScaleUp]){
-				ROS_DEBUG_STREAM("Increasing linearScale by 0.5\%...");
 				linearScale += 0.01;
+				ROS_INFO("Increasing linearScale, now %f", linearScale);
 			}else if (msg->buttons[LinearScaleDown]){
-				ROS_DEBUG_STREAM("Decreasing linearScale by 0.5\%...");
 				linearScale -= 0.01;
+				ROS_INFO("Decreasing linearScale, now %f", linearScale);
 			}else if (msg->buttons[AngularScaleUp]){
-				ROS_DEBUG_STREAM("Increasing angularScale by 0.5\%...");
 				angularScale += 0.01;
+				ROS_INFO("Increasing angularScale, now %f", angularScale);
 			}else if (msg->buttons[AngularScaleDown]){
-				ROS_DEBUG_STREAM("Decreasing linearScale by 0.5\%...");
 				angularScale -= 0.01;
+				ROS_INFO("Decreasing angularScale, now %f", angularScale);
 			}
 			
 			

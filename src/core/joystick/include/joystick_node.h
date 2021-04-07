@@ -8,9 +8,12 @@
 #include <std_msgs/Bool.h>
 #include <std_msgs/Int8.h>
 #include <std_msgs/Int8MultiArray.h>
+#include "std_msgs/MultiArrayLayout.h"
+#include "std_msgs/MultiArrayDimension.h"
 #include <geometry_msgs/Twist.h>
 #include <tf/transform_listener.h>
 #include <sensor_msgs/Joy.h>
+#include <vector>
 
 #define RUN_PERIOD_DEFAULT 100
 
@@ -32,7 +35,10 @@ class JoyTeleop
  {
 	public:
 		JoyTeleop();
-
+		std_msgs::Int8MultiArray eyes_msg;
+		std_msgs::Int8MultiArray body_msg;
+        ros::Publisher eyes_pub;
+        ros::Publisher body_pub;
 
 	private:
 		void joyCallback(const sensor_msgs::Joy::ConstPtr &msg);
@@ -52,6 +58,8 @@ class JoyTeleop
 		int eyes_std, eyes_up,  eyes_down, eyes_left, eyes_right, eyes_cross, eyes_divide;
 		int NextSection;
 		int MoveBaseRecovery;
+		std::vector<int> eyes_data;
+		std::vector<int> body_data;
 	
 		ros::Subscriber joySub;
 		ros::Subscriber moveBaseCmdVelSub;
@@ -60,8 +68,10 @@ class JoyTeleop
 		ros::Publisher twistPub;
 		ros::Publisher next_section_pub;
 		ros::Publisher move_base_recovery_pub;
-        ros::Publisher body_pub;
-        ros::Publisher eyes_pub;
+        
+        
+        
+        
 		ros::Time cmd_vel_time;
 };
 
