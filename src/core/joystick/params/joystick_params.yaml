@@ -4,7 +4,7 @@
 #Velocities setting
 
 #Default linear velocity of the robot in meters/second
-linear_scale: 0.25
+linear_scale: 0.5
 #Default angular velocity of the robot in rad/second
 angular_scale: 0.75
 #Max linear velocity of the robot in meters/second

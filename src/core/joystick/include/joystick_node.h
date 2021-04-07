@@ -7,6 +7,7 @@
 #include <std_msgs/Int32.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/Int8.h>
+#include <std_msgs/Int8MultiArray.h>
 #include <geometry_msgs/Twist.h>
 #include <tf/transform_listener.h>
 #include <sensor_msgs/Joy.h>
@@ -47,6 +48,8 @@ class JoyTeleop
 		double maxLinearScale, maxAngularScale;
 		int enable_manual, autonomous_move, linearXAxis, linearYAxis, angularAxis;
 		int LinearScaleUp, LinearScaleDown, AngularScaleUp, AngularScaleDown;
+		int body_std,body_up_down,body_left_right;
+		int eyes_std, eyes_up,  eyes_down, eyes_left, eyes_right, eyes_cross, eyes_divide;
 		int NextSection;
 		int MoveBaseRecovery;
 	
@@ -57,6 +60,8 @@ class JoyTeleop
 		ros::Publisher twistPub;
 		ros::Publisher next_section_pub;
 		ros::Publisher move_base_recovery_pub;
+        ros::Publisher body_pub;
+        ros::Publisher eyes_pub;
 		ros::Time cmd_vel_time;
 };
 

@@ -8,6 +8,8 @@ JoyTeleop::JoyTeleop() {
 	twistPub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
 	next_section_pub=nh.advertise<std_msgs::Bool>("next_section", 1000);
 	move_base_recovery_pub=nh.advertise<std_msgs::Int8>("move_base_recovery", 1000);
+	body_pub=nh.advertise<std_msgs::Int8MultiArray>("arduino/body",1000);
+	eyes_pub=nh.advertise<std_msgs::Int8MultiArray>("arduino/eyes",1000)
 	if(!updateParameters()){
 		ROS_FATAL("joystick parameters required");
 	 	ros::shutdown();
@@ -30,6 +32,34 @@ void JoyTeleop::joyCallback(const sensor_msgs::Joy::ConstPtr &msg) {
 	geometry_msgs::Twist twistMsg;
 	std_msgs::Bool next_sectionMsg;
 	std_msgs::Int8 move_base_recoveryMsg;
+	std_msgs::Int8MultiArray move_eyes_msg;
+    std_msgs::Int8MultiArray move_body_msg;
+	if(msg->buttons[eyes_std]){
+	    move_eyes_msg.data[0]=0;
+	    move_eyes_msg.data[1]=3;
+	    eyes_pub.publish(move_eyes_msg);
+	}
+    if(msg->buttons[eyes_left]){
+        move_eyes_msg.data[0]=1;
+        move_eyes_msg.data[1]=3;
+        eyes_pub.publish(move_eyes_msg);
+    }
+    if(msg->buttons[eyes_right]){
+        move_eyes_msg.data[0]=2;
+        move_eyes_msg.data[1]=3;
+        eyes_pub.publish(move_eyes_msg);
+    }
+    if(msg->buttons[eyes_up]){
+        move_eyes_msg.data[0]=4;
+        move_eyes_msg.data[1]=3;
+        eyes_pub.publish(move_eyes_msg);
+    }
+
+    if(msg->buttons[eyes_down]){
+        move_eyes_msg.data[0]=3;
+        move_eyes_msg.data[1]=3;
+        eyes_pub.publish(move_eyes_msg);
+    }
 	if (msg->axes[NextSection]==-1.0){ //right key pressed
 	    next_sectionMsg.data=true;
 		next_section_pub.publish(next_sectionMsg);
@@ -124,21 +154,33 @@ bool JoyTeleop::updateParameters() {
 	if (!nh.getParam("left_right_axis_stick_right", angularAxis))
 		return false;
 	
-	if (!nh.getParam("button_X", AngularScaleUp))
+	if (!nh.getParam("button_start", AngularScaleUp))
 		return false;
 
-	if (!nh.getParam("button_A", AngularScaleDown))
+	if (!nh.getParam("button_back", AngularScaleDown))
 		return false;
 
-	if (!nh.getParam("button_B", LinearScaleDown))
+	if (!nh.getParam("button_LT", LinearScaleDown))
 		return false;
 
-	if (!nh.getParam("button_Y", LinearScaleUp))
+	if (!nh.getParam("button_RT", LinearScaleUp))
 		return false;
-	if (!nh.getParam("cross_key_left_right", NextSection))
+	if (!nh.getParam("cross_key_left_right", body_left_right))
 		return false;
-	if (!nh.getParam("cross_key_up_down", MoveBaseRecovery))
+	if (!nh.getParam("cross_key_up_down", body_up_down))
 	    return false;
+    if (!nh.getParam("button_stick_left", body_std))
+        return false;
+    if (!nh.getParam("button_stick_right", eyes_std))
+        return false;
+    if (!nh.getParam("button_X", eyes_left))
+        return false;
+    if (!nh.getParam("button_B", eyes_right))
+        return false;
+    if (!nh.getParam("button_Y", eyes_up))
+        return false;
+    if (!nh.getParam("button_A", eyes_down))
+        return false;
 	return true;
 }
 
